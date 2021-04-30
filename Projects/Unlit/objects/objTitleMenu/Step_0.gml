@@ -34,13 +34,13 @@ if (keyAccept) {
 	case 1:
 		switch (pos) {
 		//Window size
-		case 0: break;
+		case 0: menuLevel = 3; break;
 		//Resolution
 		case 1: break;
 		//Brightness
 		case 2: break;
 		//Back
-		case 3: menuLevel = 0; break;
+		case 3: menuLevel--; break;
 			
 	
 		}
@@ -54,9 +54,24 @@ if (keyAccept) {
 		//Deck
 		case 1: room_goto(rTest); break;
 		//Back
-		case 2: menuLevel = 0; break;
+		case 2: menuLevel--; break;
 		}
 	break;
+	
+	//Window Size menu
+	case 3:
+		switch (pos) {
+		//2x
+		case 0: camera.windowScale = 2;	break;
+		//3x				
+		case 1: camera.windowScale = 3; break;
+		//4x
+		case 2: camera.windowScale = 4; break;
+		//Back
+		case 3: menuLevel--;			break;
+		}
+	break;
+	
 	}
 
 	//Set position back to 0

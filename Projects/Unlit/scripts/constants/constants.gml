@@ -6,30 +6,3 @@
 
 
 #endregion
-
-#region//enums
-enum states {
-	//PLAYER
-	normal,
-	crouch,
-	dash,
-	grab,
-	climb,
-	
-	rock,
-	
-	dead,
-	stop,
-	
-	//ENEMY
-	idle,
-	chase,
-	shoot,
-	
-	//BIRD
-	vertwave,
-	swappos,
-	seek
-}
-#endregion
-

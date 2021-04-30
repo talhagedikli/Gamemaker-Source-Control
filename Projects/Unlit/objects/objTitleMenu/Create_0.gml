@@ -22,6 +22,12 @@ option[1, 1] = "Resolution";
 option[1, 2] = "Brightness";
 option[1, 3] = "Back";
 
+//Window size menu
+option[3, 0] = "2x";
+option[3, 1] = "3x";
+option[3, 2] = "4x";
+option[3, 3] = "Back";
+
 opLength	= 0;
 menuLevel	= 0;
 
