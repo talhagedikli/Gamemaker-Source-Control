@@ -71,7 +71,6 @@ canDashport		= true;
 
 isDashing		= false;
 //isClimbing		= false;
-test			= 5;
 
 //create a bird to test it
 if (!instance_exists(objBird))
