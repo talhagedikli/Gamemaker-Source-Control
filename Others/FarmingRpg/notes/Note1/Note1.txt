@@ -1,0 +1,18 @@
+sprbase = -1;  ///// default demek
+
+if keyboard_check_pressed(vk_enter)	{ debug = !debug }	--bastığında değişir
+
+instance_place()???????????
+
+ enum rainbowcolours {
+    red = 5,
+    orange = 5 * 2,
+    yellow = 15,
+    yellow = 15,
+    green = 20,
+    blue = 25,
+    indigo = 30,
+    violet = 35 * enum_test.val
+    }
+	
+//////////////////////7

@@ -1,0 +1,14 @@
+Converting GML script: ${project_dir}\scripts\approach\approach.gml
+Converted description /// @description  approach(start, end, shift);/// @param start
+/// @param  end
+/// @param  shift
+
+Converting GML script: ${project_dir}\scripts\frame_reset\frame_reset.gml
+Converted description /// @description animation control
+
+macOS icon ${options_dir}\mac\icons\icon512.png written out as 32-bit
+Windows NSIS Installer Script has been set to default due to changes in GameMaker Studio 2
+Game speed set to 60
+Added compatibility script 'instance/instance_create.gml'
+Added compatibility script 'object/object_get_depth.gml'
+Added compatibility script '__global_object_depths.gml'

@@ -1,0 +1,33 @@
+........................................................................../*
+//SCRIPTS FOR MACROS, ENUMS
+scriptin içine yazdığın fonksiyonlar oyun başladığında tanımlanıyor.
+eğer fonksiyon değil de değişken(macros, enums, global vars...) tanımlarsan oyun başladığında
+onu tanımlar.
+........................................................................../*
+//MASK INDEX FOR grabING WALLS
+animation_control() daki switch kısmından mask indexi değiştirebilir ya da default mask'ı 
+sprPlayerMask değil de same as sprite EDITED - animation controle mask index eklendi
+........................................................................../*
+//PRESSING UP WHILE DASHING
+dash yaparken yukarı bastığımda birden yönü değişiyor;-solved
+normal değişken yerine static geçici variable
+........................................................................../*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

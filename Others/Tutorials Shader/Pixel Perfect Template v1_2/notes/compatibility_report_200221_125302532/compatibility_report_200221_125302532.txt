@@ -1,0 +1,56 @@
+Converting GML script: ${project_dir}\scripts\draw_surfaces_main\draw_surfaces_main.gml
+Converted description /// @description draw_surfaces_main()
+
+Converting GML script: ${project_dir}\scripts\window_resize\window_resize.gml
+Converted description /// @description window_resize()
+
+Converting GML script: ${project_dir}\scripts\draw_reset\draw_reset.gml
+Converted description /// @description draw_reset()
+
+Converting GML script: ${project_dir}\scripts\notify\notify.gml
+Converted description /// @description notify(string,time)/// @param string
+/// @param time
+
+Converting GML script: ${project_dir}\scripts\get_on_off\get_on_off.gml
+Converted description /// @description get_on_off(boolean value)/// @param boolean value
+
+Converting GML script: ${project_dir}\scripts\sdm\sdm.gml
+Converted description /// @description sdm(string)/// @param string
+
+Converting GML script: ${project_dir}\scripts\draw_apply_shaders\draw_apply_shaders.gml
+Converted description /// @description draw_apply_shaders()
+
+Converting GML script: ${project_dir}\scripts\mouse_get_x_relative\mouse_get_x_relative.gml
+Converted description /// @description mouse_get_x_relative()
+
+Converting GML script: ${project_dir}\scripts\mouse_get_y_relative\mouse_get_y_relative.gml
+Converted description /// @description mouse_get_y_relative()
+
+Font fnt_main has been converted to font family Arial (Regular)
+GameMaker Studio 1 font texture has been backed up at ${project_dir}\fonts\fnt_main\fnt_main.gms1.png
+Converting GML script: ${project_dir}\objects\obj_control\Create_0.gml
+Converted description /// @description Initialize
+
+Converting GML script: ${project_dir}\objects\obj_control\Alarm_2.gml
+Converted description /// @description Turn off the notification
+
+Converting GML script: ${project_dir}\objects\obj_control\Alarm_1.gml
+Converted description /// @description Center window
+
+Converting GML script: ${project_dir}\objects\obj_control\Alarm_0.gml
+Converted description /// @description Proceed to next room
+
+Converting GML script: ${project_dir}\objects\obj_control\Step_0.gml
+Converted description /// @description Hotkeys
+
+Converting GML script: ${project_dir}\objects\obj_control\Other_4.gml
+Converted description /// @description Double-check the room speed
+
+Converting GML script: ${project_dir}\objects\obj_control\Other_3.gml
+Converted description /// @description Close up
+
+Converting GML script: ${project_dir}\objects\obj_control\Draw_64.gml
+Converted description /// @description Draw application surface
+
+Windows NSIS Installer Script has been set to default due to changes in GameMaker Studio 2
+Game speed set to 60

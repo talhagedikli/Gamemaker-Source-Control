@@ -1,0 +1,1 @@
+sprite = spr_foto_red_blue_cabins;

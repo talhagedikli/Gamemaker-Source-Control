@@ -1,0 +1,28 @@
+ctrl+f find and replace
+//////////////////////////////////////////////////
+amına kodumun kamerası : if (instance_exists(follow))
+{
+	x_to = follow.x;
+	y_to = follow.y;
+}
+
+// update object position
+x += (x_to - x)/25;
+y += (y_to - x)/25;
+
+x = clamp(x,view_w_half,room_width-view_w_half); //???? clamp
+y = clamp(y,view_h_half,room_height-view_h_half);
+
+//update camera view
+camera_set_view_pos(cam,x-view_w_half,y-view_h_half);
+/////////////////////////
+Especially for things like UI (I don't remember Jon talking about this part),
+avoid the fixed coding coordinates where things are drawn,
+instead doing things like 
+"draw a health meter at 10 pixels from the top right corner of the screen"
+" draw a health meter (1270, 10)"
+////////////////////
+.5 ten küçükse false büyükseveya eşitse true exp. 1.2=false 1.7=true
+////////////////////////////////////
+zamanlama yöntemleri 1-if(timer>0) timer--;	2-timer=max(timer-1,0);	3-timer-=timer>0;
+//////////////////////////7
