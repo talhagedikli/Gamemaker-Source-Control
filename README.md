@@ -1,2 +1,2 @@
-# Gamemaker Source-Control
+# Gamemaker Source Control
  stuff about gdev
