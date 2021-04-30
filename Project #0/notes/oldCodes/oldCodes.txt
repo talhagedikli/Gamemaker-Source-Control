@@ -1,0 +1,245 @@
+............................................................................................
+OLD JUMP CODE
+	
+	//JUMP SECTION	
+	/*//jump and turning canJump to false
+	if (onGround == true and keyJump == true and canJump == true)
+	{
+		
+		canJump = false;
+		ySpeed = jPower;
+		squash_stretch(0.7,1.3);
+	}
+	else if (!keyJump)	//if keyJump is not pressed, canjump = true
+	{
+		canJump = true;
+	}*/
+............................................................................................
+ORIGINAL COYOTE AND JUMP BUFFER
+
+	//COYOTE TIMER AND JUMP BUFFER
+	if (onGround == false)
+	{
+		if (coyoteCounter > 0)
+		{
+			coyoteCounter -= 1;
+			
+			if (jumped == false)
+			{
+				if (keyJump)
+				{
+					ySpeed = jPower;
+					jumped = true;
+				}
+			}
+		}
+	}
+	else
+	{
+		jumped = false;
+		coyoteCounter = coyoteMax;
+	}
+	
+	//jump buffer
+	if (keyJump)
+	{
+		bufferCounter = bufferMax;
+	}
+	
+	
+	if (bufferCounter > 0)
+	{
+		bufferCounter -= 1;
+		
+		if (onGround == true)
+		{
+			ySpeed = jPower;
+			bufferCounter = 0;
+			jumped = true;
+		}
+	}
+	*/
+............................................................................................
+OLD GRAVITY APPLIER AND BELOW CHECKER
+	
+	//checking is on ground, if it is stop y move, if it isn't apply grav
+	/*if (place_meeting(x, y+1, objGround))
+	{
+		onGround = true;
+	}
+	else 
+	{
+		onGround = false;
+	}*/
+	
+	//if is not on ground, apply gravity //stop y movement if is on ground 
+	/*if(onGround == true)
+	{
+	    ySpeed = 0;
+	}
+	else
+	{
+	    ySpeed += gSpeed;
+	}*/
+............................................................................................
+OLD DASH
+	/// @description
+	function player_state_dash(){
+		//dash just once
+		canDash = false;
+	
+		//	
+		//screen_shake(5, 7, 10);
+
+		//increasing dash counter by one
+		dashCounter ++;
+	
+		//dash pixels
+		if (part_particles_count(global.partSystem) <= 3)
+		{
+			part_particles_create(global.partSystem, xPos-(facing*PLAYER_XOFFSET/3), yPos-(PLAYER_YOFFSET/4), global.ptDashPixels, choose(0,0,0,1,1));
+		}
+	
+		//calculating dash speeds
+		if (keyRight or keyLeft)		//if right or left pressed
+		{
+			xSpeed = facing*xDashPower;
+			ySpeed = 0;
+			squash_stretch(1.3,0.6);
+		
+			if (keyUp)
+			{
+				ySpeed = yDashPower;
+			}
+			else if (keyDown)
+			{
+				ySpeed = -yDashPower;
+			}
+		}
+		else						//if nothing pressed but up and down
+		{
+			xSpeed = 0;
+			if (keyUp)				
+			{ 
+				ySpeed = yDashPower; 
+				squash_stretch(0.6, 1.4); 
+			}
+			else if (keyDown)		
+			{ 
+				ySpeed = -yDashPower;	
+				squash_stretch(0.6, 1.4); 
+			}
+			else					//actual nothing pressed				
+			{ 
+				xSpeed = facing*xDashPower; 
+				ySpeed = 0;
+				squash_stretch(1.3,0.6);
+			}	
+		}
+
+		//counter control
+		if (dashCounter == dashCounterMax)
+		{
+			if (keyRight or keyLeft)
+			{
+				xSpeed = facing*mSpeed;
+			}
+			else if (keyUp or keyDown)
+			{
+				xSpeed = 0;
+			}
+			else
+			{
+				xSpeed = facing*mSpeed;
+			}
+		
+			dashCounter = 0;
+		
+			currentState = states.normal;
+	
+		}
+
+	}
+
+
+
+
+
+............................................................................................
+OLD DASHPORT
+/*/create dashPort
+	if (!instance_exists(objDashport) and keyDashportPressed and canDashport == true)
+    {
+        var _dashPortSpeed = 4;
+        
+        dashPort = instance_create_layer(x, y, "effects", objDashport);
+        
+		with (dashPort)
+        {
+            speed       = _dashPortSpeed*other.facing;
+        }
+        
+    }
+	else if (instance_exists(objDashport))
+	{
+		dashportCounter++;
+		
+		if (dashportCounter == dashportMax)
+        {
+            dashportCounter = 0;
+			with (dashPort)
+            {
+				instance_destroy();
+
+            }
+        }
+		var _x = dashPort.x;
+		var _y = dashPort.y;
+		
+		if (keyDashportPressed and place_free(_x, _y))
+		{
+			x = _x;
+			y = _y;
+			canDashport = false;
+		}
+		
+		
+	}
+	else
+	{
+		canDashport = true;
+	}
+	*/
+............................................................................................
+OLD SHAKE
+/*if (shake) 
+		{ 
+		shake_time -= 1; 
+		var _xval = choose(-shake_magnitude, shake_magnitude); 
+		var _yval = choose(-shake_magnitude, shake_magnitude); 
+		camera_set_view_pos(view_camera[0], _xval, _yval); 
+
+		if (shake_time <= 0) 
+		{ 
+	      shake_magnitude -= shake_fade; 
+
+	      if (shake_magnitude <= 0) 
+	      { 
+	         camera_set_view_pos(view_camera[0], 0, 0); 
+	         shake = false; 
+	      } 
+		} 
+		}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
