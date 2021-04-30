@@ -1,0 +1,18 @@
+{
+  "name": "lodins-aseprite-flat",
+  "displayName": "Lodins Flat Aseprite Theme",
+  "description": "A Flat Default Aseprite Theme",
+  "version": "1.0",
+  "author": { "name": "Daniel Dosch", "email": "lodindogar@gmail.com", "url": "https://lodindogar.itch.io/" },
+  "contributors": [],
+  "publisher": "Lodindogar",
+  "license": "CC-BY-4.0",
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      { "id": "Lodins Flat Aseprite", "path": "." }
+    ]
+  }
+}
