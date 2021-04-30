@@ -6,7 +6,7 @@ windowScale		=	3;
 following		= objPlayer;
 
 //spd variables
-followSpd		= 0.2;
+followSpd		= 0.3;
 zoomSpd			= 0.05;
 
 //its for cell camera
