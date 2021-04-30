@@ -1,7 +1,7 @@
 //width and height 384*216 
 viewWidth		=	1920/6;
 viewHeight		=	1080/6;
-windowScale		=	4;
+windowScale		=	3;
 
 following		= objPlayer;
 
