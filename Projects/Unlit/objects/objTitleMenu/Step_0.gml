@@ -1,7 +1,7 @@
 /// @description 
-keyUp = keyboard_check_pressed(vk_up);
-keyDown = keyboard_check_pressed(vk_down);
-keyAccept = keyboard_check_pressed(vk_space);
+var keyUp = keyboard_check_pressed(vk_up);
+var keyDown = keyboard_check_pressed(vk_down);
+var keyAccept = keyboard_check_pressed(vk_space);
 
 //Store number of options in current menu
 opLength = array_length(option[menuLevel]);
@@ -19,56 +19,42 @@ if (keyAccept) {
 	
 	switch (menuLevel) {
 	//Pause menu
-	case 0:	
+	case MAIN:	
 		switch (pos) {
 		//Start Game
-		case 0: menuLevel = 2; break;
+		case 0: menuLevel = START; break;
 		//Settings
-		case 1: menuLevel = 1; break;
+		case 1: menuLevel = SETTINGS; break;
 		//Quit Game
 		case 2: game_end(); break;
 		}
 	break;
 	
 	//Settings menu
-	case 1:
+	case SETTINGS:
 		switch (pos) {
 		//Window size
-		case 0: menuLevel = 3; break;
+		case 0: break;
 		//Resolution
 		case 1: break;
 		//Brightness
 		case 2: break;
 		//Back
-		case 3: menuLevel--; break;
+		case 3: menuLevel = MAIN; break;
 			
 	
 		}
 	break;
 	
 	//Start Game menu
-	case 2:
+	case START:
 		switch (pos) {
 		//World
 		case 0: room_goto(rWorld); break;
 		//Deck
 		case 1: room_goto(rTest); break;
 		//Back
-		case 2: menuLevel--; break;
-		}
-	break;
-	
-	//Window Size menu
-	case 3:
-		switch (pos) {
-		//2x
-		case 0: camera.windowScale = 2;	break;
-		//3x				
-		case 1: camera.windowScale = 3; break;
-		//4x
-		case 2: camera.windowScale = 4; break;
-		//Back
-		case 3: menuLevel--;			break;
+		case 2: menuLevel = MAIN; break;
 		}
 	break;
 	
@@ -81,6 +67,8 @@ if (keyAccept) {
 	opLength = array_length(option[menuLevel]);
 
 }
+
+
 		
 
 

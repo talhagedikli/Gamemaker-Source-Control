@@ -1,49 +1,65 @@
 /// @description 
-player_buttons_init();
+#region Movement
+//Inputs
+var right = keyboard_check_pressed(vk_right);
+var left = keyboard_check_pressed(vk_left);
+var up = keyboard_check_pressed(vk_up);
+var down = keyboard_check_pressed(vk_down);
 
-#region MOVEMENT
+var heldRight = keyboard_check(vk_right);
+var heldLeft = keyboard_check(vk_left);
+var heldUp = keyboard_check(vk_up);
+var heldDown = keyboard_check(vk_down);
 
-if (keyRightPressed) {
-	x += stepSize;
-} else if (keyLeftPressed) {
-	x -= stepSize;
-} else if (keyUpPressed) {
-	y -= stepSize;
-} else if (keyDownPressed) {
-	y += stepSize;
+var repeatSpeed = 8;
+var repeatDelay = 25;
+
+//Holding Right Button
+if (right) timeHeldRight = repeatDelay;
+if (timeHeldRight > 0) {
+	timeHeldRight--;
+	if ((timeHeldRight == 0) and heldRight) {
+		timeHeldRight = repeatSpeed;
+		right = true;
+	}
+}
+//Holding Left Button
+if (left) timeHeldLeft = repeatDelay;
+if (timeHeldLeft > 0) {
+	timeHeldLeft--;
+	if ((timeHeldLeft == 0) and heldLeft) {
+		timeHeldLeft = repeatSpeed;
+		left = true;
+	}
+}
+//Holding Left Button
+if (up) timeHeldUp = repeatDelay;
+if (timeHeldUp > 0) {
+	timeHeldUp--;
+	if ((timeHeldUp == 0) and heldUp) {
+		timeHeldUp = repeatSpeed;
+		up = true;
+	}
+}
+//Holding Left Button
+if (down) timeHeldDown = repeatDelay;
+if (timeHeldDown > 0) {
+	timeHeldDown--;
+	if ((timeHeldDown == 0) and heldDown) {
+		timeHeldDown = repeatSpeed;
+		down = true;
+	}
 }
 
+//Calculating move
+var hMove = right - left;
+var vMove = down - up;
 
-if (keyRight) {
-	pressGap--;
-	if (pressGap < 0) {
-		x += stepSize;
-		pressGap = pressGapMax;
-	}
-} else if (keyLeft) {
-	pressGap--;
-	if (pressGap < 0) {
-		x -= stepSize;
-		pressGap = pressGapMax;
-	}
-} else if (keyDown) {
-	pressGap--;
-	if (pressGap < 0) {
-		y += stepSize;
-		pressGap = pressGapMax;
-	}
-} else if (keyUp) {
-	pressGap--;
-	if (pressGap < 0) {
-		y -= stepSize;
-		pressGap = pressGapMax;
-	}
-} else {
-	pressGap = pressGapMax;
-}
+//Applying move
+x += hMove * cellW;
+y += vMove * cellH;
+
 #endregion
-
-
 
 
 

@@ -7,26 +7,29 @@ opSpace		= 16;
 
 pos		= 0;
 
-option[0, 0] = "Start Game";
-option[0, 1] = "Settings";
-option[0, 2] = "Quit Game";
+#macro MAIN		0
+#macro SETTINGS 1
+#macro START	2
+
+global.dsmSettings = ds_map_create();
+#macro set		global.dsmSettings
+
+ds_map_add(set, "sound", 5);
+
+option[MAIN][0] = "Start Game";
+option[MAIN][1] = "Settings";
+option[MAIN][2] = "Quit Game";
 
 //Start Game menu
-option[2, 0] = "World";
-option[2, 1] = "Deck";
-option[2, 2] = "Back";
+option[START][0] = "World";
+option[START][1] = "Deck";
+option[START][2] = "Back";
 
 //Settings menu
-option[1, 0] = "Window Size";
-option[1, 1] = "Resolution";
-option[1, 2] = "Brightness";
-option[1, 3] = "Back";
-
-//Window size menu
-option[3, 0] = "2x";
-option[3, 1] = "3x";
-option[3, 2] = "4x";
-option[3, 3] = "Back";
+option[SETTINGS][0] = "Window Size";
+option[SETTINGS][1] = "Resolution";
+option[SETTINGS][2] = "Brightness";
+option[SETTINGS][3] = "Back";
 
 opLength	= 0;
 menuLevel	= 0;
