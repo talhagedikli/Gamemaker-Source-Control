@@ -2,9 +2,9 @@
 //
 function check_collisions_classic(){
 	//horizontal collision
-	if (place_meeting(x+xSpeed, y, objGround))
+	if (place_meeting(x+xSpeed, y, objBlock))
 	{
-		while (!place_meeting(x+sign(xSpeed), y, objGround))
+		while (!place_meeting(x+sign(xSpeed), y, objBlock))
 		{
 			x = x + sign(xSpeed);
 		}
@@ -14,9 +14,9 @@ function check_collisions_classic(){
 	x = x + xSpeed;
 
 	//vertical collision
-	if (place_meeting(x, y+ySpeed, objGround))
+	if (place_meeting(x, y+ySpeed, objBlock))
 	{
-		while (!place_meeting(x, y+sign(ySpeed), objGround))
+		while (!place_meeting(x, y+sign(ySpeed), objBlock))
 		{
 			y = y + sign(ySpeed);
 		}
@@ -41,8 +41,8 @@ function check_collisions_pixel_perfect(){
 	x += xSpeed;
 
 	//Snap
-	if place_meeting(x + sign(xSpeed), y, objGround) {
-	    var wall = instance_place(x + sign(xSpeed), y, objGround);
+	if place_meeting(x + sign(xSpeed), y, objBlock) {
+	    var wall = instance_place(x + sign(xSpeed), y, objBlock);
 	    if (xSpeed > 0)
 		{ //right
 	        x = (wall.bbox_left - 1) - sprite_bbox_right;
@@ -58,8 +58,8 @@ function check_collisions_pixel_perfect(){
 	y += ySpeed;
 
 	//Snap
-	if place_meeting(x, y, objGround) {
-	    var wall = instance_place(x, y, objGround);
+	if place_meeting(x, y, objBlock) {
+	    var wall = instance_place(x, y, objBlock);
 	    if (ySpeed > 0)
 		{ //down
 	        y = (wall.bbox_top-1) - sprite_bbox_bottom;

@@ -1,7 +1,7 @@
 //width and height 384*216 
-viewWidth = 1920/4;
-viewHeight = 1080/4;
-windowScale = 2;
+viewWidth = 1920/3;
+viewHeight = 1080/3 - 1080 mod 32;
+windowScale = 1.5;
 following = objPlayer;
 
 //spd variables
@@ -29,13 +29,14 @@ if (instance_exists(following)) {
     targetX = following.x - camW / 2;
     targetY = following.y - camH / 2;
 }
+
 //set window size
 window_set_size(viewWidth * windowScale, viewHeight * windowScale);
 alarm[0] = 1;
 
 //re-set surface and gui 
 surface_resize(application_surface, viewWidth * windowScale, viewHeight * windowScale);
-display_set_gui_size(viewWidth * windowScale, viewHeight * windowScale);
+//display_set_gui_size(viewWidth * windowScale, viewHeight * windowScale);
 
 
 //shake

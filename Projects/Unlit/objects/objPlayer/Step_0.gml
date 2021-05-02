@@ -1,5 +1,6 @@
 /// @description 
 #region Movement
+depth = -y;
 //Inputs
 var right = keyboard_check_pressed(vk_right);
 var left = keyboard_check_pressed(vk_left);
@@ -11,7 +12,7 @@ var heldLeft = keyboard_check(vk_left);
 var heldUp = keyboard_check(vk_up);
 var heldDown = keyboard_check(vk_down);
 
-var repeatSpeed = 8;
+var repeatSpeed = 6;
 var repeatDelay = 25;
 
 //Holding Right Button
@@ -51,13 +52,22 @@ if (timeHeldDown > 0) {
 	}
 }
 
+
+
 //Calculating move
 var hMove = right - left;
 var vMove = down - up;
 
 //Applying move
-x += hMove * cellW;
-y += vMove * cellH;
+xSpeed = hMove * cellW;
+ySpeed = vMove * cellH;
+
+if (!place_meeting(x + sign(xSpeed), y + (ySpeed), objBlock)) {
+	x += xSpeed;
+	y += ySpeed;
+}
+
+//check_collisions_pixel_perfect();
 
 #endregion
 
