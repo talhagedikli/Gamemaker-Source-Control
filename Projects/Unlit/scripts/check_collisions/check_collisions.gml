@@ -27,8 +27,7 @@ function check_collisions_classic(){
 
 }
 
-/// @description check 1 pixel collisions
-//
+/// @description the pixel perfect collisions
 function check_collisions_pixel_perfect(){
 
 	//I think this is better calculation for single mask
@@ -38,37 +37,38 @@ function check_collisions_pixel_perfect(){
 	var sprite_bbox_left	= sprite_get_bbox_left(sprite_index)	- sprite_get_xoffset(sprite_index);
 
 	//Horizontal collisions
-	x += xSpeed;
+
 
 	//Snap
 	if place_meeting(x + sign(xSpeed), y, objBlock) {
-	    var wall = instance_place(x + sign(xSpeed), y, objBlock);
-	    if (xSpeed > 0)
+		var wall = instance_place(x + sign(xSpeed), y, objBlock);
+		if (xSpeed > 0)
 		{ //right
-	        x = (wall.bbox_left - 1) - sprite_bbox_right;
-	    } 
+			x = (wall.bbox_left - 1) - sprite_bbox_right;
+		} 
 		else if (xSpeed < 0)
 		{ //left
-	        x = (wall.bbox_right + 1) - sprite_bbox_left;
-	    }
-	    xSpeed = 0;
+			x = (wall.bbox_right + 1) - sprite_bbox_left;
+		}
+		xSpeed = 0;
 	}
+	//Applying horizontal speed if there is no collision with block
+	x += xSpeed;
 
 	//Vertical collisions
-	y += ySpeed;
-
-	//Snap
-	if place_meeting(x, y, objBlock) {
-	    var wall = instance_place(x, y, objBlock);
-	    if (ySpeed > 0)
+	if place_meeting(x, y + sign(ySpeed), objBlock) {
+		var wall = instance_place(x, y + sign(ySpeed), objBlock);
+		if (ySpeed > 0)
 		{ //down
-	        y = (wall.bbox_top-1) - sprite_bbox_bottom;
-	    }
-		else if (ySpeed< 0)
+			y = (wall.bbox_top - 1) - sprite_bbox_bottom;
+		}
+		else if (ySpeed < 0)
 		{ //up
-	        y = (wall.bbox_bottom+1) - sprite_bbox_top;
-	    }
-	    ySpeed = 0;
-}
+			y = (wall.bbox_bottom + 1) - sprite_bbox_top;
+		}
+		ySpeed = 0;
+	}
+	//Applying vertical speed if there is no collision with block
+	y += ySpeed;
 
 }

@@ -1,7 +1,4 @@
 /// @description 
-image_xscale	= 0.5;
-image_yscale	= 0.5;
-
 cellH			= 16;
 cellW			= 16;
 

@@ -62,12 +62,8 @@ var vMove = down - up;
 xSpeed = hMove * cellW;
 ySpeed = vMove * cellH;
 
-if (!place_meeting(x + sign(xSpeed), y + (ySpeed), objBlock)) {
-	x += xSpeed;
-	y += ySpeed;
-}
-
-//check_collisions_pixel_perfect();
+//Change in position applying also here
+check_collisions_pixel_perfect();
 
 #endregion
 
