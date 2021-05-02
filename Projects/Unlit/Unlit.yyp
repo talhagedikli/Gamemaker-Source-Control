@@ -66,7 +66,6 @@
     {"id":{"name":"frame_freeze","path":"scripts/frame_freeze/frame_freeze.yy",},"order":1,},
     {"id":{"name":"level111","path":"sprites/level111/level111.yy",},"order":4,},
     {"id":{"name":"rTest","path":"rooms/rTest/rTest.yy",},"order":2,},
-    {"id":{"name":"gmedit","path":"scripts/gmedit/gmedit.yy",},"order":12,},
   ],
   "Options": [
     {"name":"Linux","path":"options/linux/options_linux.yy",},
@@ -100,8 +99,8 @@
     {"folderPath":"folders/Rooms.yy","order":10,"resourceVersion":"1.0","name":"Rooms","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Sequences.yy","order":11,"resourceVersion":"1.0","name":"Sequences","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Animation Curves.yy","order":12,"resourceVersion":"1.0","name":"Animation Curves","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Notes.yy","order":14,"resourceVersion":"1.0","name":"Notes","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Extensions.yy","order":15,"resourceVersion":"1.0","name":"Extensions","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Notes.yy","order":13,"resourceVersion":"1.0","name":"Notes","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Extensions.yy","order":14,"resourceVersion":"1.0","name":"Extensions","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Objects/game.yy","order":0,"resourceVersion":"1.0","name":"game","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Objects/parents.yy","order":1,"resourceVersion":"1.0","name":"parents","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/animation.yy","order":1,"resourceVersion":"1.0","name":"animation","tags":[],"resourceType":"GMFolder",},
