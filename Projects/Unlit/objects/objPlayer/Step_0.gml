@@ -12,7 +12,7 @@ var heldLeft = keyboard_check(vk_left);
 var heldUp = keyboard_check(vk_up);
 var heldDown = keyboard_check(vk_down);
 
-var repeatSpeed = 6;
+var repeatSpeed = 4;
 var repeatDelay = 25;
 
 //Holding Right Button
