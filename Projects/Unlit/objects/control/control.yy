@@ -1,8 +1,5 @@
 {
-  "spriteId": {
-    "name": "sprControl",
-    "path": "sprites/sprControl/sprControl.yy",
-  },
+  "spriteId": null,
   "solid": false,
   "visible": false,
   "spriteMaskId": null,

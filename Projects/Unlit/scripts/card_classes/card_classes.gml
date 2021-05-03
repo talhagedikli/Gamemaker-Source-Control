@@ -12,8 +12,7 @@ function Card () constructor {
 	goUp	= 0; 
 }
 
-enum cards 
-{
+enum cards {
 	talk = 0,
 	hit = 1,
 	bless = 2
@@ -28,7 +27,7 @@ function Talk() : Card() constructor {
 	color	= c_white;
 	alpha	= 1;
 	
-	info	= function() {
+	static info	= function() {
 		show_message("its the first card in the world");
 	}
 }
@@ -40,7 +39,7 @@ function Hit() : Card() constructor {
 	color	= c_white;
 	alpha	= 1;
 	
-	info	= function() {
+	static info	= function() {
 		show_message("its the second card in the world");
 	}
 }
@@ -52,7 +51,7 @@ function Bless() : Card() constructor {
 	color	= c_white;
 	alpha	= 1;
 	
-	info	= function() {
+	static info	= function() {
 		show_message("there is no god to bless you so, i bless you");
 	}
 	
@@ -61,22 +60,16 @@ function Bless() : Card() constructor {
 #endregion
 
 function add_new_card(index) {
-	do {
-		if (index == cards.talk) {
+	switch (index) {
+		case cards.talk:
 			return new Talk();
 			break;
-		}
-		if (index ==  cards.hit) {
-			return new Hit();
+		case cards.hit:
+			return new Talk();
 			break;
-		}
-		if (index == cards.bless) {
-			return new Bless();
+		case cards.bless:
+			return new Talk();
 			break;
-		}
-	}
-	until (index == noone) { 
-		return noone;
 	}
 }
 

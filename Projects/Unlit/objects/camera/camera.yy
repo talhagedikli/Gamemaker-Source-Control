@@ -1,8 +1,5 @@
 {
-  "spriteId": {
-    "name": "sprCamera",
-    "path": "sprites/sprCamera/sprCamera.yy",
-  },
+  "spriteId": null,
   "solid": false,
   "visible": false,
   "spriteMaskId": null,

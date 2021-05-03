@@ -1,8 +1,5 @@
 {
-  "spriteId": {
-    "name": "sprGuiElements",
-    "path": "sprites/sprGuiElements/sprGuiElements.yy",
-  },
+  "spriteId": null,
   "solid": false,
   "visible": false,
   "spriteMaskId": null,

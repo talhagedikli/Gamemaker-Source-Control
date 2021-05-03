@@ -7,12 +7,14 @@ timeHeldLeft	= 0;
 timeHeldUp		= 0;
 timeHeldDown	= 0;
 
-delayed_input = function(_input, _inputHeld, _time, _repeatDly, _repeatSpd) {
-	if (_input) _time = _repeatDly;
-	if (_time > 0) {
-		_time--;
-		if ((_time == 0) and _inputHeld) {
-			_time = _repeatSpd;
+delayed_input = function(time, input, inputHeld, repeatDly, repeatSpd) {
+	static time = 0;
+	
+	if (input) time = repeatDly;
+	if (time > 0) {
+		time--;
+		if ((time == 0) and inputHeld) {
+			time = repeatSpd;
 			return true;
 		}
 	}	
