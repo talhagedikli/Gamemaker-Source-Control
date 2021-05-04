@@ -23,8 +23,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "game",
-    "path": "folders/Objects/game.yy",
+    "name": "Rooms",
+    "path": "folders/Objects/game/Rooms.yy",
   },
   "resourceVersion": "1.0",
   "name": "objRoomChanger",
