@@ -1,21 +1,10 @@
 #region TESTING VARIABLES
-//names
-
-
-
-
-//test[13][0] = "name";
-//test[13][1] = myArray[@ 0];
-
-//test[14][0] = "dmg ";
-//test[14][1] = myArray[@ 1];
-
-
 
 
 #region DISPLAY VARIABLES AND NAMES
 //set font
-draw_set_font(fntText);
+draw_set_font(font_textbox);
+
 //array length
 var _arrayL = array_length(test);
 
