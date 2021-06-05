@@ -139,7 +139,7 @@ function player_state_normal()
 	//switch to dash state
 	if (keyDashPressed and canDash == true and stopDashing == false)
 	{
-		screen_flash(20);
+		//screen_flash(20);
 		screen_shake(5, 3, 1);
 		squash_stretch(1.5,0.5);
 		currentState = states.dash;
