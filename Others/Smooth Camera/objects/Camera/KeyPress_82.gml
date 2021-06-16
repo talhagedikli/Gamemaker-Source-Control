@@ -1,2 +1,2 @@
 /// @description 
-zoom_out();
+game_restart();
