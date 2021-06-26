@@ -1,0 +1,2 @@
+/// @description
+scale = 1;
