@@ -69,8 +69,8 @@ applyScreenShake = function ()
 		var _yval = random_range(-shake_magnitude, shake_magnitude);
 			
 		//apply the shake
-		camX = camX + _xval;
-		camY = camY + _yval;
+		camX += _xval;
+		camY += _yval;
 			
 		if (shake_time <= 0) 
 		{

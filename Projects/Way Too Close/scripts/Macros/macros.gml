@@ -21,11 +21,6 @@
 #endregion
 
 #region// Inputs
-#macro RIGHT			keyboard_check(vk_right)
-#macro UP				keyboard_check(vk_up)
-#macro LEFT				keyboard_check(vk_left)
-#macro DOWN				keyboard_check(vk_down)
-
 #macro SPACE			keyboard_check(vk_space)
 #macro ALT				keyboard_check(vk_alt)
 

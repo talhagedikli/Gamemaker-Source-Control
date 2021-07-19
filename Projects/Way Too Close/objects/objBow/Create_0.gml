@@ -1,2 +1,2 @@
+event_inherited();
 item    = new Bow();
-fadeOut = false;

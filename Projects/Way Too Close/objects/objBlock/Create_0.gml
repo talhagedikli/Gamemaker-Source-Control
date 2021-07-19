@@ -1,6 +1,3 @@
-gridPos		= new Vector2();
-time		= 0;
+event_inherited();
 
-image_blend = c_white;
 
-fadeOut = false;

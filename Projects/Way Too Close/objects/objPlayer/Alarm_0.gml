@@ -1,9 +1,7 @@
-var _inst = gridPlace(gridPos.x + moveDir.x, gridPos.y + moveDir.y, objItemParent);
-if (instance_exists(_inst)) 
+var _item = gridPlace(gridPos.x + moveDir.x, gridPos.y + moveDir.y, objItemParent);
+if (instance_exists(_item)) 
 {
-	show("found a " + _inst.item.name);
-	ds_list_add(inventory, _inst.item);
-	_inst.fadeOut = true;
+	_item.pick();
 	attackDelay.stop();
 	moveTween.stop();
 	state.change("attack");
@@ -12,7 +10,7 @@ if (instance_exists(_inst))
 var _inst = gridPlace(gridPos.x + moveDir.x, gridPos.y + moveDir.y, objEnemyParent);
 if (instance_exists(_inst)) 
 {
-	_inst.fadeOut = true;
+	_inst.getDamage(1);
 	attackDelay.stop();
 	moveTween.stop();
 	state.change("attack");

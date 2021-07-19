@@ -6,16 +6,18 @@ if (active)
 	horizontalInput	= (keyboard_check(vk_right) - keyboard_check(vk_left));		// Will be -1, 0 or 1
 	verticalInput	= (keyboard_check(vk_down) - keyboard_check(vk_up));		// Will be -1, 0 or 1
 
-	keyRight			= RIGHT;
-	keyLeft				= LEFT;
-	keyDown				= DOWN;
-	keyUp				= UP;
+	keyRight			= keyboard_check(vk_right);
+	keyLeft				= keyboard_check(vk_left);
+	keyDown				= keyboard_check(vk_down);
+	keyUp				= keyboard_check(vk_down);
 
 	keySpace			= SPACE;
 	keyAlt				= ALT;
 	keyR				= keyboard_check(ord("R"));
 	keyEsc				= keyboard_check(vk_escape);
 	keyShiftPressed		= keyboard_check_pressed(vk_shift);
+	keyQPressed			= keyboard_check_pressed(ord("Q"));
+	keyQ				= keyboard_check(ord("Q"));
 
 	keyRightPressed		= RIGHT_PRESSED;
 	keyLeftPressed		= LEFT_PRESSED;
@@ -29,26 +31,29 @@ if (active)
 } 
 else 
 {
-	keyRight			= noone;
-	keyLeft				= noone;
-	keyDown				= noone;
-	keyUp				= noone;
+	keyRight			= 0;
+	keyLeft				= 0;
+	keyDown				= 0;
+	keyUp				= 0;
 						  
-	keySpace			= noone;
-	keyAlt				= noone;
-	keyR				= noone;
-	keyEsc				= noone;
-	keyShiftPressed		= noone;
+	keySpace			= 0;
+	keyAlt				= 0;
+	keyR				= 0;
+	keyEsc				= 0;
+	keyShiftPressed		= 0;
+	keyQPressed			= 0;
+	keyQ				= 0;
+
 						  
-	keyRightPressed		= noone;
-	keyLeftPressed		= noone;
-	keyDownPressed		= noone;
-	keyUpPressed		= noone;
+	keyRightPressed		= 0;
+	keyLeftPressed		= 0;
+	keyDownPressed		= 0;
+	keyUpPressed		= 0;
 						  
-	keySpacePressed		= noone;
-	keyAltPressed		= noone;
-	keyRPressed			= noone;
-	keyEscPressed		= noone;
+	keySpacePressed		= 0;
+	keyAltPressed		= 0;
+	keyRPressed			= 0;
+	keyEscPressed		= 0;
 }
 
 

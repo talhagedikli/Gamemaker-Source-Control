@@ -8,7 +8,7 @@ xSpeed		= 0;
 ySpeed		= 0;
 gSpeed		= 0.06;
 facing		= 1;
-moveDir 	= new Dir();
+moveDir 	= new Vector2();
 lastPos 	= new Vector2();
 moveTween	= new TweenV2(tweenType.QUARTEASEIN);
 moveTimer	= new Timer();
@@ -16,8 +16,15 @@ moveDurMax	= 12;
 moveDurMin	= 3;
 moveDur		= moveDurMax;
 
+// Sound
+walkSound	= aWalk;
+
 // Inventory
+hpMax		= 5;
+hp			= hpMax;
 inventory	= ds_list_create();
+wepons		= ds_list_create();
+focused		= 0;
 
 // Attack 
 attackDir	= new Vector2(0, 0);
@@ -27,40 +34,9 @@ attackTween = new TweenV2(tweenType.BACKEASEOUT);
 attackDelay	= new Timer();
 colliding	= noone;
 
-//accel, decel and max speed
-aSpeed		= 0.2;
-dSpeed		= 0.5;
-hMaxSpeed	= 2.5;
-vMaxSpeed	= 2.5;
-clampSpeed	= function(_horizontal = hMaxSpeed, _vertical = vMaxSpeed)
-{
-	ySpeed = clamp(ySpeed, -_vertical, _vertical);
-	xSpeed = clamp(xSpeed, -_horizontal, _horizontal);
-}
-
-groundAccel 	= 0.1;
-groundDecel 	= 0.075;
-airAccel		= 0.1;
-airDecel		= 0.075;
-crouchDecel 	= 0.075;
-
-
-area = [
-	[0, 1],
-	[0, -1],
-	[1, 0],
-	[-1, 0]
-];
-
-
-
 dirfind 		= function(_area)
 {
-	var r, u, l, d;
-	r = array_create(0);
-	u = array_create(0);
-	l = array_create(0);
-	d = array_create(0);
+	var r = [], u = [], l = [], d = [];
 	var resize = array_create(4, 0);
 	var i = 0; repeat(array_length(_area))
 	{
@@ -96,91 +72,97 @@ dirfind 		= function(_area)
 }
 
 //show(dirfind(area));
-
-distance	= array_create(array_length(area));
 collisions	= ds_list_create();
-
-//control point variables
-onGround	= false;
-onWall		= false;
-onCeiling	= false;
-isTouching	= false;
+touching	= false;
 
 gridPos 	= new Vector2(x div GRID_W, y div GRID_H);
+#endregion //-------------------------------------------------------------------
 
 #region Functions --------------------------------------------------------------
-// Distance with structs
-findDistance	   = function(_pos, _area)
+enum DIR 
 {
-    var i = 0; repeat(array_length(_area))
-    {
-		if (array_length(distance) != array_length(_area))
-		{
-			array_resize(distance, array_length(_area));
-		}
-        if (!is_struct(distance[i]))
-        {
-            distance[i] = new Grid(_pos.x + _area[i][0], _pos.y + _area[i][1]);
-        }
-        else
-        {
-            distance[i].set(_pos.x + _area[i][0], _pos.y + _area[i][1]);
-        }
-        i++;
-    }
+	RIGHT,
+	UP,
+	LEFT,
+	DOWN
+	
 }
-findDistance(gridPos, area);
 // Distance with structs2
-area2 = [
+area = [
 	[1],	// Right (y = 0)
-	[-1],	// Up (x = 0)
-	[-1],	// Left (y = 0)
+	[1],	// Up (x = 0)
+	[1],	// Left (y = 0)
 	[1]	// Down (x = 0)
 ];
-distance2 = [];
-findDistance2	   = function(_pos, _area)
+distance	= array_create(array_length(area));
+findDistance	= function(_pos, _area)
 {
-	var index	= 0;
-	var len 	= 1;
-    var i = 0; repeat(array_length(_area))
-    {
+	var _x, _y, index = 0, len = 1, value;
+	var i = 0; repeat(array_length(_area))
+	{
 		var j = 0; repeat(array_length(_area[i]))
 		{
-			array_resize(distance2, len);
-			var _x = (i mod 2 == 0 ? _area[i][j] : 0);
-			var _y = (i mod 2 == 0 ? 0 : _area[i][j]);
-	        if (!is_struct(distance2[index]))
+			array_resize(distance, len);
+			value	= _area[i][j];
+			if (i == DIR.RIGHT)
+			{
+				_x	= value;
+				_y	= 0;
+			}
+			else if (i == DIR.UP)
+			{
+				_x	= 0;
+				_y	= -value;
+			}
+			else if (i == DIR.LEFT)
+			{
+				_x	= -value;
+				_y	= 0;
+			}
+			else if (i == DIR.DOWN)
+			{
+				_x	= 0;
+				_y	= value;
+			}
+	        if (!is_struct(distance[index]))
 	        {
-	            distance2[index] = new Grid(_pos.x + _x, _pos.y + _y);
+	            distance[index] = new Grid(_pos.x + _x, _pos.y + _y);
 	        }
 	        else
 	        {
-				distance2[index].set(_pos.x + _x, _pos.y + _y);
-			}
-			
+				distance[index].set(_pos.x + _x, _pos.y + _y);
+			}			
 			j++;
 			len++;
 			index++;
 		}
-        i++;
-    }
+		i++;
+	}
 }
+findDistance(gridPos, area);
 
-
-checkCollisions = function()
+addArea			= function(_area, _value)
 {
-	onGround	= place_meeting(x, y + 1, objBlock);
-	onWall		= place_meeting(x + facing, y, objBlock);
-	onCeiling	= place_meeting(x, y - 1, objBlock);
-	isTouching	= onGround || onWall || onCeiling;
-}	
+	var i = 0; repeat(array_length(_value))
+	{
+		var j = 0; repeat(array_length(_value[i]))
+		{
+			if (array_safe(_area[i], _value[i][j]))
+			{
+				array_push(_area[i], _value[i][j]);
+			}
+			j++;
+		}
+		i++;
+	}
+}
 
 snapPosition	= function()
 {
-	var _tlx	= x - sprite_xoffset;
-	var _tly	= y - sprite_yoffset;
-	var _xspc	= _tlx mod GRID_W;
-	var _yspc	= _tly mod GRID_H;
+	var _tlx	= x - sprite_xoffset,
+	_tly		= y - sprite_yoffset,
+	_xspc		= _tlx mod GRID_W,
+	_yspc		= _tly mod GRID_H;
 	if (_xspc != 0 || _yspc != 0)
 	{
 		x = _xspc < GRID_W / 2 ? x - _xspc : x + _xspc;
@@ -204,12 +186,10 @@ gridList		= function(_dist, _object, _pos = undefined, _arr = undefined)
 	}
 	var i = 0; repeat(array_length(_dist))
 	{
-		var x1 = _dist[i].x;
-		var x2 = _dist[i].x + 1;
-		var y1 = _dist[i].y;
-		var y2 = _dist[i].y + 1;
-		var gr = _dist[i];
-		var safe = true;
+		var x1	= _dist[i].x,	x2		= _dist[i].x + 1,
+		y1		= _dist[i].y,	y2		= _dist[i].y + 1,
+		gr		= _dist[i],
+		safe	= true;
 		bl		= collision_line(x1 * GRID_W + gm, y1 * GRID_H + gm, x2 * GRID_W - gm, y2 * GRID_H - gm, _object, false, true);
 		var j = 0; repeat(ds_list_size(_list))
 		{
@@ -227,7 +207,6 @@ gridList		= function(_dist, _object, _pos = undefined, _arr = undefined)
 		
 	}
 	return _list;
-	
 }
 
 gridMeeting 	= function(_x, _y, _obj)
@@ -236,7 +215,7 @@ gridMeeting 	= function(_x, _y, _obj)
 	{	
 		return position_meeting(_x * GRID_W, _y * GRID_H, _obj);
 	}
-		return false;
+	return false;
 }
 
 gridPlace		= function(_x, _y, _obj)
@@ -275,58 +254,14 @@ distancePlace	= function(_dist = distance, _obj)
 	}
 	return noone;
 }
-		
 
-structMeeting	= function(_x, _y, _obj)
+tileCollision		= function(_gx, _gy, _tile)
 {
-	if (is_struct(_obj))
-	{
-		var i = 0; repeat (_obj.xScale)
-		{
-			var j = 0; repeat (_obj.yScale)
-			{
-				if (_x == _obj.x + i && _y == _obj.y + j)
-				{
-					return true;
-				}
-				j++;
-			}
-			i++;
-		}
-	}
-	else if (instance_exists(_obj))
-	{
-		return position_meeting(_x * GRID_W, _y * GRID_H, _obj);
-	}
-	return false;
-}
-
-structPlace		= function(_x, _y, _obj)
-{
-	if (is_struct(_obj))
-	{
-		var i = 0; repeat (_obj.xScale)
-		{
-			var j = 0; repeat (_obj.yScale)
-			{
-				if (_x == _obj.x + i && _y == _obj.y + j)
-				{
-					return _obj;
-				}
-				j++;
-			}
-			i++;
-		}
-	}
-	else if (instance_exists(_obj))
-	{
-		return instance_position(_x * GRID_W, _y * GRID_H, _obj);
-	}
-	return noone;
+	return tile_meeting(_gx * GRID_W, _gy * GRID_H, _tile);
 }
 
 #endregion //-------------------------------------------------------------------
-#endregion //-------------------------------------------------------------------
+
 #region State ------------------------------------------------------------------
 state = new SnowState("idle");
 
@@ -344,10 +279,9 @@ state.add("idle", {
 		snapPosition();
 		gridPos.set(x div GRID_W, y div GRID_H);
 		findDistance(gridPos, area);
-		findDistance2(gridPos, area2);
 		collisions = gridList(distance, objBlock);
 		audio_listener_set_position(0, x, y, 0);
-
+		// test
 	},
 	step: function()
 	{
@@ -359,7 +293,8 @@ state.add("idle", {
 		{
 			moveDur = approach(moveDur, moveDurMax, 8);
 		}
-		if (gridMeeting(gridPos.x + InputManager.horizontalInput, gridPos.y, objBlock) || gridMeeting(gridPos.x, gridPos.y + InputManager.verticalInput, objBlock))
+		if (gridMeeting(gridPos.x + InputManager.horizontalInput, gridPos.y, objCollidibleParent) || gridMeeting(gridPos.x, gridPos.y + InputManager.verticalInput, objCollidibleParent) ||
+			tileCollision(gridPos.x + InputManager.horizontalInput, gridPos.y, "TileCollision") || tileCollision(gridPos.x, gridPos.y + InputManager.verticalInput, "TileCollision"))
 		{
 			moveDur = moveDurMax;
 		}
@@ -368,25 +303,23 @@ state.add("idle", {
 			var bl = distancePlace(distance, objBlock);
 			if instance_exists(bl) bl.fadeOut = true;
 		}
+
 		
 		// Switch to move
-		if (abs(InputManager.horizontalInput) && !gridMeeting(gridPos.x + InputManager.horizontalInput, gridPos.y, objWall))
+		if (abs(InputManager.horizontalInput) && !tileCollision(gridPos.x + InputManager.horizontalInput, gridPos.y, "TileCollision"))
 		{
-			moveDir.find(InputManager.horizontalInput, 0);
+			moveDir.set(InputManager.horizontalInput, 0);
 			lastPos.x = x;
 			lastPos.y = y;
 			state.change("move")
 		}
-		else if (abs(InputManager.verticalInput) && !gridMeeting(gridPos.x, gridPos.y + InputManager.verticalInput, objWall))
+		else if (abs(InputManager.verticalInput) && !tileCollision(gridPos.x, gridPos.y + InputManager.verticalInput, "TileCollision"))
 		{
-			moveDir.find(0, InputManager.verticalInput);
+			moveDir.set(0, InputManager.verticalInput);
 			lastPos.x = x;
 			lastPos.y = y;
 			state.change("move")
 		}
-
-		
-
 	}
 });
 	
@@ -396,18 +329,22 @@ state.add("move", {
 		moveTween.start(0, 1, moveDur);
 		moveTimer.start(moveDur);
 		attackDelay.start(moveDur*4/5);
-		alarm[0] = moveDur*4/5;
+		alarm[0] = moveDur*4/5;			// 10
 	},
 	step: function() 
 	{
-		x = flerp(x, lastPos.x + lengthdir_x(GRID_W, moveDir.angle), moveTween.value);
-		y = flerp(y, lastPos.y + lengthdir_y(GRID_H, moveDir.angle), moveTween.value);
+		x = flerp(x, lastPos.x + lengthdir_x(GRID_W, moveDir.get_direction()), moveTween.value);
+		y = flerp(y, lastPos.y + lengthdir_y(GRID_H, moveDir.get_direction()), moveTween.value);
 
 		if (moveTween.done)
 		{
 			moveTween.stop();
 			state.change("idle");
 		}
+	},
+	leave: function()
+	{
+		audio_play_sound(walkSound, 1, false);
 	}
 });
 
@@ -418,7 +355,7 @@ state.add("attack", {
 		attackTimer.start(attackDur);
 		moveDur = moveDurMax;
 		if (instance_exists(colliding)) colliding.fadeOut = true;
-		screen_shake(3, 1, 120);
+		screen_shake(4, 1, 20);
 	},
 	step: function()
 	{
