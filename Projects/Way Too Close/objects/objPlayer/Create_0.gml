@@ -22,9 +22,16 @@ walkSound	= aWalk;
 // Inventory
 hpMax		= 5;
 hp			= hpMax;
-inventory	= ds_list_create();
-wepons		= ds_list_create();
+inventory	= [];
+showInv		= false;
+invBgAlpha	= 0;
+invSur		= -1;
+tempSur		= -1;
+invIndex	= 0;
+wepons		= [];
 focused		= 0;
+focusDelay	= 20;
+focusTimer	= new Timer();
 
 // Attack 
 attackDir	= new Vector2(0, 0);
@@ -34,51 +41,7 @@ attackTween = new TweenV2(tweenType.BACKEASEOUT);
 attackDelay	= new Timer();
 colliding	= noone;
 
-dirfind 		= function(_area)
-{
-	var r = [], u = [], l = [], d = [];
-	var resize = array_create(4, 0);
-	var i = 0; repeat(array_length(_area))
-	{
-		var _x = _area[i][0];
-		var _y = _area[i][1];
-		if (_x >= 0 && _y == 0)
-		{
-			resize[0]++;
-			array_resize(r, resize[0]);
-			r[resize[0] - 1] = _x;
-		}
-		else if (_x = 0 && _y <= 0)
-		{
-			resize[1]++;
-			array_resize(u, resize[1]);
-			u[resize[1] - 1] = _y;
-		}	
-		else if (_x <= 0 && _y == 0)
-		{
-			resize[2]++;
-			array_resize(l, resize[2]);
-			l[resize[2] - 1] = _x;
-		}
-		else if (_x == 0 && _y >= 0)
-		{
-			resize[3]++;
-			array_resize(d, resize[3]);
-			d[resize[3] - 1] = _y;
-		}
-		i++;
-	}
-	return [r, u, l, d];
-}
-
-//show(dirfind(area));
-collisions	= ds_list_create();
-touching	= false;
-
-gridPos 	= new Vector2(x div GRID_W, y div GRID_H);
-#endregion //-------------------------------------------------------------------
-
-#region Functions --------------------------------------------------------------
+// Area and distance
 enum DIR 
 {
 	RIGHT,
@@ -87,7 +50,6 @@ enum DIR
 	DOWN
 	
 }
-// Distance with structs2
 area = [
 	[1],	// Right (y = 0)
 	[1],	// Up (x = 0)
@@ -95,6 +57,18 @@ area = [
 	[1]	// Down (x = 0)
 ];
 distance	= array_create(array_length(area));
+
+
+//show(dirfind(area));
+collisions	= ds_list_create();
+touching	= false;
+
+gridPos 	= new Vector2(x div GRID_W, y div GRID_H);
+#endregion----------------------------------------------------------------------
+
+#region Functions --------------------------------------------------------------
+// Distance and area functions
+/// @func findDistance(pos, area))
 findDistance	= function(_pos, _area)
 {
 	var _x, _y, index = 0, len = 1, value;
@@ -141,6 +115,7 @@ findDistance	= function(_pos, _area)
 }
 findDistance(gridPos, area);
 
+/// @func addArea(area, value))
 addArea			= function(_area, _value)
 {
 	var i = 0; repeat(array_length(_value))
@@ -169,7 +144,7 @@ snapPosition	= function()
 		y = _yspc < GRID_H / 2 ? y - _yspc : y + _yspc;
 	}
 }
-
+// Collision functions
 gridList		= function(_dist, _object, _pos = undefined, _arr = undefined)
 {
 	static gm		= 1;
@@ -260,7 +235,49 @@ tileCollision		= function(_gx, _gy, _tile)
 	return tile_meeting(_gx * GRID_W, _gy * GRID_H, _tile);
 }
 
-#endregion //-------------------------------------------------------------------
+dirfind 		= function(_area)
+{
+	var r = [], u = [], l = [], d = [];
+	var resize = array_create(4, 0);
+	var i = 0; repeat(array_length(_area))
+	{
+		var _x = _area[i][0];
+		var _y = _area[i][1];
+		if (_x >= 0 && _y == 0)
+		{
+			resize[0]++;
+			array_resize(r, resize[0]);
+			r[resize[0] - 1] = _x;
+		}
+		else if (_x = 0 && _y <= 0)
+		{
+			resize[1]++;
+			array_resize(u, resize[1]);
+			u[resize[1] - 1] = _y;
+		}	
+		else if (_x <= 0 && _y == 0)
+		{
+			resize[2]++;
+			array_resize(l, resize[2]);
+			l[resize[2] - 1] = _x;
+		}
+		else if (_x == 0 && _y >= 0)
+		{
+			resize[3]++;
+			array_resize(d, resize[3]);
+			d[resize[3] - 1] = _y;
+		}
+		i++;
+	}
+	return [r, u, l, d];
+}
+
+// Array sorting functions
+typeSort	= function(_a, _b)
+{
+	return _a.type - _b.type;
+}
+#endregion----------------------------------------------------------------------
 
 #region State ------------------------------------------------------------------
 state = new SnowState("idle");
@@ -329,12 +346,32 @@ state.add("move", {
 		moveTween.start(0, 1, moveDur);
 		moveTimer.start(moveDur);
 		attackDelay.start(moveDur*4/5);
-		alarm[0] = moveDur*4/5;			// 10
+		DoLater(moveDur*4/5, function(data)
+		{
+			var _item = gridPlace(gridPos.x + moveDir.x, gridPos.y + moveDir.y, objItemParent);
+			if (instance_exists(_item)) 
+			{
+				_item.pick();
+				attackDelay.stop();
+				moveTween.stop();
+				state.change("attack");
+			}
+			var _inst = gridPlace(gridPos.x + moveDir.x, gridPos.y + moveDir.y, objEnemyParent);
+			if (instance_exists(_inst)) 
+			{
+				_inst.getDamage(1);
+				attackDelay.stop();
+				moveTween.stop();
+				state.change("attack");
+			}
+		}, { nextState: "attack"}, true);
+		
+		//alarm[0] = moveDur*4/5;			// 10
 	},
 	step: function() 
 	{
-		x = flerp(x, lastPos.x + lengthdir_x(GRID_W, moveDir.get_direction()), moveTween.value);
-		y = flerp(y, lastPos.y + lengthdir_y(GRID_H, moveDir.get_direction()), moveTween.value);
+		x = flerp(x, lastPos.x + lengthdir_x(GRID_W, moveDir.angle(false)), moveTween.value);
+		y = flerp(y, lastPos.y + lengthdir_y(GRID_H, moveDir.angle(false)), moveTween.value);
 
 		if (moveTween.done)
 		{
@@ -355,7 +392,6 @@ state.add("attack", {
 		attackTimer.start(attackDur);
 		moveDur = moveDurMax;
 		if (instance_exists(colliding)) colliding.fadeOut = true;
-		screen_shake(4, 1, 20);
 	},
 	step: function()
 	{

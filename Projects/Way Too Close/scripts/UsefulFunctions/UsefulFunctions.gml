@@ -89,6 +89,18 @@ function array_safe(_array, _value)
 	return true;
 }
 
+function ds_list_safe(_list, _value)
+{
+	foreach_list(_list as (val, index)
+	{
+		if (val == _value)
+		{
+			return false;
+		}
+	});
+	return true;
+}
+
 /// @description draw a sprite using four- or nine-slicing
 /// @arg sprite
 /// @arg subimg

@@ -13,3 +13,5 @@ if (useSound != noone)
 }
 if (showDist)	visible = true;
 else			visible = false;
+
+alarm[0] = 60;

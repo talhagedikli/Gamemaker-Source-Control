@@ -57,6 +57,7 @@ enum camStates
 }
 
 // Methods
+/// @func applyScreenShake()
 applyScreenShake = function () 
 {
 	if (shake)
@@ -91,6 +92,18 @@ updateCameraSize = function (_w, _h)
 {
 	camW = flerp(camW, _w, zoomSpd);
 	camH = flerp(camH, _h, zoomSpd);
+}
+
+/// @function getSize()
+getSize = function()
+{
+	return new Vector2(CAM_W, CAM_H);
+}
+
+/// @function getPosition()
+getPosition = function()
+{
+	return new Vector2(CAM_X, CAM_Y);
 }
 
 state = new SnowState("cell");

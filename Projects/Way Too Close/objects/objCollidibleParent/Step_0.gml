@@ -1,5 +1,7 @@
-gridPos.x   = x div GRID_W;
-gridPos.y   = y div GRID_H;
+if (gridPos.x != x div GRID_W || gridPos.y != y div GRID_H)
+{
+	gridPos.set(x div GRID_W, y div GRID_H);
+}
 
 if (fadeOut)
 {

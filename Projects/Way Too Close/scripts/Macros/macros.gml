@@ -39,6 +39,7 @@
 
 #macro log				show_debug_message
 #macro show		 		show_message
+#macro here				show("here")
 
 #macro ignore			if (true) { } else
 #macro defer			for (;; {
