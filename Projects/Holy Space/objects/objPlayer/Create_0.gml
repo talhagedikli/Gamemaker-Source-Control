@@ -4,11 +4,15 @@ audio_listener_set_position(0, x, y, 0);
 audio_listener_set_orientation(0, 0, 1, 0, 0, 0, 1);
 animation_init();
 //speed variables
-xSpeed		= 0;
-ySpeed		= 0;
-lastPos 	= new Vector2();
 shipAngle	= 0;
-motion		= new Vector2(0, 0);
+shipDir		= 0;
+motion		= 0;
+maxSpd		= 3;
+minSpd		= 1;
+accel		= 0.12;
+decel		= 0.05;
+angleAccel	= 0.2;
+angleDecel	= 0.1;
 
 // Inventory
 hpMax		= 5;
@@ -32,6 +36,15 @@ enum DIR
 collisions	= ds_list_create();
 touching	= false;
 
+// Particles
+ptExhaust = part_type_create();
+part_type_shape(ptExhaust, pt_shape_pixel);
+part_type_life(ptExhaust, 30, 40);
+part_type_scale(ptExhaust, 1.5, 1.5);
+part_type_alpha3(ptExhaust, 0.7, 1, 0);
+part_type_gravity(ptExhaust, 0.05, shipAngle - 180);	// Dynamic
+
+
 #endregion----------------------------------------------------------------------
 
 #region Functions --------------------------------------------------------------
@@ -42,6 +55,43 @@ typeSort	= function(_a, _b)
 {
 	return _a.type - _b.type;
 }
+
+/// @func updateShipDir()
+updateShipDir = function()
+{
+	if (InputManager.keyRight)
+	{
+		shipDir = flerp(shipDir, -maxSpd, angleAccel);
+	}
+	else if (InputManager.keyLeft)
+	{
+		shipDir = flerp(shipDir, maxSpd, angleAccel);
+	}
+	else
+	{
+		shipDir = flerp(shipDir, 0, angleDecel);
+	}	
+}
+
+/// @func updateShipSpeed()
+updateShipSpeed = function()
+{
+	if (InputManager.keyUp)
+	{
+		motion = approach(motion, maxSpd, accel);
+		part_type_gravity(ptExhaust, 0.05, shipAngle - 180);
+	}
+	else if (InputManager.keyDown)
+	{
+		motion = approach(motion, -minSpd, accel);
+	}
+	else
+	{
+		motion = approach(motion, 0, decel);
+		part_type_gravity(ptExhaust, 0.05, shipAngle - 180);
+	}
+}
+
 #endregion----------------------------------------------------------------------
 
 #region State ------------------------------------------------------------------
@@ -58,21 +108,20 @@ state.event_set_default_function("init", function()
 state.add("idle", {
 	enter: function() 
 	{
-		// test
-		shipDir.set(5, 0);
+		DoLater(10, function(data)
+		{
+			part_particles_create(global.partSystem, x, y, ptExhaust, 1);
+		}, noone, false);
 	},
 	step: function()
 	{
-		if (InputManager.keyRight)
-		{
-			shipAngle -= 1;
-		}
-		else if (InputManager.keyLeft)
-		{
-			shipAngle += 1;
-		}
-		x += lengthdir_x(motion.length(), shipAngle);
-		y += lengthdir_y(motion.length(), shipAngle);
+		updateShipDir();
+		updateShipSpeed();
+		shipAngle += shipDir;
+		image_angle = shipAngle;
+		direction = image_angle;
+		x += lengthdir_x(motion, shipAngle);
+		y += lengthdir_y(motion, shipAngle);
 	}
 });
 

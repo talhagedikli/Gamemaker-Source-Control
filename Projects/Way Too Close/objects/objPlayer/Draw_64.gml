@@ -37,7 +37,6 @@ if (invBgAlpha > 0)
 		draw_text_color(x1, y1, item.count, wc, wc, wc, wc, invBgAlpha);
 	}
 }
-
 // Draw wepons
 //var scale	= 2, margin	= 0;
 

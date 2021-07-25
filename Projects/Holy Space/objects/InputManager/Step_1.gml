@@ -9,7 +9,7 @@ if (active)
 	keyRight			= keyboard_check(vk_right);
 	keyLeft				= keyboard_check(vk_left);
 	keyDown				= keyboard_check(vk_down);
-	keyUp				= keyboard_check(vk_down);
+	keyUp				= keyboard_check(vk_up);
 
 	keySpace			= SPACE;
 	keyAlt				= ALT;

@@ -3,21 +3,20 @@
 /// @function foreach(array as (element, [index])
 function foreach(array, func) { 
     var size = array_length(array);
-    
-	with (other)
-    {
-		for (var i = 0; i < size; i++) {       
-	        var element = array[i];
-			func(element, i);
-		}
+	for (var i = 0; i < size; i++) 
+	{
+	    var element = array[i];
+		func(element, i);
 	}
 }
 
 /// @function foreach_list(list as (element, [index])
-function foreach_list(list, func) {
+function foreach_list(list, func) 
+{
     var size = ds_list_size(list);
     
-    for (var i = 0; i < size; i++) {
+    for (var i = 0; i < size; i++) 
+	{
         var element = list[| i];
         func(element, i);
     }

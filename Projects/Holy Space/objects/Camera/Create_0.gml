@@ -35,8 +35,8 @@ window_set_size(viewWidth*windowScale, viewHeight*windowScale);
 alarm[0] = 1;
 
 //re-set surface and gui 
-surface_resize(application_surface, viewWidth*windowScale, viewHeight*windowScale);
-display_set_gui_size(viewWidth*windowScale, viewHeight*windowScale);
+surface_resize(application_surface, viewWidth * windowScale, viewHeight * windowScale);
+display_set_gui_size(viewWidth* windowScale, viewHeight* windowScale);
 
 viewSurf	= -1;
 smooth		= false;
@@ -57,6 +57,7 @@ enum camStates
 }
 
 // Methods
+/// @func applyScreenShake()
 applyScreenShake = function () 
 {
 	if (shake)
@@ -87,13 +88,14 @@ applyScreenShake = function ()
 	
 }
 
+/// @func updateCameraSize()
 updateCameraSize = function (_w, _h) 
 {
 	camW = flerp(camW, _w, zoomSpd);
 	camH = flerp(camH, _h, zoomSpd);
 }
 
-state = new SnowState("cell");
+state = new SnowState("normal");
 
 state.history_enable(true);
 state.set_history_max_size(5);
@@ -111,8 +113,8 @@ state.add("normal", {
 			xTo = round(following.x) - (camW / 2);
 			yTo = round(following.y) - (camH / 2);
 			//camX = abs(difX) < EPSILON ? targetX : lerp(camX, targetX, followSpd);
-			camX = flerp(camX, xTo, followSpd, 0.000001);
-			camY = flerp(camY, yTo, followSpd, 0.000001);
+			camX = flerp(camX, xTo, followSpd);
+			camY = flerp(camY, yTo, followSpd);
 			//camY = abs(difY) < EPSILON ? targetY : lerp(camY, targetY, followSpd);
 			applyScreenShake();
 		}		

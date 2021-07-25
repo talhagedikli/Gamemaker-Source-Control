@@ -75,11 +75,6 @@ backgroundState.add(room_get_name(rTitle), {
 });
 
 
-backgroundState.add(room_get_name(rTitle), {
-	
-	
-});
-
 
 
 
