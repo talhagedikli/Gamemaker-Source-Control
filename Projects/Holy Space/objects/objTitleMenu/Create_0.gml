@@ -8,6 +8,9 @@ enum menus {
 	length
 }
 
+element		= SCRIBBLE_NULL_ELEMENT;
+alphaTimer	= new Timer();
+alphaTimer.start(180, true);
 
 menu = [
 	["START", "SETTINGS", "QUIT"],		// Main

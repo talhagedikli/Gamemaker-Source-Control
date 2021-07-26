@@ -9,8 +9,8 @@ else
 	
 state.step();
 	
-camX = clamp(camX, 0, room_width - camW);
-camY = clamp(camY, 0, room_height - camH);
+camX = clamp(camX, -shake_magnitude, room_width - camW + shake_magnitude);
+camY = clamp(camY, -shake_magnitude, room_height - camH + shake_magnitude);
 camera_set_view_size(VIEW, camW, camH);
 
 if keyboard_check_pressed(ord("S")) 

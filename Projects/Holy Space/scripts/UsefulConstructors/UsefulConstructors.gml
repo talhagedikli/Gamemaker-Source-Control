@@ -42,20 +42,22 @@ function GuiBar(_rate = 1) constructor
 
 function Timer() constructor
 { // For basic timer
-	time = 0;
-	done = false;
-	active = false;
-	sTime = undefined;
-	duration = 0;
+	time		= 0;
+	done		= false;
+	active		= false;
+	duration	= 0;
+	loop		= false;
+	/// @func start(duration, [loop]))
 	static start = function(_duration = infinity, _loop = false)
 	{
-		duration = _duration;
+		duration	= _duration;
+		loop		= _loop;
 		if (done == true) done = false;
 		if (active == false) active = true;
 		return self;
 	}
-	
-	static onTimeout = function(_func)
+	/// @func on_timeout(func))
+	static on_timeout = function(_func)
 	{
 		if (done)
 		{
@@ -63,15 +65,16 @@ function Timer() constructor
 		}
 		return self;
 	};
+	/// @func reset())
 	static reset = function()
 	{
 		time = 0;
-		sTime = undefined;
 		done = false;
 		active = true;
 		return self;
 
 	};
+	/// @func stop())
 	static stop = function()
 	{
 		time = 0;
@@ -85,13 +88,17 @@ function Timer() constructor
 	{
 		if (active)
 		{
-			time++;
 			if (time >= duration)
 			{
 				done = true;
+				if (loop)	reset();
+				//else		stop();
+			}
+			else
+			{
+				time ++;
 			}
 		}
-		
 	});
 }
 
@@ -180,7 +187,7 @@ function Vector2(_x = undefined, _y = undefined) constructor
 	/// @desc Returns the length (magnitude) of this vector.
 	static length = function()
 	{
-	    return sqrt(x * x + y * y);
+	    return point_distance(0, 0, x, y);
 	}
 
 	/// @func length_squared()

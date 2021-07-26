@@ -35,12 +35,9 @@ function zoom_out() {
 	global.zoom = false;
 }
 
-/// @function                   screenshake(_time, _magnitude, _fade);
-/// @param  {real}  _time       The length of time - in steps - to shake the screen
-/// @param  {real}  _magnitude  The amount of screenshake to apply
-/// @param  {real}  _fade       How quickly the screenshake effect will fade out
-/// @description    Set the screenshake object variables.
-function screen_shake(_time, _magnitude, _fade) {
+
+function screen_shake(_time, _magnitude, _fade) 
+{
 	with (Camera) {
 	    shake = true;
 	    shake_time = _time;

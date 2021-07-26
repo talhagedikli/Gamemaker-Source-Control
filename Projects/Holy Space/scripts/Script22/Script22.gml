@@ -1,38 +1,48 @@
-function Block() constructor
+function Wepon(func) constructor
 {
-    gridPos = new Vector2(x div GRID_W, y div GRID_H);
-    
-    static update = function()
-    {
-        gridPos.x = x div GRID_W;
-        gridPos.y = y div GRID_H;
-    }
+	name	= ""; 
+	sprite	= noone;
+	info	= "";
 }
-function Grid(_x, _y, _color = c_white, _alpha = 1, _xScale = 1, _yScale = 1) constructor
+
+function Single() : Wepon() constructor
 {
-    x       = _x;
-    y       = _y;
-    color   = _color;
-    alpha   = _alpha;
-	xScale	= _xScale;
-	yScale	= _yScale;
-	
-	set = function(_x, _y)
+	name	= "Single";
+	sprite	= sprBullet;
+	info	= "";
+	static use = function()
 	{
-		x = _x;
-		y = _y;
-	}
-	
-	blend = function(_color, _alpha)
-	{
-		color = _color;
-		alpha = _alpha;
-	}
-	
-	scale = function(_xScale, _yScale)
-	{
-		xScale	= _xScale;
-		yScale	= _yScale;
+		with (objPlayer)
+		{
+			var b = instance_create_layer(x, y, layer, objBullet);
+			b.direction		= image_angle;
+			b.image_angle	= image_angle;
+			b.speed			= maxSpd + motion;
+		}
 	}
 }
 
+function Triple() : Wepon() constructor
+{
+	name	= "Triple";
+	sprite	= sprBullet;
+	info	= "";
+	static use = function()
+	{
+		with (objPlayer)
+		{
+			var b1 = instance_create_layer(x, y, layer, objBullet);
+			var b2 = instance_create_layer(x, y, layer, objBullet);
+			var b3 = instance_create_layer(x, y, layer, objBullet);
+			b1.direction		= image_angle;
+			b1.image_angle		= image_angle;
+			b1.speed			= maxSpd  + motion;	
+			b2.direction		= image_angle + 30;
+			b2.image_angle		= image_angle + 30;
+			b2.speed			= maxSpd  + motion;	
+			b3.direction		= image_angle - 30;
+			b3.image_angle		= image_angle - 30;
+			b3.speed			= maxSpd + motion;
+		}
+	}
+}

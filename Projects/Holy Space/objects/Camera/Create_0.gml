@@ -1,7 +1,7 @@
 //width and height 480*270
-viewWidth		=	1920/3;
-viewHeight		=	1080/3;
-windowScale		=	2;
+viewWidth		=	1920/2;
+viewHeight		=	1080/2;
+windowScale		=	1;
 
 following		= instance_exists(objPlayer) ? objPlayer : noone;
 
@@ -164,9 +164,6 @@ state.add("zoom", {
 			//if zoomed in, make camera smaller
 			newW = defaultW / 2;
 			newH = defaultH / 2;
-			//camW = flerp(camW, newW, zoomSpd);
-			//camH = flerp(camH, newH, zoomSpd);
-			//go to who you are focused to
 			camX = flerp(camX, targetX, followSpd);
 			camY = flerp(camY, targetY, followSpd);
 		}		

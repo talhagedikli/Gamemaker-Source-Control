@@ -60,7 +60,6 @@
       show_debug_message(print_value); \
       break;                           \
     }) print_value =
-
 //#macro BUILTIN_SHOW_DEBUG_MESSAGE show_debug_message
 //#macro show_debug_message overrides_show_debug_message
 
