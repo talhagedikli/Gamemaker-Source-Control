@@ -1,1 +1,0 @@
-//if game ends or restarts, set them off

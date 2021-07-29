@@ -1,12 +1,17 @@
 /// @description 
 var vmove		= InputManager.keyDownPressed - InputManager.keyUpPressed;
-var keyaccept	= InputManager.keySpacePressed;
+var keyaccept	= keyboard_check_pressed(vk_space);
 var menul		= array_length(menu[menuLevel])
 
-if (abs(InputManager.verticalInput)) alphaTimer.reset();
+if (abs(InputManager.verticalInput) or keyaccept) alphaTimer.reset();
 pos	+= vmove;
 if (pos >= menul) { pos = 0 };
 if (pos < 0) { pos = menul - 1 };
+
+alphaTimer.on_timeout(function()
+{
+	alphaTimer.reset();
+});
 
 if (menuLevel == menus.main) {
 	if (pos == 0 && keyaccept) {

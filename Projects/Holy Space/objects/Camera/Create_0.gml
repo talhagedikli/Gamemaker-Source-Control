@@ -17,8 +17,8 @@ defaultH = viewHeight;
 camW = defaultW;
 camH = defaultH;
 
-camX = camera_get_view_x(VIEW);
-camY = camera_get_view_y(VIEW);
+camX = 0;
+camY = 0;
 
 //to switch target
 newW = 0;
@@ -38,10 +38,7 @@ alarm[0] = 1;
 surface_resize(application_surface, viewWidth * windowScale, viewHeight * windowScale);
 display_set_gui_size(viewWidth* windowScale, viewHeight* windowScale);
 
-viewSurf	= -1;
-smooth		= false;
 
-application_surface_enable(!smooth);
 //shake
 shake			= false;
 shake_time		= 0;
@@ -113,8 +110,10 @@ state.add("normal", {
 			xTo = round(following.x) - (camW / 2);
 			yTo = round(following.y) - (camH / 2);
 			//camX = abs(difX) < EPSILON ? targetX : lerp(camX, targetX, followSpd);
-			camX = flerp(camX, xTo, followSpd);
-			camY = flerp(camY, yTo, followSpd);
+			camX = 0;
+			camY = 0;
+			//camX = flerp(camX, xTo, followSpd);
+			//camY = flerp(camY, yTo, followSpd);
 			//camY = abs(difY) < EPSILON ? targetY : lerp(camY, targetY, followSpd);
 			applyScreenShake();
 		}		

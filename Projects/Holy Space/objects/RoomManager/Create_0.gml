@@ -1,10 +1,6 @@
 /// @description 
 switched = false;
 currentRoom = rTitle;
-
-#macro GRID_W 8
-#macro GRID_H 8
-
 checkRoom = function()
 {
 	if (currentRoom != room) {
@@ -13,6 +9,18 @@ checkRoom = function()
 	}
 	return false;
 };
+
+infoText = [
+	"Press Q to cycle wepons",
+	"Press Z to shoot",
+	"Press X to dash"
+];
+info		= noone;
+infoTimer	= new Timer();
+infoIndex	= 0;
+infoAlpha	= new Timer();
+
+obstacleTimer	= new Timer();
 
 
 state = new SnowState(room_get_name(rTitle));
@@ -26,6 +34,7 @@ state
 	},
 	step: function()
 	{
+		
 	},
 	leave: function() 
 	{
@@ -35,10 +44,16 @@ state
 	.add(room_get_name(rWorld), {	// ----------WORLD
 	enter: function() 
 	{
+		obstacleTimer.start(120);
 	},
 	step: function()
 	{
-	
+		obstacleTimer.on_timeout(function()
+		{
+			var obs = instance_create_layer(room_width, random_range(0, room_height), "Enemies", objObstacle);
+			obs.speed *= global.difficulty;
+			obstacleTimer.reset(120 / global.difficulty);
+		});
 
 	},
 	leave: function() 

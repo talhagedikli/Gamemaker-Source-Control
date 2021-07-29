@@ -170,17 +170,17 @@ function __CleanClassTriangle(_x1, _y1, _x2, _y2, _x3, _y3) constructor
         var _border_r1 = colour_get_red(  _border_c1)/255;
         var _border_g1 = colour_get_green(_border_c1)/255;
         var _border_b1 = colour_get_blue( _border_c1)/255;
-        var _border_a1 = _border_a1;
+        //var _border_a1 = _border_a1;
         
         var _border_r2 = colour_get_red(  _border_c2)/255;
         var _border_g2 = colour_get_green(_border_c2)/255;
         var _border_b2 = colour_get_blue( _border_c2)/255;
-        var _border_a2 = _border_a2;
+        //var _border_a2 = _border_a2;
         
         var _border_r3 = colour_get_red(  _border_c3)/255;
         var _border_g3 = colour_get_green(_border_c3)/255;
         var _border_b3 = colour_get_blue( _border_c3)/255;
-        var _border_a3 = _border_a3;
+        //var _border_a3 = _border_a3;
         
         var _border_rc = 0.3333*(_border_r1 + _border_r2 + _border_r3);
         var _border_gc = 0.3333*(_border_g1 + _border_g2 + _border_g3);
@@ -232,24 +232,24 @@ function __CleanClassTriangle(_x1, _y1, _x2, _y2, _x3, _y3) constructor
         var _nx12 = _x2 - _x1;
         var _ny12 = _y2 - _y1;
         var _n    = 1/sqrt(_nx12*_nx12 + _ny12*_ny12);
-        var _tmp  =  _nx12;
-            _nx12 = -_ny12*_n;
+        var _tmp  =  _nx12,
+            _nx12 = -_ny12*_n,
             _ny12 =  _tmp*_n;
         var _ds12 = dot_product(_x2, _y2, _nx12, _ny12);
         
         var _nx23 = _x3 - _x2;
         var _ny23 = _y3 - _y2;
         var _n    = 1/sqrt(_nx23*_nx23 + _ny23*_ny23);
-        var _tmp  =  _nx23;
-            _nx23 = -_ny23*_n;
+        var _tmp  =  _nx23,
+            _nx23 = -_ny23*_n,
             _ny23 =  _tmp*_n;
         var _ds23 = dot_product(_x3, _y3, _nx23, _ny23);
         
         var _nx31 = _x1 - _x3;
         var _ny31 = _y1 - _y3;
         var _n    = 1/sqrt(_nx31*_nx31 + _ny31*_ny31);
-        var _tmp  =  _nx31;
-            _nx31 = -_ny31*_n;
+        var _tmp  =  _nx31,
+            _nx31 = -_ny31*_n,
            _ny31 =  _tmp*_n;
         var _ds31 = dot_product(_x1, _y1, _nx31, _ny31);
         

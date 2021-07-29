@@ -2,7 +2,6 @@
 // Init
 audio_listener_set_position(0, x, y, 0);
 audio_listener_set_orientation(0, 0, 1, 0, 0, 0, 1);
-animation_init();
 //speed variables
 shipAngle		= 0;
 shipDir			= 0;
@@ -15,7 +14,7 @@ angleAccel		= 0.2;
 angleDecel		= 0.07;
 shootTimer		= new Timer();
 shootDelay		= 10;
-
+fadeOut			= false;
 // Inventory
 hpMax			= 5;
 hp				= hpMax;
@@ -23,6 +22,7 @@ showInv			= false;
 
 // Attack 
 colliding		= noone;
+weponElement	= SCRIBBLE_NULL_ELEMENT;
 
 // Area and distance
 enum DIR 
@@ -39,24 +39,14 @@ exhaustTimer	= new Timer();
 ghostTimer		= new Timer();
 wepons			= [];
 weponIndex		= 0;
-// Particles
-//ptExhaust = part_type_create();
-//part_type_shape(ptExhaust, pt_shape_pixel);
-//part_type_life(ptExhaust, 30, 40);
-//part_type_scale(ptExhaust, 1.5, 1.5);
-//part_type_alpha3(ptExhaust, 0.7, 1, 0);
-//part_type_gravity(ptExhaust, 0.05, shipAngle - 180);	// Dynamic
+shooting		= false;
+
 
 
 #endregion----------------------------------------------------------------------
 
 #region Functions --------------------------------------------------------------
 // Distance and area functions
-// Wepon constructor
-
-
-	
-
 // Array sorting functions
 typeSort	= function(_a, _b)
 {
@@ -99,48 +89,21 @@ updateShipSpeed = function()
 	}
 }
 
-/// @func shoot()
-shoot = function()
-{
-	var b = instance_create_layer(x, y, layer, objBullet);
-	b.direction		= image_angle;
-	b.image_angle	= image_angle;
-	b.speed			= maxSpd + motion;
-}
-/// @func tripleShot()
-tripleShot = function()
-{
-	var b1 = instance_create_layer(x, y, layer, objBullet);
-	var b2 = instance_create_layer(x, y, layer, objBullet);
-	var b3 = instance_create_layer(x, y, layer, objBullet);
-	b1.direction		= image_angle;
-	b1.image_angle		= image_angle;
-	b1.speed			= maxSpd  + motion;	
-	b2.direction		= image_angle + 30;
-	b2.image_angle		= image_angle + 30;
-	b2.speed			= maxSpd  + motion;	
-	b3.direction		= image_angle - 30;
-	b3.image_angle		= image_angle - 30;
-	b3.speed			= maxSpd + motion;
-}
 
 array_push(wepons, new Single());
 array_push(wepons, new Triple());
+array_push(wepons, new Sphere());
+array_push(wepons, new Tornado());
 wepon			= wepons[weponIndex];
 
 
 #endregion----------------------------------------------------------------------
 
 #region State ------------------------------------------------------------------
-state = new SnowState("move");
+state = new SnowState("move", function() { log("init"); });
 
 state.history_enable();
 state.set_history_max_size(15);
-state.event_set_default_function("init", function() 
-{
-		x = clamp(x, 0, room_width);
-		y = clamp(y, 0, room_height);
-});
 
 state.add("move", {
 	enter: function() 
@@ -152,16 +115,19 @@ state.add("move", {
 		updateShipDir();
 		updateShipSpeed();
 		motion = clamp(motion, - maxSpd, maxSpd);
-
 		exhaustTimer.on_timeout(function()
 		{
-			part_particles_create_color(global.partSystem, x, y, global.ptExhaust, c_blue_hosta, 1);
+			if (abs(InputManager.keyUp))
+			{
+				part_particles_create_color(global.partSystem, x, y, global.ptExhaust, c_fuchsia, 1);
+			}
 			exhaustTimer.reset();
 		});
 		// Shooting
 		if (InputManager.keyShootPressed)
 		{
-			shootTimer.start(shootDelay);
+			shootTimer.start(wepon.delay);
+			shooting = true;
 			wepon.use();
 		}
 		else if (InputManager.keyShoot)
@@ -175,11 +141,14 @@ state.add("move", {
 		else
 		{
 			shootTimer.stop();
+			shooting = false;
 		}
+		// Cycle wepons
 		if (InputManager.keySwitchPressed)
 		{
 			weponIndex++;
 			weponIndex = weponIndex mod array_length(wepons);
+			weponElement.typewriter_reset();
 		}
 		wepon = wepons[weponIndex];
 		// Dash state
@@ -187,6 +156,7 @@ state.add("move", {
 		{
 			exhaustTimer.stop();
 		});
+
 		shipAngle	+= shipDir;
 		image_angle = floor(shipAngle);
 		x += lengthdir_x(motion, shipAngle);
@@ -225,13 +195,20 @@ state.add("dash", {
 	}
 });
 
-state.add("shoot", {
+state.add("death", {
 	enter: function() 
 	{
+		
 	},
 	step: function() 
 	{
-		// Code here
+		motion			= 0;
+		image_angle		= image_angle;
+		image_alpha -= 0.01;
+		if (image_alpha <= 0)
+		{
+			instance_destroy();
+		}
 	},
 	leave: function()
 	{
@@ -243,11 +220,4 @@ state.add("shoot", {
 #endregion //-------------------------------------------------------------------
 
 Camera.following = self;
-
-global.clock.variable_interpolate("x", "iotaX");
-global.clock.variable_interpolate("y", "iotaY");
-
-global.clock.add_cycle_method(function() {
-	
-});
 

@@ -1,4 +1,0 @@
-/// @description 
-global.clock.tick();
-
-

@@ -1,18 +1,31 @@
 /// @description Insert description here
 // You can write your code in this editor
-//var gw = GUI_W, gh = GUI_H;
-//draw_set_halign(fa_left);
-//draw_set_valign(fa_top);
-//draw_set_font(fntText);
-//var strTime = string(current_hour) + " : " + string(current_minute);
-//var len = string_length("00 : 00");
-//draw_text(gw - len * 8, 0, strTime);
+var strTime = (current_hour < 10 ? "0" : "") + string(current_hour) + " : " + 
+				(current_minute < 10 ? "0" : "") + string(current_minute);
+var padd = 2;
+
+// Draw clock
+//display_set_gui_size(DIS_W, DIS_H);
 var gw = GUI_W, gh = GUI_H;
-if (state == "end")
+var te = scribble(strTime)
+.starting_format("fntText", c_white)
+.transform(1, 1, 0)
+.align(fa_right, fa_top);
+var ts = te.get_bbox();
+CleanRectangle(gw - ts.width - 3 * padd, 0 + padd, gw - padd, ts.height + padd)
+.Blend(c_dkgray, 0.7)
+.Border(2, c_dkgray, 0.9)
+.Rounding(3)
+.Draw();
+
+te.draw(gw - 2 * padd, 0 + padd);
+//display_set_gui_size(Camera.viewWidth, Camera.viewHeight);
+
+
+if (state.get_current_state() == "end")
 {
-	//Get the text element for our current line of text
-	//Note that we're setting "textbox_element" here
-	element = scribble("PRESS R TO RESTART")
+	var gw = GUI_W, gh = GUI_H;
+	restartElement = scribble("PRESS R TO RESTART")
 	.starting_format("fntText", c_white)
 	.transform(3, 3, 0)
 	.typewriter_in(0.5, 0, 60)
@@ -20,5 +33,5 @@ if (state == "end")
 	.align(fa_center, fa_center);
 
 	//Draw main text body
-	element.draw(gw/2, gh/2);	
+	restartElement.draw(gw/2, gh/2);	
 }

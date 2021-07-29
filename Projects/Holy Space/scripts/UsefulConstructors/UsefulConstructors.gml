@@ -1,59 +1,35 @@
 /// @description quick and dynamic guibar setup
-function GuiBar(_rate = 1) constructor
-{ // Makes a bar
-	smtRate = _rate;
-	static update = function(rate = 1, lrp = true, lrpRate = 0.1)
-	{
-		if (is_real(rate)) smtRate = lrp ? flerp(smtRate, rate, lrpRate) : rate;
-		return self;
-	}
-	static draw = function(x1, y1, width, height, type = "vertical", color = c_white, alpha = 1, rounded = false, bottomline = false)
-	{
-		draw_set_alpha(alpha);
-		draw_set_color(color);
-		if (type == "vertical")
-		{ // 0 = vertical
-			if (rounded)
-			{
-				draw_roundrect(x1, y1, x1 + width, y1 + height * smtRate + (bottomline ? sign(height) : 0), false);
-			}
-			else
-			{
-				draw_rectangle(x1, y1, x1 + width, y1 + height * smtRate + (bottomline ? sign(height) : 0), false);
-			}
-		}
-		else if (type == "horizontal")
-		{ // 1 = horizontal
-			if (rounded)
-			{
-				draw_roundrect(x1, y1, x1 + width * smtRate + (bottomline ? sign(width) : 0), y1 + height, false);
-			}
-			else
-			{
-				draw_rectangle(x1, y1, x1 + width * smtRate + (bottomline ? sign(width) : 0), y1 + height, false);
-			}
-		}
-		draw_set_alpha(1);
-		draw_set_color(c_white);
-		return self;
-	}
-	
-}
-
 function Timer() constructor
 { // For basic timer
 	time		= 0;
+	timeLeft	= 0;
 	done		= false;
 	active		= false;
 	duration	= 0;
 	loop		= false;
-	/// @func start(duration, [loop]))
-	static start = function(_duration = infinity, _loop = false)
+	tickSize	= 1;
+	/// @func start(duration, [tickSize], [loop]))
+	static start = function(_duration = infinity, _tickSize = 1, _loop = false)
 	{
 		duration	= _duration;
 		loop		= _loop;
-		if (done == true) done = false;
-		if (active == false) active = true;
+		tickSize	= _tickSize;
+		timeLeft	= duration - time;
+		if (done == true)		done	= false;
+		if (active == false)	active	= true;
+		return self;
+	}
+	/// @func run()
+	run = function()
+	{
+		time		+= 1 / tickSize;
+		timeLeft	= duration - time;
+		return self;
+	}
+	/// @func set_duration(duration))
+	static set_duration = function(dur)
+	{
+		duration	= dur;
 		return self;
 	}
 	/// @func on_timeout(func))
@@ -64,25 +40,42 @@ function Timer() constructor
 			_func();
 		}
 		return self;
-	};
-	/// @func reset())
-	static reset = function()
+	}
+	/// @func reset([duration]))
+	static reset = function(_duration = duration)
 	{
-		time = 0;
-		done = false;
-		active = true;
+		time		= 0;
+		duration	= _duration;
+		done		= false;
+		active		= true;
 		return self;
 
-	};
+	}
 	/// @func stop())
 	static stop = function()
 	{
-		time = 0;
-		sTime = undefined;
-		active = false;
-		done = true;
+		time	= 0;
+		active	= false;
+		done	= true;
 		return self;
-	};
+	}
+	/// @func pause())
+	static pause = function()
+	{
+		active = false;
+		return self;
+	}
+	/// @func resume())
+	static resume = function()
+	{
+		active = true;
+		return self;
+	}
+	/// @func get_paused())
+	static get_paused = function()
+	{
+		return active;
+	}
 	
 	global.clock.add_cycle_method(function()
 	{
@@ -96,7 +89,7 @@ function Timer() constructor
 			}
 			else
 			{
-				time ++;
+				run();
 			}
 		}
 	});
@@ -429,7 +422,6 @@ function Vector2(_x = undefined, _y = undefined) constructor
 	
 }
 
-
 function Vector3(_x = undefined, _y = undefined, _z = undefined) constructor
 {
 	x = _x;
@@ -437,8 +429,6 @@ function Vector3(_x = undefined, _y = undefined, _z = undefined) constructor
 	z = _z;
 	return self;	
 }
-
-
 
 
 
