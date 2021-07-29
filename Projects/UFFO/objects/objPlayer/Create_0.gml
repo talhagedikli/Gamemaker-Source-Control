@@ -42,17 +42,14 @@ shooting		= false;
 
 
 
+
 #endregion----------------------------------------------------------------------
 
 #region Functions --------------------------------------------------------------
 // Distance and area functions
 // Array sorting functions
-typeSort	= function(_a, _b)
-{
-	return _a.type - _b.type;
-}
 
-/// @func updateShipDir()
+
 updateShipDir = function()
 {
 	if (InputManager.keyRight)
@@ -69,7 +66,6 @@ updateShipDir = function()
 	}	
 }
 
-/// @func updateShipSpeed()
 updateShipSpeed = function()
 {
 	if (InputManager.keyUp)
@@ -100,24 +96,25 @@ changed = true;
 #endregion----------------------------------------------------------------------
 
 #region State ------------------------------------------------------------------
-//state = new SnowState("move");
-
-//state.history_enable();
-//state.set_history_max_size(15);
-//state.event_set_default_function("init", function() 
-//{
-//		x = clamp(x, 0, room_width);
-//		y = clamp(y, 0, room_height);
-//});
-
-//state.add("move", {
-//	enter: function() 
+//xxx = new xState();
+//xxx.add("move", {
+//	enter: function()
 //	{
-//		exhaustTimer.start(10);
 //	},
 //	step: function()
 //	{
-//		updateShipDir();
+//		if (InputManager.keyRight)
+//		{
+//			shipDir = flerp(shipDir, -maxSpd, angleAccel);
+//		}
+//		else if (InputManager.keyLeft)
+//		{
+//			shipDir = flerp(shipDir, maxSpd, angleAccel);
+//		}
+//		else
+//		{
+//			shipDir = flerp(shipDir, 0, angleDecel);
+//		}	
 //		updateShipSpeed();
 //		motion = clamp(motion, - maxSpd, maxSpd);
 //		exhaustTimer.on_timeout(function()
@@ -128,38 +125,18 @@ changed = true;
 //			}
 //			exhaustTimer.reset();
 //		});
-//		// Shooting
-//		if (InputManager.keyShootPressed)
-//		{
-//			shootTimer.start(wepon.delay);
-//			shooting = true;
-//			wepon.use();
-//		}
-//		else if (InputManager.keyShoot)
-//		{
-//			shootTimer.on_timeout(function()
-//			{
-//				wepon.use();
-//				shootTimer.reset();
-//			});
-//		}
-//		else
-//		{
-//			shootTimer.stop();
-//			shooting = false;
-//		}
 //		// Cycle wepons
 //		if (InputManager.keySwitchPressed)
 //		{
-//			weponIndex++;
-//			weponIndex = weponIndex mod array_length(wepons);
-//			weponElement.typewriter_reset();
+//			//weponIndex++;
+//			xxx.change("aaa");
+//			//weponIndex = weponIndex mod array_length(wepons);
 //		}
-//		wepon = wepons[weponIndex];
 //		// Dash state
-//		if (InputManager.keyDash) state.change("dash", function()
+//		if (InputManager.keyDash) state_change("dash", function()
 //		{
 //			exhaustTimer.stop();
+//			xxx.change("dash");
 //		});
 
 //		shipAngle	+= shipDir;
@@ -167,15 +144,12 @@ changed = true;
 //		x += lengthdir_x(motion, shipAngle);
 //		y += lengthdir_y(motion, shipAngle);
 //	}
-	
 //});
-
-//state.add("dash", {
-//	enter: function() 
+//xxx.add("dash", {
+//	enter: function()
 //	{
-//		ghostTimer.start(5);
 //	},
-//	step: function() 
+//	step: function()
 //	{
 //		motion = approach(motion, maxSpd * 2, accel * 2);
 //		motion = clamp(motion, - maxSpd * 2, maxSpd * 2);
@@ -187,42 +161,15 @@ changed = true;
 //		});
 //		x += lengthdir_x(motion, shipAngle);
 //		y += lengthdir_y(motion, shipAngle);
-//		if (!InputManager.keyDash) state.change("move", function()
+//		if (!InputManager.keyDash) xxx.change("move", function()
 //		{
 //			ghostTimer.stop();
 //			shipDir = 0;
 //			motion	= maxSpd;
-//		});
-//	},
-//	leave: function()
-//	{
-//		// Code here
+//		});			
 //	}
 //});
-
-//state.add("death", {
-//	enter: function() 
-//	{
-		
-//	},
-//	step: function() 
-//	{
-//		motion			= 0;
-//		image_angle		= image_angle;
-//		image_alpha -= 0.01;
-//		if (image_alpha <= 0)
-//		{
-//			instance_destroy();
-//		}
-//	},
-//	leave: function()
-//	{
-//		// Code here
-//	}
-//});
-
-
+//xxx.init("move");
 #endregion //-------------------------------------------------------------------
-
 Camera.following = self;
 

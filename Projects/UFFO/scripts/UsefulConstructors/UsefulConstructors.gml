@@ -19,8 +19,7 @@ function Timer() constructor
 		if (active == false)	active	= true;
 		return self;
 	}
-	/// @func run()
-	run = function()
+	static run = function()
 	{
 		time		+= 1 / tickSize;
 		timeLeft	= duration - time;
@@ -88,7 +87,6 @@ function Vector2(_x = undefined, _y = undefined) constructor
 		x = _x;
 		y = _y;
 	}
-	/// @func add()
 	static add = function(_vector) 
 	{
 		x += _vector.x;
