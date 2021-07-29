@@ -121,7 +121,7 @@ changed = true;
 //		{
 //			if (abs(InputManager.keyUp))
 //			{
-//				part_particles_create_color(global.partSystem, x, y, global.ptExhaust, c_fuchsia, 1);
+//				part_particles_create_color(global.psEffects, x, y, global.ptExhaust, c_fuchsia, 1);
 //			}
 //			exhaustTimer.reset();
 //		});
@@ -156,7 +156,7 @@ changed = true;
 //		ghostTimer.on_timeout(function()
 //		{
 //			part_type_orientation(global.ptGhostDash, image_angle, image_angle, 0, 0, 1);
-//			part_particles_create(global.partSystem, x, y, global.ptGhostDash, 1);
+//			part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
 //			ghostTimer.reset();
 //		});
 //		x += lengthdir_x(motion, shipAngle);

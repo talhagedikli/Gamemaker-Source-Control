@@ -12,3 +12,6 @@ else if (room == rWorld) { // WORLD ROOM
 	}
 	
 }
+
+state		= rWorld;
+changed		= false;

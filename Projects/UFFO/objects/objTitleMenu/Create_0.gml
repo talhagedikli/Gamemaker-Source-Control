@@ -8,6 +8,7 @@ enum menus {
 	length
 }
 
+
 alphaTimer	= new Timer();
 alphaTimer.start(180, true);
 

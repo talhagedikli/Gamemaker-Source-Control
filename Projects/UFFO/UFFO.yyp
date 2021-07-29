@@ -1,6 +1,7 @@
 {
   "resources": [
     {"id":{"name":"BackgroundManager","path":"objects/BackgroundManager/BackgroundManager.yy",},"order":0,},
+    {"id":{"name":"xState","path":"scripts/xState/xState.yy",},"order":9,},
     {"id":{"name":"rTitle","path":"rooms/rTitle/rTitle.yy",},"order":1,},
     {"id":{"name":"RoomManager","path":"objects/RoomManager/RoomManager.yy",},"order":4,},
     {"id":{"name":"Init","path":"scripts/Init/Init.yy",},"order":5,},

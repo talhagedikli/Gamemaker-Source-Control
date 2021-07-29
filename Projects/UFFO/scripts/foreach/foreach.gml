@@ -3,18 +3,19 @@
 /// @function foreach(array as (element, [index])
 function foreach(array, func) { 
     var size = array_length(array);
-
-	var foo = func;
+	ttt = method(self, func);
 	for (var i = 0; i < size; i++) 
 	{       
 	    var element = array[i];
-		with other
-			script_execute_ext(method_get_index(method(other, func)), [element, i]);
+		with self
+		{
+			script_execute_ext(method_get_index(ttt), [element, i]);
+		}
 	}
 }
 //var arr = [0, 1, 2];
 //var m = 2;
-//foreach(arr as (val, ind)
+//foreach(arr as (ind, val) 
 //{
 //	show(val * m);
 //});

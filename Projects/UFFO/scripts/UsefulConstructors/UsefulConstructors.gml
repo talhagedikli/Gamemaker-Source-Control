@@ -21,8 +21,20 @@ function Timer() constructor
 	}
 	static run = function()
 	{
-		time		+= 1 / tickSize;
-		timeLeft	= duration - time;
+		if (active)
+		{
+			if (time >= duration)
+			{
+				done = true;
+				if (loop)	reset();
+				//else		stop();
+			}
+			else
+			{
+				time		+= 1 / tickSize;
+				timeLeft	= duration - time;
+			}
+		}
 		return self;
 	}
 	/// @func set_duration(duration))

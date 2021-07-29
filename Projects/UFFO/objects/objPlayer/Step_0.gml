@@ -8,14 +8,15 @@
  	updateShipDir();
  	updateShipSpeed();
  	motion = clamp(motion, - maxSpd, maxSpd);
- 	exhaustTimer.on_timeout(function()
+ 	if (abs(InputManager.keyUp))
  	{
- 		if (abs(InputManager.keyUp))
- 		{
- 			part_particles_create_color(global.partSystem, x, y, global.ptExhaust, c_fuchsia, 1);
- 		}
- 		exhaustTimer.reset();
- 	});
+		exhaustTimer.on_timeout(function()
+		{
+ 			part_particles_create_color(global.psEffects, x, y, global.ptExhaust, c_fuchsia, 1);
+			exhaustTimer.reset();
+		});
+		exhaustTimer.run();
+ 	}
  	// Shooting
  	//if (InputManager.keyShootPressed)
  	//{
@@ -40,14 +41,13 @@
  	if (InputManager.keySwitchPressed)
  	{
  		//weponIndex++;
- 		xxx.change("aaa");
 
  		//weponIndex = weponIndex mod array_length(wepons);
  	}
  	// Dash state
  	if (InputManager.keyDash) state_change("dash", function()
  	{
- 		exhaustTimer.stop();
+		// Code here
  	});
 
  	shipAngle	+= shipDir;
@@ -66,9 +66,11 @@
  	ghostTimer.on_timeout(function()
  	{
  		part_type_orientation(global.ptGhostDash, image_angle, image_angle, 0, 0, 1);
- 		part_particles_create(global.partSystem, x, y, global.ptGhostDash, 1);
+ 		part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
  		ghostTimer.reset();
  	});
+	ghostTimer.run();
+
  	x += lengthdir_x(motion, shipAngle);
  	y += lengthdir_y(motion, shipAngle);
  	if (!InputManager.keyDash) state_change("move", function()
