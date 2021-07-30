@@ -9,6 +9,12 @@ pos	+= vmove;
 if (pos >= menul) { pos = 0 };
 if (pos < 0) { pos = menul - 1 };
 
+if (menuLevel != lastMenuLevel)
+{
+	writer.reset();
+	lastMenuLevel = menuLevel;
+}
+
 alphaTimer.on_timeout(function()
 {
 	alphaTimer.reset();

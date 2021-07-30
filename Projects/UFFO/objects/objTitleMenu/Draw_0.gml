@@ -1,7 +1,7 @@
 var gw = GUI_W, gh = GUI_H;
 var length	= array_length(menu[menuLevel]);
-var midX	= gw / 2;
-var midy	= gh / 4;
+var midX	= CAM_X + CAM_W / 2;
+var midy	= CAM_Y + CAM_H / 4;
 
 var i = 0; repeat (length) 
 {

@@ -23,6 +23,8 @@ showInv			= false;
 // Attack 
 colliding		= noone;
 
+dashDir			= 1;
+
 // Area and distance
 enum DIR 
 {
@@ -96,80 +98,94 @@ changed = true;
 #endregion----------------------------------------------------------------------
 
 #region State ------------------------------------------------------------------
-//xxx = new xState();
-//xxx.add("move", {
-//	enter: function()
-//	{
-//	},
-//	step: function()
-//	{
-//		if (InputManager.keyRight)
-//		{
-//			shipDir = flerp(shipDir, -maxSpd, angleAccel);
-//		}
-//		else if (InputManager.keyLeft)
-//		{
-//			shipDir = flerp(shipDir, maxSpd, angleAccel);
-//		}
-//		else
-//		{
-//			shipDir = flerp(shipDir, 0, angleDecel);
-//		}	
-//		updateShipSpeed();
-//		motion = clamp(motion, - maxSpd, maxSpd);
-//		exhaustTimer.on_timeout(function()
-//		{
-//			if (abs(InputManager.keyUp))
-//			{
-//				part_particles_create_color(global.psEffects, x, y, global.ptExhaust, c_fuchsia, 1);
-//			}
-//			exhaustTimer.reset();
-//		});
-//		// Cycle wepons
-//		if (InputManager.keySwitchPressed)
-//		{
-//			//weponIndex++;
-//			xxx.change("aaa");
-//			//weponIndex = weponIndex mod array_length(wepons);
-//		}
-//		// Dash state
-//		if (InputManager.keyDash) state_change("dash", function()
-//		{
-//			exhaustTimer.stop();
-//			xxx.change("dash");
-//		});
+xxx = new SnowState("move");
+xxx.add("move", {
+	enter: function()
+	{
+		exhaustTimer.start(10);
+	},
+	step: function()
+	{
+		updateShipDir();
+	 	updateShipSpeed();
+	 	motion = clamp(motion, - maxSpd, maxSpd);
+	 	if (abs(InputManager.keyUp))
+	 	{
+			exhaustTimer.on_timeout(function()
+			{
+	 			part_particles_create_color(global.psEffects, x, y, global.ptExhaust, c_fuchsia, 1);
+				exhaustTimer.reset();
+			});
+			exhaustTimer.run();
+	 	}
+	 	// Shooting
+	 	//if (InputManager.keyShootPressed)
+	 	//{
+	 	//	shootTimer.start(wepon.delay);
+	 	//	shooting = true;
+	 	//	wepon.use();
+	 	//}
+	 	//else if (InputManager.keyShoot)
+	 	//{
+	 	//	shootTimer.on_timeout(function()
+	 	//	{
+	 	//		wepon.use();
+	 	//		shootTimer.reset();
+	 	//	});
+	 	//}
+	 	//else
+	 	//{
+	 	//	shootTimer.stop();
+	 	//	shooting = false;
+	 	//}
+	 	// Cycle wepons
+	 	if (InputManager.keySwitchPressed)
+	 	{
+	 		//weponIndex++;
 
-//		shipAngle	+= shipDir;
-//		image_angle = floor(shipAngle);
-//		x += lengthdir_x(motion, shipAngle);
-//		y += lengthdir_y(motion, shipAngle);
-//	}
-//});
-//xxx.add("dash", {
-//	enter: function()
-//	{
-//	},
-//	step: function()
-//	{
-//		motion = approach(motion, maxSpd * 2, accel * 2);
-//		motion = clamp(motion, - maxSpd * 2, maxSpd * 2);
-//		ghostTimer.on_timeout(function()
-//		{
-//			part_type_orientation(global.ptGhostDash, image_angle, image_angle, 0, 0, 1);
-//			part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
-//			ghostTimer.reset();
-//		});
-//		x += lengthdir_x(motion, shipAngle);
-//		y += lengthdir_y(motion, shipAngle);
-//		if (!InputManager.keyDash) xxx.change("move", function()
-//		{
-//			ghostTimer.stop();
-//			shipDir = 0;
-//			motion	= maxSpd;
-//		});			
-//	}
-//});
-//xxx.init("move");
+	 		//weponIndex = weponIndex mod array_length(wepons);
+	 	}
+	 	// Dash state
+	 	if (InputManager.keyDash)
+	 	{
+			dashDir = InputManager.verticalInput != 0 ? -InputManager.verticalInput : dashDir;
+			xxx.change("dash");
+	 	};
+
+	 	shipAngle	+= shipDir;
+	 	image_angle = floor(shipAngle);
+	 	x += lengthdir_x(motion, shipAngle);
+	 	y += lengthdir_y(motion, shipAngle);
+	}
+});
+xxx.add("dash", {
+	enter: function()
+	{
+		ghostTimer.start(5);
+	},
+	step: function()
+	{
+	 	motion = approach(motion, dashDir * maxSpd * 2, accel * 2);
+	 	motion = clamp(motion, - maxSpd * 2, maxSpd * 2);
+	 	ghostTimer.on_timeout(function()
+	 	{
+	 		part_type_orientation(global.ptGhostDash, image_angle, image_angle, 0, 0, 1);
+	 		part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
+	 		ghostTimer.reset();
+	 	});
+		ghostTimer.run();
+		part_type_gravity(global.ptExhaust, 0.1, shipAngle - 180);
+	 	x += lengthdir_x(motion, shipAngle);
+	 	y += lengthdir_y(motion, shipAngle);
+	 	if (!InputManager.keyDash)
+	 	{
+	 		ghostTimer.stop();
+	 		shipDir = 0;
+	 		motion	= dashDir * maxSpd;
+			xxx.change("move");
+	 	};			
+	}
+});
 #endregion //-------------------------------------------------------------------
 Camera.following = self;
 

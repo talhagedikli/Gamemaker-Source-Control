@@ -31,12 +31,12 @@ if (instance_exists(following))
 	targetY	= following.y - camH/2;
 }
 //set window size
-window_set_size(viewWidth*windowScale, viewHeight*windowScale);
+window_set_size(viewWidth * windowScale, viewHeight * windowScale);
 alarm[0] = 1;
 
 //re-set surface and gui 
 surface_resize(application_surface, viewWidth * windowScale, viewHeight * windowScale);
-//display_set_gui_size(viewWidth* windowScale, viewHeight* windowScale);
+//display_set_gui_size(viewWidth, viewHeight);
 
 
 //shake
@@ -92,81 +92,7 @@ updateCameraSize = function (_w, _h)
 	camH = flerp(camH, _h, zoomSpd);
 }
 
-//state.add("normal", {
-//	enter: function()
-//	{
-		
-//	},
-//	step: function()
-//	{
-//		if (instance_exists(following))
-//		{
-//			var xTo, yTo;
-//			xTo = round(following.x) - (camW / 2);
-//			yTo = round(following.y) - (camH / 2);
-//			//camX = abs(difX) < EPSILON ? targetX : lerp(camX, targetX, followSpd);
-//			camX = 0;
-//			camY = 0;
-//			//camX = flerp(camX, xTo, followSpd);
-//			//camY = flerp(camY, yTo, followSpd);
-//			//camY = abs(difY) < EPSILON ? targetY : lerp(camY, targetY, followSpd);
-//			applyScreenShake();
-//		}		
-//	},
-//	leave: function()
-//	{
-		
-//	}
-//});
 
-//state.add("cell", {
-//	enter: function()
-//	{
-		
-//	},
-//	step: function()
-//	{
-//		if (instance_exists(following))
-//		{
-//			var xTo, yTo;
-//			xTo = (following.x div viewWidth) * viewWidth;
-//			yTo = (following.y div viewHeight) * viewHeight;
-//			var difX, difY;
-//			difX = (xTo - camX);
-//			difY = (yTo - camY);
-//			camX = abs(difX) < 1 ? xTo : camX + difX / 15;
-//			camY = abs(difY) < 1 ? yTo : camY + difY / 15;
-//		}
-//		//screen shake script to apply it
-//		applyScreenShake();		
-//	},
-//	leave: function()
-//	{
-		
-//	}
-//});
-
-//state.add("zoom", {
-//	enter: function()
-//	{
-		
-//	},
-//	step: function()
-//	{
-//		if (instance_exists(following))
-//		{
-//			//if zoomed in, make camera smaller
-//			newW = defaultW / 2;
-//			newH = defaultH / 2;
-//			camX = flerp(camX, targetX, followSpd);
-//			camY = flerp(camY, targetY, followSpd);
-//		}		
-//	},
-//	leave: function()
-//	{
-		
-//	}
-//});
 
 
 

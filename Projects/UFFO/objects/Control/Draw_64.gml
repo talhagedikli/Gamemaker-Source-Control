@@ -22,16 +22,19 @@
 ////display_set_gui_size(Camera.viewWidth, Camera.viewHeight);
 
 
-//if (state.get_current_state() == "end")
-//{
-//	var gw = GUI_W, gh = GUI_H;
-//	restartElement = scribble("PRESS R TO RESTART")
-//	.starting_format("fntText", c_white)
-//	.transform(3, 3, 0)
-//	.typewriter_in(0.5, 0, 60)
-//	.typewriter_ease(SCRIBBLE_EASE.ELASTIC, 0, -25, 1, 1, 0, 0.1)
-//	.align(fa_center, fa_center);
+if (state.get_current_state() == "end")
+{
+	var gw = GUI_W, gh = GUI_H;
+	//restartElement = scribble(t)
+	//.starting_format("fntText", c_white)
+	//.transform(3, 3, 0)
+	//.typewriter_in(0.5, 0, 60)
+	//.typewriter_ease(SCRIBBLE_EASE.ELASTIC, 0, -25, 1, 1, 0, 0.1)
+	//.align(fa_center, fa_center);
+	//Draw main text body
+	//restartElement.draw(gw/2, gh/2);
+	draw_set_aling(fa_center, fa_center);
+	draw_text(gw / 2, gh / 2, endText.write());
 
-//	//Draw main text body
-//	restartElement.draw(gw/2, gh/2);	
-//}
+	
+}

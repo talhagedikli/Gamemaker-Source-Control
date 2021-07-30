@@ -8,7 +8,7 @@ enum menus {
 	length
 }
 
-
+writer = new Typewriter("");
 alphaTimer	= new Timer();
 alphaTimer.start(180, true);
 
@@ -20,7 +20,8 @@ menu = [
 ];
 
 
-menuLevel = menus.main;
+menuLevel		= menus.main;
+lastMenuLevel	= menuLevel;
 pos = 0;
 
 

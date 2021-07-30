@@ -37,13 +37,11 @@ function Timer() constructor
 		}
 		return self;
 	}
-	/// @func set_duration(duration))
 	static set_duration = function(dur)
 	{
 		duration	= dur;
 		return self;
 	}
-	/// @func on_timeout(func))
 	static on_timeout = function(_func)
 	{
 		if (done)
@@ -52,7 +50,6 @@ function Timer() constructor
 		}
 		return self;
 	}
-	/// @func reset([duration]))
 	static reset = function(_duration = duration)
 	{
 		time		= 0;
@@ -62,7 +59,6 @@ function Timer() constructor
 		return self;
 
 	}
-	/// @func stop())
 	static stop = function()
 	{
 		time	= 0;
@@ -70,19 +66,16 @@ function Timer() constructor
 		done	= true;
 		return self;
 	}
-	/// @func pause())
 	static pause = function()
 	{
 		active = false;
 		return self;
 	}
-	/// @func resume())
 	static resume = function()
 	{
 		active = true;
 		return self;
 	}
-	/// @func get_paused())
 	static get_paused = function()
 	{
 		return active;

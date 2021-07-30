@@ -33,12 +33,12 @@ global.psBackground = part_system_create_layer("EffectsLayer", true);;
 	var _p = part_type_create();
 	
 	part_type_shape(_p, pt_shape_pixel);
-	part_type_life(_p, 400, 600);
+	part_type_life(_p, 300, 600);
 	
 	part_type_speed(_p, 0.2, 0.5, 0, 0);
 	part_type_direction(_p, 200, 160, 0, 0); 
-	part_type_orientation(_p, 0, 360, 0, 0, false);
-	var scl = choose(1, 2);
+	//part_type_orientation(_p, 200, 160, 0, 0, false);
+	var scl = choose(1, 1, 1, 2, 2, 3);
 	part_type_scale(_p, scl, scl);
 	part_type_alpha3(_p, 0.7, 1, 0.3);
 	global.ptStar = _p;
