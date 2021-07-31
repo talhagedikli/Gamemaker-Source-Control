@@ -1,3 +1,4 @@
+#region oldstep
 ////xxx.call("step");
 // if (state == "move")
 // {
@@ -8,7 +9,7 @@
 // 	updateShipDir();
 // 	updateShipSpeed();
 // 	motion = clamp(motion, - maxSpd, maxSpd);
-// 	if (abs(InputManager.keyUp))
+// 	if (abs(InputManager.p1keyUp))
 // 	{
 //		exhaustTimer.on_timeout(function()
 //		{
@@ -18,13 +19,13 @@
 //		exhaustTimer.run();
 // 	}
 // 	// Shooting
-// 	//if (InputManager.keyShootPressed)
+// 	//if (InputManager.p1keyShootPressed)
 // 	//{
 // 	//	shootTimer.start(wepon.delay);
 // 	//	shooting = true;
 // 	//	wepon.use();
 // 	//}
-// 	//else if (InputManager.keyShoot)
+// 	//else if (InputManager.p1keyShoot)
 // 	//{
 // 	//	shootTimer.on_timeout(function()
 // 	//	{
@@ -38,16 +39,16 @@
 // 	//	shooting = false;
 // 	//}
 // 	// Cycle wepons
-// 	if (InputManager.keySwitchPressed)
+// 	if (InputManager.p1keySwitchPressed)
 // 	{
 // 		//weponIndex++;
 
 // 		//weponIndex = weponIndex mod array_length(wepons);
 // 	}
 // 	// Dash state
-// 	if (InputManager.keyDash) state_change("dash", function()
+// 	if (InputManager.p1keyDash) state_change("dash", function()
 // 	{
-//		dashDir = InputManager.verticalInput != 0 ? -InputManager.verticalInput : dashDir;
+//		dashDir = InputManager.p1verticalInput != 0 ? -InputManager.p1verticalInput : dashDir;
 // 	});
 
 // 	shipAngle	+= shipDir;
@@ -73,12 +74,12 @@
 //	part_type_gravity(global.ptExhaust, 0.1, shipAngle - 180);
 // 	x += lengthdir_x(motion, shipAngle);
 // 	y += lengthdir_y(motion, shipAngle);
-// 	if (!InputManager.keyDash) state_change("move", function()
+// 	if (!InputManager.p1keyDash) state_change("move", function()
 // 	{
 // 		ghostTimer.stop();
 // 		shipDir = 0;
 // 		motion	= dashDir * maxSpd;
 // 	});	
 // }
-
+#endregion
 xxx.step();

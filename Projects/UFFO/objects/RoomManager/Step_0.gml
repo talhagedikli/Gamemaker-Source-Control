@@ -1,12 +1,6 @@
-switched = checkRoom();
-if (switched)
-{
-	state.change(room_get_name(room));
-	currentRoom = room;	
-}
 
 state.step();
-
+checkRoom();
 //var init = state_init;
 //if (state == "rTitle")
 //{

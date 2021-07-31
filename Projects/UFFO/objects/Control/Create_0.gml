@@ -20,7 +20,7 @@ state.add("end", {
 	enter: function()
 	{
 		InputManager.active = false;
-
+		part_type_gravity(global.ptExhaust, 0, 0);
 	},
 	step: function()
 	{

@@ -30,7 +30,9 @@
 
 #macro ignore			if (true) { } else
 #macro defer			for (;; {
-#macro after			; break; })
+#macro after			; break; })	  
+//#macro func				function()
+
 
 //defer {
 //	show("second");
@@ -38,15 +40,6 @@
 //	show("first");	
 //}
 
-#macro loopi			var i = 0; repeat
-#macro loopj			var i = 0; repeat
-#macro loopk			var i = 0; repeat
-
-#macro print                           \ // Multiline macro example
-    for (var print_value;; {           \
-      show_debug_message(print_value); \
-      break;                           \
-    }) print_value =
 //#macro BUILTIN_SHOW_DEBUG_MESSAGE show_debug_message
 //#macro show_debug_message overrides_show_debug_message
 
@@ -79,4 +72,5 @@
 #macro C_DAISY			$fafafa
 #macro C_CHIFFON		$faf2fb
 #macro C_RANDOM			make_colour_hsv(irandom(255), irandom(255), irandom(255))
+#macro C_SPACE_BLUE		make_color_rgb(0.2*255, 0.3*255, 0.5*255);
 #endregion

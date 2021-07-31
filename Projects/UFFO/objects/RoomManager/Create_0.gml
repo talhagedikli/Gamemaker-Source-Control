@@ -20,7 +20,6 @@ checkRoom = function()
 		state_change(room_get_name(room));
 	}
 }
-maxStarCount = 100;
 
 infoText = [
 	"Press Q to cycle wepons",
@@ -39,57 +38,30 @@ switched = false;
 currentRoom = rTitle;
 checkRoom = function()
 {
-	if (currentRoom != room) {
-		currentRoom = room;
-		return true;
+	if (state.get_current_state() != room_get_name(room))
+	{
+		state.change(room_get_name(room));
 	}
-	return false;
-};
+}
 state = new SnowState(room_get_name(rTitle));
-	state.add(room_get_name(rTitle), {	// ----------TITLE
+state.add(room_get_name(rTitle), {	// ----------TITLE
 	enter: function() 
 	{
-		var i = 0; repeat(maxStarCount)
-		{
-			part_particles_create(global.psBackground, irandom_range(0, room_width + room_width / 3), 
-								irandom_range(0, room_height), global.ptStar, 1);
-			i++;
-		}
 	},
 	step: function()
 	{
-		var pc = part_particles_count(global.psBackground);
-		if (pc < maxStarCount)
-		{
-			part_particles_create(global.psBackground, irandom_range(room_width/6, room_width + room_width / 3), 
-								irandom_range(0, room_height), global.ptStar, 1);
-		}		
 	},
 	leave: function() 
 	{
 	}
 });
 	
-	state.add(room_get_name(rWorld), {	// ----------WORLD
+state.add(room_get_name(rWorld), {	// ----------WORLD
 	enter: function() 
 	{
-		var pc = part_particles_count(global.psBackground);
-		//part_particles_clear(global.psBackground);
-		while(pc < maxStarCount)
-		{
-			part_particles_create(global.psBackground, irandom_range(0, room_width + room_width / 3), 
-								irandom_range(0, room_height), global.ptStar, 1);
-		}
 	},
 	step: function()
 	{
-		var pc = part_particles_count(global.psBackground);
-		if (pc < maxStarCount)
-		{
-			part_particles_create(global.psBackground, irandom_range(room_width/6, room_width + room_width / 3), 
-								irandom_range(0, room_height), global.ptStar, 1);
-		}
-		log(pc);
 	},
 	leave: function() 
 	{

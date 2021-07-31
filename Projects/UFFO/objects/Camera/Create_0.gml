@@ -1,7 +1,7 @@
 //width and height 480*270
-viewWidth		=	1920/2;
-viewHeight		=	1080/2;
-windowScale		=	1;
+viewWidth		=	1920/3;
+viewHeight		=	1080/3;
+windowScale		=	2;
 
 following		= instance_exists(objPlayer) ? objPlayer : noone;
 
@@ -36,7 +36,7 @@ alarm[0] = 1;
 
 //re-set surface and gui 
 surface_resize(application_surface, viewWidth * windowScale, viewHeight * windowScale);
-//display_set_gui_size(viewWidth, viewHeight);
+//display_set_gui_size(viewWidth * windowScale, viewHeight * windowScale);
 
 
 //shake
@@ -92,7 +92,29 @@ updateCameraSize = function (_w, _h)
 	camH = flerp(camH, _h, zoomSpd);
 }
 
-
+state = new SnowState("normal");
+state.add("normal", {
+	step: function()
+	{
+		if (instance_exists(following))
+		{
+			var xTo, yTo;
+			xTo = round(following.x) - (camW / 2);
+			yTo = round(following.y) - (camH / 2);
+			//camX = abs(difX) < EPSILON ? targetX : lerp(camX, targetX, followSpd);
+			camX = 0;
+			camY = 0;
+			//camX = flerp(camX, xTo, followSpd);
+			//camY = flerp(camY, yTo, followSpd);
+			//camY = abs(difY) < EPSILON ? targetY : lerp(camY, targetY, followSpd);
+			applyScreenShake();
+		}		
+			
+		
+		camX = clamp(camX, -shake_magnitude, room_width - camW + shake_magnitude);
+		camY = clamp(camY, -shake_magnitude, room_height - camH + shake_magnitude);		
+	}
+});
 
 
 

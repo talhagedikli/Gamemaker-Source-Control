@@ -23,13 +23,3 @@ menu = [
 menuLevel		= menus.main;
 lastMenuLevel	= menuLevel;
 pos = 0;
-
-
-
-
-
-
-
-
-
-
