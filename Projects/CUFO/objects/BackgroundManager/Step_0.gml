@@ -1,0 +1,4 @@
+/// @description 
+
+state.step();
+checkRoom();

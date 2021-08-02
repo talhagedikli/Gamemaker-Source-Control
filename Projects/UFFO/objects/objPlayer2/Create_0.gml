@@ -136,14 +136,16 @@ xxx.add("move", {
 	 	if (InputManager.p2.keyShootPressed && !shooting)
 	 	{
 	 		shootTimer.start(wepon.delay);
-			wepon.use();
+			with object_index
+				wepon.use();
 			shooting = true;
 	 	}
 	 	else if (InputManager.p2.keyShoot)
 	 	{
 	 		shootTimer.on_timeout(function()
 	 		{
-	 			wepon.use();
+				with object_index
+					wepon.use();
 	 			shootTimer.reset();
 	 			shooting = false;
 	 		});

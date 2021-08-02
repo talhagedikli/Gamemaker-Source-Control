@@ -16,7 +16,7 @@ function Single() : Wepon() constructor
 	delay	= 10;
 	static use = function()
 	{
-		with (objPlayer)
+		with (other)
 		{
 			var b = instance_create_layer(x, y, layer, objBullet);
 			b.direction		= image_angle;
@@ -35,7 +35,7 @@ function Triple() : Wepon() constructor
 	delay	= 25;
 	static use = function()
 	{
-		with (objPlayer)
+		with (other)
 		{
 			var b1 = instance_create_layer(x, y, layer, objBullet);
 			var b2 = instance_create_layer(x, y, layer, objBullet);
@@ -62,7 +62,7 @@ function Sphere() : Wepon() constructor
 	delay	= 30;
 	static use = function()
 	{
-		with (objPlayer)
+		with (other)
 		{
 			var i = image_angle; repeat(4)
 			{
@@ -87,7 +87,7 @@ function Tornado() : Wepon() constructor
 	{
 		randomize();
 		var _angleSpd = choose(2, -2);
-		with (objPlayer)
+		with (other)
 		{
 			var i = image_angle; repeat(4)
 			{

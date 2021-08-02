@@ -25,7 +25,14 @@ colliding		= noone;
 
 dashDir			= 1;
 
-
+// Area and distance
+enum DIR 
+{
+	RIGHT,
+	UP,
+	LEFT,
+	DOWN
+}
 
 //show(dirfind(area));
 touching		= false;
@@ -47,11 +54,11 @@ shooting		= false;
 
 updateShipDir = function()
 {
-	if (InputManager.p1.keyRight)
+	if (InputManager.p2.keyRight)
 	{
 		shipDir = flerp(shipDir, -maxSpd, angleAccel);
 	}
-	else if (InputManager.p1.keyLeft)
+	else if (InputManager.p2.keyLeft)
 	{
 		shipDir = flerp(shipDir, maxSpd, angleAccel);
 	}
@@ -64,13 +71,13 @@ updateShipDir = function()
 
 updateShipSpeed = function()
 {
-	if (InputManager.p1.keyUp)
+	if (InputManager.p2.keyUp)
 	{
 		motion = approach(motion, maxSpd, accel);
 		part_type_gravity(global.ptExhaust, 0.05, shipAngle - 180);
 		part_type_gravity(global.ptBolis, 0.05, shipAngle - 180);
 	}
-	else if (InputManager.p1.keyDown)
+	else if (InputManager.p2.keyDown)
 	{
 		motion = approach(motion, -minSpd, accel);
 	}
@@ -84,7 +91,7 @@ updateShipSpeed = function()
 
 switchWepon = function()
 {
-	if (InputManager.p1.keySwitchPressed)
+	if (InputManager.p2.keySwitchPressed)
 	{
 	 	weponIndex++;
 	 	weponIndex	= weponIndex mod array_length(wepons);
@@ -115,7 +122,7 @@ xxx.add("move", {
 		updateShipDir();
 	 	updateShipSpeed();
 	 	motion = clamp(motion, - maxSpd, maxSpd);
-	 	if (abs(InputManager.p1.keyUp))
+	 	if (abs(InputManager.p2.keyUp))
 	 	{
 			exhaustTimer.on_timeout(function()
 			{
@@ -125,18 +132,20 @@ xxx.add("move", {
 			exhaustTimer.run();
 	 	}
 	 	 //Shooting
-	 	//if (InputManager.p1.keyShootPressed && !shooting) xxx.change("shoot");
-	 	if (InputManager.p1.keyShootPressed && !shooting)
+	 	//if (InputManager.p2.keyShootPressed && !shooting) xxx.change("shoot");
+	 	if (InputManager.p2.keyShootPressed && !shooting)
 	 	{
 	 		shootTimer.start(wepon.delay);
-			wepon.use();
+			with object_index
+				wepon.use();
 			shooting = true;
 	 	}
-	 	else if (InputManager.p1.keyShoot)
+	 	else if (InputManager.p2.keyShoot)
 	 	{
 	 		shootTimer.on_timeout(function()
 	 		{
-	 			wepon.use();
+				with object_index
+					wepon.use();
 	 			shootTimer.reset();
 	 			shooting = false;
 	 		});
@@ -149,9 +158,9 @@ xxx.add("move", {
 	 	// Cycle wepons
 		switchWepon();
 	 	// Dash state
-	 	if (InputManager.p1.keyDash)
+	 	if (InputManager.p2.keyDash)
 	 	{
-			dashDir = InputManager.p1.verticalInput != 0 ? -InputManager.p1.verticalInput : dashDir;
+			dashDir = InputManager.p2.verticalInput != 0 ? -InputManager.p2.verticalInput : dashDir;
 			xxx.change("dash");
 	 	};
 
@@ -173,8 +182,8 @@ xxx.add("dash", {
 	 	ghostTimer.on_timeout(function()
 	 	{
 	 		part_type_orientation(global.ptGhostDash, image_angle, image_angle, 0, 0, 1);
-	 		part_type_sprite(global.ptGhostDash, sprite_index, false, false, false);
-	 		part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
+	 		part_type_sprite(global.ptGhostDash, sprite_index, false, false, false);	 		
+			part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
 	 		part_particles_create(global.psEffects, random_range(0, room_width),
 						irandom_range(0, room_height), global.ptBolis, 1);
 			ghostTimer.reset();
@@ -184,7 +193,7 @@ xxx.add("dash", {
 
 	 	x += lengthdir_x(motion, shipAngle);
 	 	y += lengthdir_y(motion, shipAngle);
-	 	if (!InputManager.p1.keyDash)
+	 	if (!InputManager.p2.keyDash)
 	 	{
 	 		ghostTimer.stop();
 	 		shipDir = 0;
@@ -208,7 +217,7 @@ xxx.add("shoot", {
 	 	motion = clamp(motion, - maxSpd, maxSpd);
 		shootTimer.on_timeout(function()
 	 	{
-			if (!InputManager.p1.keyShoot) 
+			if (!InputManager.p2.keyShoot) 
 			{
 				xxx.change("move", function()
 				{
