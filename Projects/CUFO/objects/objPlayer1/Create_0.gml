@@ -1,5 +1,5 @@
 #region Create -----------------------------------------------------------------
-// Init
+// Init test
 audio_listener_set_position(0, x, y, 0);
 audio_listener_set_orientation(0, 0, 1, 0, 0, 0, 1);
 //speed variables
@@ -88,7 +88,7 @@ switchWepon = function()
 	 	weponIndex++;
 	 	weponIndex	= weponIndex mod array_length(wepons);
 	 	wepon		= wepons[weponIndex];
-	}	
+	}
 }
 state = "move";
 changed = true;
@@ -115,38 +115,37 @@ xxx.add("move", {
 		shipDir.set(InputManager.p1.horizontalInput, InputManager.p1.verticalInput);
 	 	motion.x = clamp(motion.x, - maxSpd, maxSpd);
 	 	motion.y = clamp(motion.y, - maxSpd, maxSpd);
-	 	if (InputManager.p1.keyShootPressed && !shooting) xxx.change("shoot");
-	 	//if (InputManager.p1.keyShootPressed && !shooting)
-	 	//{
-	 	//	shootTimer.start(wepon.delay);
-		//	with(self)
-		//		wepon.use();
-		//	shooting = true;
-	 	//}
-	 	//else if (InputManager.p1.keyShoot)
-	 	//{
-	 	//	shootTimer.on_timeout(function()
-	 	//	{
-		//		with (self)
-		//			wepon.use();
-	 	//		shootTimer.reset();
-	 	//		shooting = false;
-	 	//	});
-		//	shootTimer.run();
-	 	//}
-	 	//else
-	 	//{
-	 	//	shootTimer.stop();
-	 	//}
+	 	//if (InputManager.p1.keyShootPressed && !shooting) xxx.change("shoot");
+	 	if (InputManager.p1.keyShootPressed && !shooting)
+	 	{
+			shooting = true;
+	 		shootTimer.start(wepon.delay);
+			with(self)
+				wepon.use();
+	 	}
+	 	else if (InputManager.p1.keyShoot)
+	 	{
+	 		shootTimer.on_timeout(function()
+	 		{
+				with (self)
+					wepon.use();
+	 			shooting = false;
+	 			shootTimer.reset();
+	 		});
+			shootTimer.run();
+	 	}
+	 	else
+	 	{
+	 		shootTimer.stop();
+	 	}
 		
 	 	// Cycle wepons
 		switchWepon();
 	 	// Dash state
 	 	if (InputManager.p1.keyDash)
 	 	{
-			dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
+			if (abs(InputManager.horizontalInput)) dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
 			xxx.change("dash");
-	 		return;
 		};
 
 	 	x += motion.x;
@@ -203,6 +202,7 @@ xxx.add("shoot", {
 		//part_type_speed(global.ptShoot, 2 - motion.y, 3 - motion.y, 0, 0);
 	 	updateShipSpeed();
 		switchWepon();
+
 		shootTimer.on_timeout(function()
 	 	{
 			if (!InputManager.p1.keyShoot) 
@@ -222,6 +222,12 @@ xxx.add("shoot", {
 			}
 	 	});
 		shootTimer.run();
+
+		if (InputManager.p1.keyDash)
+	 	{
+			dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
+			xxx.change("dash");
+		}
 		x += motion.x;
 	 	y += motion.y;
 	}

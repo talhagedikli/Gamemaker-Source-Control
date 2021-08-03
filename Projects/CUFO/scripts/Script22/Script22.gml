@@ -32,8 +32,10 @@ function Typewriter(_text, _spd = 0.25) constructor
 	char	= 1;
 	charSpd = _spd;
 	len		= string_length(text);
+	done	= false;
 	static write = function(_text = text)
 	{
+		len = string_length(_text);
 		if (text != _text)
 		{
 			text = _text;
@@ -42,11 +44,17 @@ function Typewriter(_text, _spd = 0.25) constructor
 		if (char < len)
 		{
 			char += charSpd;
+			done = false;
+		}
+		else
+		{
+			done = true;
 		}
 		return string_copy(text, 1, char);
 	}
 	static reset = function(_text = text)
 	{
+		done = false;
 		text = _text;
 		char = 1;
 	}

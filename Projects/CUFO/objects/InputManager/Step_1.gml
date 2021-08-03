@@ -36,11 +36,11 @@ if (active)
 		keyDownPressed		= keyboard_check_pressed(vk_down);
 		keyUpPressed		= keyboard_check_pressed(vk_up);
 		
-		keyDash				= keyboard_check(ord("N"));
-		keyShoot			= keyboard_check(vk_space);
-		keyShootPressed		= keyboard_check_pressed(vk_space);
-		keySwitchPressed	= keyboard_check_pressed(ord("B"));
-		keySwitch			= keyboard_check(ord("B"));
+		keyDash				= keyboard_check(ord("Z"));
+		keyShoot			= keyboard_check(ord("X"));
+		keyShootPressed		= keyboard_check_pressed(ord("X"));
+		keySwitchPressed	= keyboard_check_pressed(ord("C"));
+		keySwitch			= keyboard_check(ord("C"));
 	}
 	with (p2)
 	{
