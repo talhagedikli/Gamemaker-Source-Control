@@ -8,7 +8,13 @@ image_xscale	= scl;
 image_yscale	= scl;
 image_alpha		= image_index == image_number - 1 ? 0.5 : 1;
 angleSpd		= image_index == image_number - 1 ? 0.1 : random_range(0, 0.05);
-spaceCol		= surface_getpixel(objSky.sur, room_width / 2, y);
+if (instance_exists(objSky))
+{
+	if (surface_exists(objSky.sur))
+		spaceCol		= surface_getpixel(objSky.sur, room_width / 2, y);
+	else spaceCol = c_white;
+}
+else spaceCol = c_white;
 destroy			= function()
 {
 	if (bbox_right < room_width)

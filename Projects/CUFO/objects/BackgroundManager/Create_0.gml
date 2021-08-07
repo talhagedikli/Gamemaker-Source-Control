@@ -66,11 +66,11 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 		updateStars();
 		planetTimer.on_timeout(function()
 		{
-			//if (part_particles_count(global.psPlanets) < 3)
-			//{
-			//	part_particles_create(global.psPlanets, room_width + sprite_get_width(sprPlanets), 
-			//							irandom_range(0, room_height), global.ptPlanets, 1);
-			//}
+			if (layer_exists("SpaceBG"))
+			{
+				var l = layer_get_id("SpaceBG");
+				
+			}
 			if (instance_number(objPlanets) < 3)
 			{
 				instance_create_layer(room_width + sprite_get_width(sprPlanets), irandom_range(0, room_height),

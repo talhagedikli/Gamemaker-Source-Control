@@ -3,7 +3,6 @@ if (!surface_exists(sur))
 	sur = surface_create(CAM_W, CAM_H);
 }
 
-
 surface_set_target(sur);
 draw_clear_alpha(c_black, 1);
 surface_reset_target();

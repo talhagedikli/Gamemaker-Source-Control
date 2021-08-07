@@ -1,5 +1,6 @@
 uniform vec3 iResolution; 
 varying vec2 fragCoord; 
+varying vec2 v_vTexcoord;
 uniform float time;
 
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
@@ -53,6 +54,7 @@ float StableStarField( in vec2 vSamplePos, float fThreshhold )
 void main( void )
 {
 	// Sky Background Color
+	vec4 base	= texture2D( gm_BaseTexture, v_vTexcoord );
 	vec2 st = fragCoord.xy / iResolution.xy;
 	vec3 blue = vec3(0.2, 0.3, 0.5);
 	vec3 black = vec3(0.);
@@ -60,6 +62,8 @@ void main( void )
 	//float stpx = smoothstep(0.4, 0.7, mod(st.x * 10., 3.) / 4.) * 0.3;
 	
 	vec3 vColor = mix( black, blue, vec3(stpy) );
+	vec2 pct = vec2(cos(time * 0.01), sin(time)) * 0.5 + 0.2;
+	//vColor = mix(vColor, base.rgb, 0.3);
 	//vColor		= mix(vColor, blue, stpx);
     //// Note: Choose fThreshhold in the range [0.99, 0.9999].
     //// Higher values (i.e., closer to one) yield a sparser starfield.
@@ -72,6 +76,6 @@ void main( void )
 	//float StarVal = StableStarField( vSamplePos, StarFieldThreshhold );
     //vColor += vec3( StarVal );
 	
-	gl_FragColor = vec4(vColor, 1.0);
+	gl_FragColor = vec4(vColor, pct.x);
 }
 

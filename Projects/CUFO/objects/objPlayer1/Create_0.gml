@@ -144,7 +144,8 @@ xxx.add("move", {
 	 	// Dash state
 	 	if (InputManager.p1.keyDash)
 	 	{
-			if (abs(InputManager.horizontalInput)) dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
+			if (abs(InputManager.horizontalInput) || abs(InputManager.verticalInput)) dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
+			else (dashDir.set(sign(motion.x), 0));
 			xxx.change("dash");
 		};
 
