@@ -1,3 +1,5 @@
+xxx.step();
+part_type_speed(global.ptFog, 0.2 * global.difficulty, 0.4 * global.difficulty, 0, 0);
 #region oldstep
 ////xxx.call("step");
 // if (state == "move")
@@ -82,4 +84,3 @@
 // 	});	
 // }
 #endregion
-xxx.step();

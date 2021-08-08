@@ -22,6 +22,7 @@ function Single() : Wepon() constructor
 		{
 			//part_particles_create(global.psEffects, bbox_right, y, global.ptShoot, 1);
 			var b = instance_create_layer(bbox_right, y, layer, objBullet);
+			b.owner			= self;
 			b.direction		= random_range(-2, 2);
 			b.image_angle	= b.direction;
 			b.speed			= 3 * maxSpd;
@@ -46,11 +47,14 @@ function Triple() : Wepon() constructor
 			var b2 = instance_create_layer(bbox_right, y, layer, objBullet);
 			var b3 = instance_create_layer(bbox_right, y, layer, objBullet);
 			b1.direction		= image_angle;
+			b1.owner			= self;
 			b1.image_angle		= image_angle;
 			b1.speed			= maxSpd;	
+			b2.owner			= self;
 			b2.direction		= image_angle + 30;
 			b2.image_angle		= image_angle + 30;
 			b2.speed			= maxSpd;	
+			b3.owner			= self;
 			b3.direction		= image_angle - 30;
 			b3.image_angle		= image_angle - 30;
 			b3.speed			= maxSpd;
@@ -74,6 +78,7 @@ function Sphere() : Wepon() constructor
 			var i = image_angle; repeat(4)
 			{
 				var b = instance_create_layer(x, y, layer, objBullet);
+				b.owner			= self;
 				b.direction		= i;
 				b.image_angle	= i;
 				b.speed			= maxSpd;	
@@ -101,6 +106,7 @@ function Tornado() : Wepon() constructor
 			var i = image_angle; repeat(4)
 			{
 				var b = instance_create_layer(x, y, layer, objBullet);
+				b.owner			= self;
 				b.direction		= i;
 				b.image_angle	= i;
 				b.speed			= maxSpd / 2 + max(motion.x, motion.y);

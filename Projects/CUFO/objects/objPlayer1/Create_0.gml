@@ -16,14 +16,18 @@ angleDecel		= 0.07;
 shipAngle		= 0;
 shipDir			= new Vector2(0, 0);
 // Dash
-dashDir			= new Vector2(0, 0);
+dashDir			= new Vector2(1, 0);
+dashBuffer		= 2;
+dashDurMax		= 120;
+dashDur 		= dashDurMax;
+dashRate		= dashDur / dashDurMax;
+canDash			= false;
 // Shoot
 shootTimer		= new Timer();
 shootDelay		= 10;
 wepons			= [];
 weponIndex		= 0;
 shooting		= false;
-
 // Self
 hpMax			= 5;
 hp				= hpMax;
@@ -111,10 +115,18 @@ xxx.add("move", {
 	},
 	step: function()
 	{
+		// Move and rotate
 	 	updateShipSpeed();
 		shipDir.set(InputManager.p1.horizontalInput, InputManager.p1.verticalInput);
 	 	motion.x = clamp(motion.x, - maxSpd, maxSpd);
 	 	motion.y = clamp(motion.y, - maxSpd, maxSpd);
+		// Get Damage
+		if (place_meeting(x, y, objObstacles))
+		{
+			Control.state.change("end");
+			instance_destroy();
+		}
+		// Shoot State
 	 	//if (InputManager.p1.keyShootPressed && !shooting) xxx.change("shoot");
 	 	if (InputManager.p1.keyShootPressed && !shooting)
 	 	{
@@ -142,15 +154,30 @@ xxx.add("move", {
 	 	// Cycle wepons
 		switchWepon();
 	 	// Dash state
-	 	if (InputManager.p1.keyDash)
-	 	{
-			if (abs(InputManager.horizontalInput) || abs(InputManager.verticalInput)) dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
-			else (dashDir.set(sign(motion.x), 0));
-			xxx.change("dash");
-		};
+
+		if (InputManager.p1.keyDash)
+		{
+			if (dashDur > dashBuffer)
+			{
+				if (canDash)
+				{
+					if (abs(InputManager.horizontalInput) || abs(InputManager.verticalInput)) dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
+					else (dashDir.set(sign(motion.x), 0));
+					xxx.change("dash");
+				}
+			}
+			canDash = false;
+		}
+		else
+		{
+		dashDur += 0.3;
+		dashDur = clamp(dashDur, 0, dashDurMax);
+			canDash = true;
+		}
 
 	 	x += motion.x;
 	 	y += motion.y;
+		image_alpha = flerp(image_alpha, 1, 0.05);
 	}
 });
 xxx.add("dash", {
@@ -162,30 +189,39 @@ xxx.add("dash", {
 	{
 	 	//motion.x = approach(motion.x, maxSpd * 2 * dashDir.x, accel * 2);
 	 	//motion.y = approach(motion.y, maxSpd * 2 * dashDir.y, accel * 2);
+		image_alpha = flerp(image_alpha, 0.5, 0.05);
+		dashDur--;
+		dashDur = clamp(dashDur, 0, dashDurMax);
 	 	motion.x = approach(motion.x, lengthdir_x(maxSpd * 2, dashDir.angle()), accel);
 	 	motion.y = approach(motion.y, lengthdir_y(maxSpd * 2, dashDir.angle()), accel);
 	 	motion.x = clamp(motion.x, - maxSpd * 2, maxSpd * 2);
 	 	motion.y = clamp(motion.y, - maxSpd * 2, maxSpd * 2);
+	 	//dashDir = dashDir != 0 ? -1 : 0;
 	 	ghostTimer.on_timeout(function()
 	 	{
 	 		part_type_orientation(global.ptGhostDash, image_angle, image_angle, 0, 0, 1);
 	 		part_type_sprite(global.ptGhostDash, sprite_index, false, false, false);
-	 		part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
+	 		part_type_alpha3(global.ptGhostDash, 0.3, 0.5, 0);
+			
+			part_type_gravity(global.ptBolis, 0.1, 180 - shipDir.angle());
+	 		
+			part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
 	 		part_particles_create(global.psEffects, random_range(0, room_width),
 						irandom_range(0, room_height), global.ptBolis, 1);
 			ghostTimer.reset();
 	 	});
 		ghostTimer.run();
-		part_type_gravity(global.ptBolis, 0.1, 180 - shipDir.angle());
 
 	 	x += motion.x;
 	 	y += motion.y;
-	 	if (!InputManager.p1.keyDash)
+	 	if (!InputManager.p1.keyDash || dashDur <= dashBuffer)
 	 	{
 	 		ghostTimer.stop();
-	 		//motion	= dashDir * maxSpd;
 			xxx.change("move");
 	 	};			
+	},
+	leave: function()
+	{
 	}
 });
 xxx.add("shoot", {

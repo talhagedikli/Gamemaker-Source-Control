@@ -17,12 +17,9 @@ if (instance_exists(objSky))
 else spaceCol = c_white;
 destroy			= function()
 {
-	if (bbox_right < room_width)
+	if (bbox_right < 0)
 	{
-		if (bbox_right < 0)
-		{
-			instance_destroy();
-		}
+		instance_destroy();
 	}
 }
 

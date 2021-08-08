@@ -1,8 +1,9 @@
 randomize();
-speed		= 2;
+owner		= noone;
 angleSpd	= 2;
 fadeOut		= false;
 startPos	= new Vector2(x, y);
+speed		= 2;
 image_speed = 0;
 //part_particles_create(global.psEffects, bbox_right, y, global.ptShoot, 1);
 destroy = function()

@@ -1,3 +1,4 @@
+fileName = "svHighscore"
 save = function()
 {
 	var _highscore = max(global.score, global.highScore);
@@ -11,17 +12,16 @@ save = function()
 	// Save to json
 	var _json = json_stringify(_rootstruct);
 	
-	save_string(_json, "highscore_save");
+	save_string(_json, fileName);
 }
 
 load = function()
 {
-	if (!file_exists("highscore_save")) return;
+	if (!file_exists(fileName)) return;
 	
 	// Load JSON
-	var _json = load_string("highscore_save");
+	var _json = load_string(fileName);
 	var _rootstruct = json_parse(_json);
 	
 	global.highScore = _rootstruct.highScore;
-	
 }

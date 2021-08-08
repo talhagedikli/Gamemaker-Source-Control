@@ -73,7 +73,7 @@ function Vector2(_x = undefined, _y = undefined) constructor
 
 	/// @func angle(radians)
 	/// @desc Returns this vector's angle with respect to the X axis.
-	static angle = function(radians)
+	static angle = function(radians = false)
 	{
 	    return (radians) ? arctan2(y, x) : darctan2(y, x);
 	}

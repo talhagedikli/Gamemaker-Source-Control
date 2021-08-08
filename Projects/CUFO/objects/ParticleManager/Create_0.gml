@@ -55,6 +55,23 @@ global.psEffects = part_system_create_layer("Effects", true);
 	
 #endregion
 
+#region Fog
+	var p = part_type_create();
+	
+	part_type_shape(p, pt_shape_cloud);
+	part_type_life(p, 800, 1000);
+	part_type_size(p, 0.7, 2, 0, 0);
+	part_type_direction(p, 180, 180, 0, 0);
+	part_type_speed(p, 0.2, 0.4, 0, 0);
+	part_type_alpha3(p, 0.7, 1, 0.1);
+	global.ptFog = p;
+
+	
+	//set as death
+	//part_type_death(global.ptGhostDash, 1, global.ptExhaust);
+	
+#endregion
+
 global.psBackground = part_system_create_layer("Effects", true);
 #region Bolis
 	var p = part_type_create();

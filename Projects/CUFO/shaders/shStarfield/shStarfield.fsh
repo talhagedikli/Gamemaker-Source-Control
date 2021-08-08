@@ -76,6 +76,6 @@ void main( void )
 	//float StarVal = StableStarField( vSamplePos, StarFieldThreshhold );
     //vColor += vec3( StarVal );
 	
-	gl_FragColor = vec4(vColor, pct.x);
+	gl_FragColor = vec4(vColor, 0.2);
 }
 

@@ -10,6 +10,8 @@ planetTimer		= new Timer();
 planetDelay		= 400;
 maxStarCount	= 20;
 
+fogTimer		= new Timer();
+
 createStars		= function()
 {
 	var i = 0; repeat(maxStarCount)
@@ -28,8 +30,9 @@ updateStars		= function()
 							irandom_range(0, room_height), global.ptStar, 1);
 	}		
 }
-
-
+// Background setup
+background_map = ds_map_create();
+background_map[? layer_get_id("bgSpace")] = 0.3;
 
 state = new SnowState(room_get_name(rTitle));
 state.add(room_get_name(rTitle), {	// ----------TITLE
@@ -60,15 +63,16 @@ state.add(room_get_name(rTitle), {	// ----------TITLE
 state.add(room_get_name(rWorld), {	// ----------WORLD
 	enter: function() 
 	{
+		fogTimer.start(70);
 	},
 	step: function()
 	{
 		updateStars();
 		planetTimer.on_timeout(function()
 		{
-			if (layer_exists("SpaceBG"))
+			if (layer_exists("bgSpace"))
 			{
-				var l = layer_get_id("SpaceBG");
+				var l = layer_get_id("bgSpace");
 				
 			}
 			if (instance_number(objPlanets) < 3)
@@ -79,7 +83,17 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 			planetTimer.reset();
 		});
 		planetTimer.run();
-
+		
+		fogTimer.on_timeout(function()
+		{
+			part_particles_create(global.psEffects, room_width, random_range(0, room_height), global.ptFog, 1);
+			fogTimer.reset(70 / global.difficulty);
+		});
+		//fogTimer.run();
+		if (layer_exists("bgSpace")) 
+		{
+		    layer_x("bgSpace", -global.difficulty * 100);
+		}
 	},
 	leave: function() 
 	{

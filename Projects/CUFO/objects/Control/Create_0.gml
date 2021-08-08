@@ -6,6 +6,8 @@ endText			= new Typewriter("Press R to restart");
 scoreText		= new Typewriter(string(global.score));
 highscoreText	= new Typewriter(string(global.highScore));
 state			= new SnowState("normal");
+global.starfieldColor = make_color_rgb(0.2 * 255, 0.3 * 255, 0.5 * 255);
+
 
 state.add("normal", {
 	enter: function()

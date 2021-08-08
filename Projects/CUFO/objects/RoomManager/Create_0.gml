@@ -63,10 +63,17 @@ state.add(room_get_name(rTitle), {	// ----------TITLE
 state.add(room_get_name(rWorld), {	// ----------WORLD
 	enter: function() 
 	{
-
+		obstacleTimer.start(60 / global.difficulty);
 	},
 	step: function()
 	{
+		obstacleTimer.on_timeout(function()
+		{
+			instance_create_layer(room_width + sprite_get_width(sprObstacles), random_range(0, room_width), 
+									"Obstacles", objObstacles);
+			obstacleTimer.reset(60 / global.difficulty);
+		});
+		obstacleTimer.run();
 	},
 	leave: function() 
 	{
