@@ -7,7 +7,10 @@
   "visible": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "objEnemyParent",
+    "path": "objects/objEnemyParent/objEnemyParent.yy",
+  },
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,
@@ -27,8 +30,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Collidibles",
+    "path": "folders/Objects/Collidibles.yy",
   },
   "resourceVersion": "1.0",
   "name": "objObstacles",

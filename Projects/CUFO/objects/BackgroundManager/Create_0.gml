@@ -7,7 +7,7 @@ checkRoom = function()
 	}
 }
 planetTimer		= new Timer();
-planetDelay		= 400;
+planetDelay		= 640;
 maxStarCount	= 20;
 
 fogTimer		= new Timer();
@@ -51,7 +51,7 @@ state.add(room_get_name(rTitle), {	// ----------TITLE
 				instance_create_layer(room_width + sprite_get_width(sprPlanets), irandom_range(0, room_height),
 											"Planets", objPlanets);
 			}
-			planetTimer.reset();
+			planetTimer.reset(planetDelay / global.difficulty);
 		});
 		planetTimer.run();
 	},
@@ -64,6 +64,7 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 	enter: function() 
 	{
 		fogTimer.start(70);
+		planetTimer.start(planetDelay);
 	},
 	step: function()
 	{
@@ -80,7 +81,7 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 				instance_create_layer(room_width + sprite_get_width(sprPlanets), irandom_range(0, room_height),
 											"Planets", objPlanets);
 			}
-			planetTimer.reset();
+			planetTimer.reset(planetDelay / global.difficulty);
 		});
 		planetTimer.run();
 		

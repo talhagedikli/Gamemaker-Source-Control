@@ -14,6 +14,12 @@ function approach(argument0, argument1, argument2)
 	}
 }
 
+function squash_and_stretch(xscl, yscl)
+{
+	image_xscale = xscl;
+	image_yscale = yscl;
+}
+
 function normalize_value(value, min, max)
 {
 	var normalized = (value - min) / (max - min);

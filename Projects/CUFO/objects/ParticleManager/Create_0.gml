@@ -13,6 +13,18 @@ global.psEffects = part_system_create_layer("Effects", true);
 	global.ptExhaust = p;
 	#endregion
 
+#region ShineEffect
+	var p = part_type_create();
+	
+	part_type_shape(p, pt_shape_pixel);
+	part_type_life(p, 30, 40);
+	part_type_speed(p, 0.3, 0.5, 0, 0);
+	part_type_direction(p, 85, 95, 0, 0);
+	part_type_size(p, 0.5, 1.4, 0, 0);
+	part_type_alpha3(p, 0.7, 1, 0);
+	global.ptShine = p;
+	#endregion
+
 #region Bullet Destroy
 	var p = part_type_create();
 	
@@ -29,7 +41,7 @@ global.psEffects = part_system_create_layer("Effects", true);
 #region Bullet Shoot
 	var p = part_type_create();
 	
-	part_type_sprite(p, sprBullet, false, false, false);
+	part_type_sprite(p, sprAllyBullets, false, false, false);
 	part_type_life(p, 70, 100);
 	part_type_direction(p, 80, 110, 0, 0);
 	part_type_speed(p, 2, 3, 0, 0);

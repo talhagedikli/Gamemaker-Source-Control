@@ -3,13 +3,12 @@
 audio_listener_set_position(0, x, y, 0);
 audio_listener_set_orientation(0, 0, 1, 0, 0, 0, 1);
 //speed variables
-
 // Motion
 motion			= new Vector2(0, 0);
 maxSpd			= 3;
 minSpd			= 2;
-accel			= 0.5;
-decel			= 0.1;
+accel			= 0.3;
+decel			= 0.2;
 // Angle
 angleAccel		= 0.2;
 angleDecel		= 0.07;
@@ -17,10 +16,12 @@ shipAngle		= 0;
 shipDir			= new Vector2(0, 0);
 // Dash
 dashDir			= new Vector2(1, 0);
+dashTween		= new Tween(TWEENTYPE.CIRCEASEOUT);
 dashBuffer		= 2;
 dashDurMax		= 120;
 dashDur 		= dashDurMax;
 dashRate		= dashDur / dashDurMax;
+dashType		= "pressDash";
 canDash			= false;
 // Shoot
 shootTimer		= new Timer();
@@ -36,9 +37,6 @@ fadeOut			= false;
 
 exhaustTimer	= new Timer();
 ghostTimer		= new Timer();
-
-
-
 
 
 #endregion----------------------------------------------------------------------
@@ -102,13 +100,14 @@ array_push(wepons, new Triple());
 array_push(wepons, new Sphere());
 array_push(wepons, new Tornado());
 wepon			= wepons[weponIndex];
+wepon			= new Single();
 
 
 #endregion----------------------------------------------------------------------
 
 #region State ------------------------------------------------------------------
-xxx = new SnowState("move");
-xxx.add("move", {
+state = new SnowState("move");
+state.add("move", {
 	enter: function()
 	{
 		exhaustTimer.start(10);
@@ -123,14 +122,21 @@ xxx.add("move", {
 		// Get Damage
 		if (place_meeting(x, y, objObstacles))
 		{
-			Control.state.change("end");
-			instance_destroy();
+			state.change("death");
+		}
+		// Pick Ability
+		var a = instance_place(x, y, objAbilities);
+		if (instance_exists(a))
+		{
+			with self
+				a.pick();	
 		}
 		// Shoot State
-	 	//if (InputManager.p1.keyShootPressed && !shooting) xxx.change("shoot");
+	 	//if (InputManager.p1.keyShootPressed && !shooting) state.change("shoot");
 	 	if (InputManager.p1.keyShootPressed && !shooting)
 	 	{
 			shooting = true;
+			squash_and_stretch(1.2, 0.95);
 	 		shootTimer.start(wepon.delay);
 			with(self)
 				wepon.use();
@@ -139,6 +145,7 @@ xxx.add("move", {
 	 	{
 	 		shootTimer.on_timeout(function()
 	 		{
+				squash_and_stretch(1.2, 0.95);
 				with (self)
 					wepon.use();
 	 			shooting = false;
@@ -152,7 +159,6 @@ xxx.add("move", {
 	 	}
 		
 	 	// Cycle wepons
-		switchWepon();
 	 	// Dash state
 
 		if (InputManager.p1.keyDash)
@@ -163,7 +169,7 @@ xxx.add("move", {
 				{
 					if (abs(InputManager.horizontalInput) || abs(InputManager.verticalInput)) dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
 					else (dashDir.set(sign(motion.x), 0));
-					xxx.change("dash");
+					state.change(dashType);
 				}
 			}
 			canDash = false;
@@ -180,15 +186,57 @@ xxx.add("move", {
 		image_alpha = flerp(image_alpha, 1, 0.05);
 	}
 });
-xxx.add("dash", {
+state.add("pressDash", {
+	enter: function()
+	{
+		dashTween.start(0, 10, 15);
+		ghostTimer.start(5);
+	},
+	step: function()
+	{
+		image_alpha = flerp(image_alpha, 0.5, 0.05);
+	 	motion.x = lengthdir_x(dashTween.value, dashDir.angle());
+	 	motion.y = lengthdir_y(dashTween.value, dashDir.angle());
+	 	//motion.x = clamp(motion.x, - maxSpd * 2, maxSpd * 2);
+	 	//motion.y = clamp(motion.y, - maxSpd * 2, maxSpd * 2);
+	 	//dashDir = dashDir != 0 ? -1 : 0;
+	 	ghostTimer.on_timeout(function()
+	 	{
+	 		part_type_orientation(global.ptGhostDash, image_angle, image_angle, 0, 0, 1);
+	 		part_type_sprite(global.ptGhostDash, sprite_index, false, false, false);
+	 		part_type_alpha3(global.ptGhostDash, 0.3, 0.5, 0);
+			
+			part_type_gravity(global.ptBolis, 0.1, 180 - shipDir.angle());
+	 		
+			part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
+	 		part_particles_create(global.psEffects, random_range(0, room_width),
+						irandom_range(0, room_height), global.ptBolis, 1);
+			ghostTimer.reset();
+	 	});
+		ghostTimer.run();
+
+	 	x += motion.x;
+	 	y += motion.y;
+	 	if (dashTween.done)
+	 	{
+			dashTween.stop();
+			state.change("move");
+	 	};
+		dashTween.run();
+	},
+	leave: function()
+	{
+	}
+});
+state.add("holdDash", {
 	enter: function()
 	{
 		ghostTimer.start(5);
 	},
 	step: function()
 	{
-	 	//motion.x = approach(motion.x, maxSpd * 2 * dashDir.x, accel * 2);
-	 	//motion.y = approach(motion.y, maxSpd * 2 * dashDir.y, accel * 2);
+	 	motion.x = approach(motion.x, maxSpd * 2 * dashDir.x, accel * 2);
+	 	motion.y = approach(motion.y, maxSpd * 2 * dashDir.y, accel * 2);
 		image_alpha = flerp(image_alpha, 0.5, 0.05);
 		dashDur--;
 		dashDur = clamp(dashDur, 0, dashDurMax);
@@ -217,14 +265,14 @@ xxx.add("dash", {
 	 	if (!InputManager.p1.keyDash || dashDur <= dashBuffer)
 	 	{
 	 		ghostTimer.stop();
-			xxx.change("move");
+			state.change("move");
 	 	};			
 	},
 	leave: function()
 	{
 	}
 });
-xxx.add("shoot", {
+state.add("shoot", {
 	enter: function()
 	{
 	 		shootTimer.start(wepon.delay);
@@ -244,7 +292,7 @@ xxx.add("shoot", {
 	 	{
 			if (!InputManager.p1.keyShoot) 
 			{
-				xxx.change("move", function()
+				state.change("move", function()
 				{
 					shootTimer.stop();
 					shooting = false;
@@ -263,10 +311,21 @@ xxx.add("shoot", {
 		if (InputManager.p1.keyDash)
 	 	{
 			dashDir.set(InputManager.p1.horizontalInput, -InputManager.p1.verticalInput);
-			xxx.change("dash");
+			state.change("dash");
 		}
 		x += motion.x;
 	 	y += motion.y;
+	}
+});
+state.add("death", {
+	enter: function()
+	{
+		Control.state.change("end");
+	},
+	step: function()
+	{
+		image_alpha -= 0.1;
+		if (image_alpha <= 0) instance_destroy();
 	}
 });
 #endregion //-------------------------------------------------------------------

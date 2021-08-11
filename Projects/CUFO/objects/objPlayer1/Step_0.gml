@@ -1,7 +1,9 @@
-xxx.step();
-part_type_speed(global.ptFog, 0.2 * global.difficulty, 0.4 * global.difficulty, 0, 0);
+image_xscale = approach(image_xscale, 1, 0.03);
+image_yscale = approach(image_yscale, 1, 0.03);
+state.step();
+// part_type_speed(global.ptFog, 0.2 * global.difficulty, 0.4 * global.difficulty, 0, 0);
 #region oldstep
-////xxx.call("step");
+////state.call("step");
 // if (state == "move")
 // {
 // 	state_init(function()

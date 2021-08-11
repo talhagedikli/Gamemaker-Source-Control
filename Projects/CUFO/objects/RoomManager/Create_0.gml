@@ -32,7 +32,11 @@ infoIndex	= 0;
 infoAlpha	= new Timer();
 
 obstacleTimer	= new Timer();
-
+obstacleDelay	= 200;
+abilityTimer	= new Timer();
+abilityDelay	= 600;
+enemyTimer		= new Timer();
+enemyDelay		= 1000;
 
 switched = false;
 currentRoom = rTitle;
@@ -63,17 +67,37 @@ state.add(room_get_name(rTitle), {	// ----------TITLE
 state.add(room_get_name(rWorld), {	// ----------WORLD
 	enter: function() 
 	{
-		obstacleTimer.start(60 / global.difficulty);
+		var adelay = 60 * 10;
+		obstacleTimer.start(obstacleDelay);
+		abilityTimer.start(60);
+		enemyTimer.start(enemyDelay);
 	},
 	step: function()
 	{
+		// Obstacle spawn
 		obstacleTimer.on_timeout(function()
 		{
 			instance_create_layer(room_width + sprite_get_width(sprObstacles), random_range(0, room_width), 
 									"Obstacles", objObstacles);
-			obstacleTimer.reset(60 / global.difficulty);
+			obstacleTimer.reset(obstacleDelay / global.difficulty);
 		});
-		obstacleTimer.run();
+		obstacleTimer.run();		
+		// EnemySpawn
+		enemyTimer.on_timeout(function()
+		{
+			instance_create_layer(room_width + sprite_get_width(sprEnemies), random_range(0, room_width), 
+									"Obstacles", objEnemies);
+			enemyTimer.reset(enemyDelay / global.difficulty);
+		});
+		enemyTimer.run();
+		// Ability Spawn
+		abilityTimer.on_timeout(function()
+		{
+			instance_create_layer(room_width + sprite_get_width(sprAbilities), random_range(0, room_width), 
+									"Obstacles", objAbilities);
+			abilityTimer.reset();
+		});
+		abilityTimer.run();
 	},
 	leave: function() 
 	{
