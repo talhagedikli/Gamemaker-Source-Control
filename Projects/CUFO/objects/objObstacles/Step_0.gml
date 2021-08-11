@@ -19,7 +19,12 @@ var bul = instance_place(x, y, objBullet)
 
 if (instance_exists(bul))
 {
-	getDamage();
-	instance_destroy(bul);
+	if (bul.owner.object_index == objPlayer1) 
+	{
+		var a = audio_play_sound(aHurt, 1, false);
+		getDamage();
+		instance_destroy(bul);
+	}
+		
 }
 

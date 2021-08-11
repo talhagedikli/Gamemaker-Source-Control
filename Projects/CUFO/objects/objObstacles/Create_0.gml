@@ -15,6 +15,7 @@ image_yscale	= scale;
 image_speed		= 0;
 destroy = function()
 {
+	var a = audio_play_sound(aDestroy, 1, false);
 	fadeOut = true;
 }
 

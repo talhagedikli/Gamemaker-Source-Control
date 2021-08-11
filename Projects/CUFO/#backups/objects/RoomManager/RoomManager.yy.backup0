@@ -1,0 +1,190 @@
+// 2021-08-11 22:17:36
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+persistent = true;
+uses_physics = false;
+
+#event create 
+switched = false;
+currentRoom = rTitle;
+//checkRoom = function()
+//{
+//	if (currentRoom != room) {
+//		currentRoom = room;
+//		return true;
+//	}
+//	return false;
+//};
+
+state	= "rTitle";
+changed	= true;
+
+checkRoom = function()
+{
+	if (room_get_name(room) != state)
+	{
+		state_change(room_get_name(room));
+	}
+}
+
+infoText = [
+	new Typewriter("Press Q to cycle wepons"),
+	new Typewriter("Press Z to shoot"),
+	new Typewriter("Press X to dash")
+];
+info		= noone;
+infoTimer	= new Timer();
+infoIndex	= 0;
+infoAlpha	= new Timer();
+
+obstacleTimer	= new Timer();
+obstacleDelay	= 200;
+abilityTimer	= new Timer();
+abilityDelay	= 300;
+enemyTimer		= new Timer();
+enemyDelay		= 1000;
+
+switched = false;
+currentRoom = rTitle;
+room_set_width(rTitle, Camera.viewWidth);
+room_set_height(rTitle, Camera.viewHeight);
+room_set_width(rWorld, Camera.viewWidth);
+room_set_height(rWorld, Camera.viewHeight);
+checkRoom = function()
+{
+	if (state.get_current_state() != room_get_name(room))
+	{
+		state.change(room_get_name(room));
+	}
+}
+state = new SnowState(room_get_name(rTitle));
+state.add(room_get_name(rTitle), {	// ----------TITLE
+	enter: function() 
+	{
+	},
+	step: function()
+	{
+	},
+	leave: function() 
+	{
+	}
+});
+	
+state.add(room_get_name(rWorld), {	// ----------WORLD
+	enter: function() 
+	{
+		var adelay = 60 * 10;
+		obstacleTimer.start(obstacleDelay);
+		abilityTimer.start(abilityDelay);
+		enemyTimer.start(enemyDelay);
+	},
+	step: function()
+	{
+		// Obstacle spawn
+		obstacleTimer.on_timeout(function()
+		{
+			instance_create_layer(room_width + sprite_get_width(sprObstacles), random_range(0, room_width), 
+									"Obstacles", objObstacles);
+			obstacleTimer.reset(obstacleDelay / global.difficulty);
+		});
+		obstacleTimer.run();		
+		// EnemySpawn
+		enemyTimer.on_timeout(function()
+		{
+			instance_create_layer(room_width + sprite_get_width(sprEnemies), random_range(0, room_width), 
+									"Obstacles", objEnemies);
+			enemyTimer.reset(enemyDelay / global.difficulty);
+		});
+		enemyTimer.run();
+		// Ability Spawn
+		abilityTimer.on_timeout(function()
+		{
+			instance_create_layer(room_width + sprite_get_width(sprAbilities), random_range(0, room_width), 
+									"Obstacles", objAbilities);
+			abilityTimer.reset();
+		});
+		abilityTimer.run();
+	},
+	leave: function() 
+	{
+	}
+});
+
+
+
+
+
+
+#event step
+
+state.step();
+checkRoom();
+//var init = state_init;
+//if (state == "rTitle")
+//{
+//	init(function()
+//	{
+//		var i = 0; repeat(maxStarCount)
+//		{
+//			part_particles_create(global.psBackground, irandom_range(0, room_width + room_width / 3), 
+//								irandom_range(0, room_height), global.ptStar, 1);
+//			i++;
+//		}
+//	});
+//	var pc = part_particles_count(global.psBackground);
+//	if (pc < maxStarCount)
+//	{
+//		part_particles_create(global.psBackground, irandom_range(room_width/6, room_width + room_width / 3), 
+//							irandom_range(0, room_height), global.ptStar, 1);
+//	}
+//}
+//else if (state == "rWorld")
+//{
+//	init(function()
+//	{
+//		var pc = part_particles_count(global.psBackground);
+//		//part_particles_clear(global.psBackground);
+//		while(pc < maxStarCount)
+//		{
+//			part_particles_create(global.psBackground, irandom_range(0, room_width + room_width / 3), 
+//								irandom_range(0, room_height), global.ptStar, 1);
+//		}
+//	});
+//	var pc = part_particles_count(global.psBackground);
+//	if (pc < maxStarCount)
+//	{
+//		part_particles_create(global.psBackground, irandom_range(room_width/6, room_width + room_width / 3), 
+//							irandom_range(0, room_height), global.ptStar, 1);
+//	}
+//	log(pc);
+//}
+
+
+
+
+
+
+#event step_begin
+
+
+#event draw
+
+
+
+#event draw_gui
+//var gw = GUI_W, gh = GUI_H;
+//if ("rTitle" == state.get_current_state())
+//{
+//	var i = 0; repeat(array_length(infoText))
+//	{
+//		info = scribble(infoText[i])
+//		.starting_format("fntText", c_white)
+//		.transform(1, 1, 0)
+//		.typewriter_in(0.5, 0, 60)
+//		.typewriter_ease(SCRIBBLE_EASE.ELASTIC, 0, -25, 1, 1, 0, 0.1)
+//		.align(fa_left, fa_bottom);
+//		var siz = info.get_bbox();
+//		info.draw(0, gh - i * siz.height);
+//		i++;
+//	}
+//}

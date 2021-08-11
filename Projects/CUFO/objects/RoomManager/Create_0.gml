@@ -9,7 +9,11 @@ currentRoom = rTitle;
 //	}
 //	return false;
 //};
-
+spawnPos = function(spr)
+{
+	return new Vector2(room_width + sprite_get_width(spr), 
+				irandom_range(sprite_get_height(spr), room_height - sprite_get_height(spr)));
+}
 state	= "rTitle";
 changed	= true;
 
@@ -20,23 +24,26 @@ checkRoom = function()
 		state_change(room_get_name(room));
 	}
 }
-
-infoText = [
-	"Press Q to cycle wepons",
-	"Press Z to shoot",
-	"Press X to dash"
-];
 info		= noone;
+info = [
+	new Typewriter("Press X to Shoot"),
+	new Typewriter("Press Z to Dash"),
+	new Typewriter("Press R to Restart"),
+	new Typewriter("Press Escape to Quit")
+];
 infoTimer	= new Timer();
 infoIndex	= 0;
 infoAlpha	= new Timer();
 
-obstacleTimer	= new Timer();
-obstacleDelay	= 200;
-abilityTimer	= new Timer();
-abilityDelay	= 600;
-enemyTimer		= new Timer();
-enemyDelay		= 1000;
+obstacleTimer		= new Timer();
+obstacleSpawnPos	= spawnPos(sprObstacles);
+obstacleDelay		= 200;
+abilityTimer		= new Timer();
+abilitySpawnPos		= spawnPos(sprAbilities);
+abilityDelay		= 300;
+enemyTimer			= new Timer();
+enemySpawnPos		= spawnPos(sprEnemies);
+enemyDelay			= 1000;
 
 switched = false;
 currentRoom = rTitle;
@@ -59,6 +66,27 @@ state.add(room_get_name(rTitle), {	// ----------TITLE
 	step: function()
 	{
 	},
+	draw_gui: function()
+	{
+		var gw = GUI_W, gh = GUI_H;
+		draw_set_aling(fa_left, fa_bottom);
+		var scl = 2, sh = string_height("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), al = array_length(info);
+		var i = al - 1; repeat(al)
+		{
+			if (i =! al - 1)
+			{
+				if (info[i + 1].done)
+				{
+					draw_text_transformed(0, gh - i * (sh * scl), info[i].write(), 2, 2, 0);
+				}
+			}
+			else
+			{
+				draw_text_transformed(0, gh - i * (sh * scl), info[i].write(), 2, 2, 0);	
+			}
+			i--;
+		}	
+	},
 	leave: function() 
 	{
 	}
@@ -69,7 +97,7 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 	{
 		var adelay = 60 * 10;
 		obstacleTimer.start(obstacleDelay);
-		abilityTimer.start(60);
+		abilityTimer.start(abilityDelay);
 		enemyTimer.start(enemyDelay);
 	},
 	step: function()
@@ -77,7 +105,7 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 		// Obstacle spawn
 		obstacleTimer.on_timeout(function()
 		{
-			instance_create_layer(room_width + sprite_get_width(sprObstacles), random_range(0, room_width), 
+			instance_create_layer(obstacleSpawnPos.x, obstacleSpawnPos.y,
 									"Obstacles", objObstacles);
 			obstacleTimer.reset(obstacleDelay / global.difficulty);
 		});
@@ -85,7 +113,7 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 		// EnemySpawn
 		enemyTimer.on_timeout(function()
 		{
-			instance_create_layer(room_width + sprite_get_width(sprEnemies), random_range(0, room_width), 
+			instance_create_layer(enemySpawnPos.x, enemySpawnPos.y,
 									"Obstacles", objEnemies);
 			enemyTimer.reset(enemyDelay / global.difficulty);
 		});
@@ -93,7 +121,7 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 		// Ability Spawn
 		abilityTimer.on_timeout(function()
 		{
-			instance_create_layer(room_width + sprite_get_width(sprAbilities), random_range(0, room_width), 
+			instance_create_layer(abilitySpawnPos.x, abilitySpawnPos.y,
 									"Obstacles", objAbilities);
 			abilityTimer.reset();
 		});

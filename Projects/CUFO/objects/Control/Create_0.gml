@@ -7,7 +7,11 @@ scoreText		= new Typewriter(string(global.score));
 highscoreText	= new Typewriter(string(global.highScore));
 state			= new SnowState("normal");
 global.starfieldColor = make_color_rgb(0.2 * 255, 0.3 * 255, 0.5 * 255);
-
+info = [
+	new Typewriter("Press Q to cycle wepons", 5),
+	new Typewriter("Press Z to shoot", 5),
+	new Typewriter("Press X to dash", 5)
+];
 
 state.add("normal", {
 	enter: function()
@@ -23,6 +27,7 @@ state.add("normal", {
 		var gw = GUI_W, gh = GUI_H;
 		draw_set_aling(fa_center, fa_top);
 		draw_text_transformed(gw / 2, 0, global.score, 3, 3, 0);	
+
 	},
 	leave: function()
 	{

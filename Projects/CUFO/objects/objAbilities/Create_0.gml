@@ -22,6 +22,7 @@ leftOutRoom = function()
 
 pick = function()
 {
+	var a = audio_play_sound(aPick, 1, false);
 	other.wepon = ability;
 	destroy();
 }

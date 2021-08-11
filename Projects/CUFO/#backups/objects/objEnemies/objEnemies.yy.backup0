@@ -1,3 +1,10 @@
+// 2021-08-11 22:17:00
+#event properties (no comments/etc. here are saved)
+parent_index = objEnemyParent;
+sprite_index = sprEnemies;
+uses_physics = false;
+
+#event create
 direction		= 180;
 speed			= random_range(0.5, 1.5) * (global.difficulty / 2);
 var c			= choose(global.starfieldColor, c_dkgray, c_gray, c_white);
@@ -10,14 +17,9 @@ image_index		= irandom_range(0, image_number - 1);
 image_speed		= 0;
 destroy = function()
 {
-	var a = audio_play_sound(aDestroy, 1, false);
 	fadeOut = true;
 }
-playShootSound = function()
-{
-	var a = audio_play_sound(aShoot, 1, false);
-	audio_sound_pitch(a, random_range(0.8, 1.2));	
-}
+
 leftOutRoom = function()
 {
 	if (bbox_right < 0) return true;
@@ -56,7 +58,6 @@ state.add("0", {
 	{
 		shootTimer[image_index].on_timeout(function()
 		{
-			playShootSound();
 			var i = 0; repeat(3)
 			{
 				var b = instance_create_layer(x, y, layer, objBullet);
@@ -82,7 +83,6 @@ state.add("1", {
 	{
 		shootTimer[image_index].on_timeout(function()
 		{
-			playShootSound();
 			var i = 0; repeat(4)
 			{
 				var b = instance_create_layer(x, y, layer, objBullet);
@@ -109,7 +109,6 @@ state.add("2", {
 	{
 		shootTimer[image_index].on_timeout(function()
 		{
-			playShootSound();
 			var i = 45; repeat(4)
 			{
 				var b = instance_create_layer(x, y, layer, objBullet);
@@ -135,7 +134,6 @@ state.add("3", {
 	{
 		shootTimer[image_index].on_timeout(function()
 		{
-			playShootSound();
 			var i = 45; repeat(4)
 			{
 				var b = instance_create_layer(x, y, layer, objBullet);
@@ -152,3 +150,33 @@ state.add("3", {
 	}
 });
 
+
+
+#event step
+state.step();
+if (leftOutRoom()) instance_destroy();
+if (fadeOut)
+{
+	image_alpha -= 0.1;
+	if (image_alpha <= 0)
+	{
+		instance_destroy();
+	}
+}
+
+if (image_blend != color)
+{
+	image_blend = merge_color(image_blend, color, 0.05);
+}
+
+var bul = instance_place(x, y, objBullet);
+if (bul != noone)
+{
+	if (bul.owner.object_index == objPlayer1 && !bul.state.state_is("death"))
+	{
+		getDamage();
+		bul.destroy();
+	}
+		
+}
+image_angle += angleSpd;
