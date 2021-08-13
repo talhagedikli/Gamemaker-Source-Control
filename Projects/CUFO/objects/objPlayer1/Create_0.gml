@@ -50,6 +50,11 @@ playShootSound = function()
 	audio_sound_pitch(a, random_range(0.8, 1.2));	
 }
 
+outside = function()
+{
+	return bbox_right < 0 || bbox_left > room_width;
+}
+
 updateShipSpeed = function()
 {
 	if (InputManager.p1.keyDown)
@@ -123,6 +128,9 @@ state.add("move", {
 		shipDir.set(InputManager.p1.horizontalInput, InputManager.p1.verticalInput);
 	 	motion.x = clamp(motion.x, - maxSpd, maxSpd);
 	 	motion.y = clamp(motion.y, - maxSpd, maxSpd);
+	 	// Wrap map
+	 	
+	 	
 		// Get Damage
 		// Getting hit by enemy
 		var b = instance_place(x, y, objBullet);

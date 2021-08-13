@@ -1,3 +1,4 @@
+// 2021-08-12 14:35:45
 
 /// @description wrap(value, min, max)
 /// @function wrap
@@ -6,9 +7,9 @@
 /// @param max Maximum bound, inclusive
 // Returns the value wrapped to the range [min, max] (min and max can be swapped).
 // Calls floor() on reals, but GML's modulo is doing something weird and original_wrap just hangs indefinitely on some values anyways so oh well.
-function wrap(val, minValue, maxValue)
+function wrap(value, minValue, maxValue)
 {
-	var value = floor(val);
+	var value = floor(value);
 	var _min = floor(min(minValue, maxValue));
 	var _max = floor(max(minValue, maxValue));
 	var range = _max - _min + 1; // + 1 is because max bound is inclusive

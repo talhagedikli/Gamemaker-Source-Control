@@ -36,14 +36,11 @@ infoIndex	= 0;
 infoAlpha	= new Timer();
 
 obstacleTimer		= new Timer();
-obstacleSpawnPos	= spawnPos(sprObstacles);
-obstacleDelay		= 200;
+obstacleDelay		= 300;
 abilityTimer		= new Timer();
-abilitySpawnPos		= spawnPos(sprAbilities);
-abilityDelay		= 300;
+abilityDelay		= 1200;
 enemyTimer			= new Timer();
-enemySpawnPos		= spawnPos(sprEnemies);
-enemyDelay			= 1000;
+enemyDelay			= 1200;
 
 switched = false;
 currentRoom = rTitle;
@@ -105,7 +102,8 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 		// Obstacle spawn
 		obstacleTimer.on_timeout(function()
 		{
-			instance_create_layer(obstacleSpawnPos.x, obstacleSpawnPos.y,
+			var s = spawnPos(sprObstacles);
+			instance_create_layer(s.x, s.y,
 									"Obstacles", objObstacles);
 			obstacleTimer.reset(obstacleDelay / global.difficulty);
 		});
@@ -113,7 +111,8 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 		// EnemySpawn
 		enemyTimer.on_timeout(function()
 		{
-			instance_create_layer(enemySpawnPos.x, enemySpawnPos.y,
+			var s = spawnPos(sprEnemies);
+			instance_create_layer(s.x, s.y,
 									"Obstacles", objEnemies);
 			enemyTimer.reset(enemyDelay / global.difficulty);
 		});
@@ -121,7 +120,8 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 		// Ability Spawn
 		abilityTimer.on_timeout(function()
 		{
-			instance_create_layer(abilitySpawnPos.x, abilitySpawnPos.y,
+			var s = spawnPos(sprAbilities);
+			instance_create_layer(s.x, s.y,
 									"Obstacles", objAbilities);
 			abilityTimer.reset();
 		});

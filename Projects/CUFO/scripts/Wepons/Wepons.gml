@@ -46,6 +46,7 @@ function Track() : Wepon() constructor
 			//part_particles_create(global.psEffects, bbox_right, y, global.ptShoot, 1);
 			var b = instance_create_layer(bbox_right, y, layer, objBullet);
 			b.owner			= self;
+			b.trackTarget	= objEnemyParent;
 			b.state.change("tracking");
 			b.speed			= 1.5 * maxSpd;
 			b.image_index	= other.index;
@@ -149,6 +150,14 @@ function Tornado() : Wepon() constructor
 #endregion
 
 #region Bounities
+function Bounity() constructor
+{
+	name	= ""; 
+	sprite	= noone;
+	sound	= noone;
+	index	= 0;
+	info	= "";
+}
 function Speedup() : Wepon() constructor
 {
 	name	= "Speedup";
@@ -179,7 +188,7 @@ function Shootrate() : Wepon() constructor
 		}
 	}
 }
-
+// 
 function HoldDash() : Wepon() constructor
 {
 	name	= "Hold Dash";
@@ -208,6 +217,20 @@ function PressDash() : Wepon() constructor
 		{
 			//part_particles_create(global.psEffects, bbox_right, y, global.ptShoot, 1);
 			dashType = "pressDash";
+		}
+	}
+}
+
+function RandomWepon() : Wepon() constructor
+{
+	name	= "Random Wepon";
+	sprite	= sprIcons;
+	index	= 0;
+	static use = function()
+	{
+		with (other)
+		{
+			
 		}
 	}
 }

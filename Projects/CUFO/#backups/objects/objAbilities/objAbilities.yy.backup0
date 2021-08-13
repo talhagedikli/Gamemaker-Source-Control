@@ -1,0 +1,117 @@
+// 2021-08-12 14:52:27
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+sprite_index = sprAbilities;
+uses_physics = false;
+
+#event create
+direction		= 180;
+speed			= random_range(0.3, 0.7) * global.difficulty;
+var c			= choose(global.starfieldColor);
+color			= merge_color(c_white, c, 0.4)
+angleSpd		= 0;
+fadeOut			= false;
+image_blend		= c_white;
+image_index		= irandom_range(0, image_number - 1);
+image_speed		= 0;
+effectTimer		= new Timer();
+effectTimer.start(5);
+ability			= noone;
+destroy = function()
+{
+	fadeOut = true;
+}
+
+leftOutRoom = function()
+{
+	return bbox_right < 0 ? true : false;
+}
+
+pick = function()
+{
+	var a = audio_play_sound(aPick, 1, false);
+	other.wepon = ability;
+	destroy();
+}
+
+state = new SnowState(string(image_index));
+state.add("0", {
+	enter: function()
+	{
+		ability = new Single();
+	},
+	step: function()
+	{
+		
+	}
+});
+state.add("1", {
+	enter: function()
+	{
+		ability = new Triple();
+	},
+	step: function()
+	{
+	
+	}
+});
+state.add("2", {
+	enter: function()
+	{
+		ability = new Sphere();
+	},
+	step: function()
+	{
+		
+	}
+});
+state.add("3", {
+	enter: function()
+	{
+		ability = new Tornado();
+	},
+	step: function()
+	{
+		
+	}
+});
+state.add("4", {
+	enter: function()
+	{
+		ability = new Track();
+	},
+	step: function()
+	{
+		
+	}
+});
+
+
+
+#event step
+if (leftOutRoom()) instance_destroy();
+if (fadeOut)
+{
+	image_alpha -= 0.1;
+	if (image_alpha <= 0)
+	{
+		instance_destroy();
+	}
+}
+
+if (image_blend != color)
+{
+	image_blend = merge_color(image_blend, color, 0.05);
+}
+effectTimer.on_timeout(function()
+{
+	// part_type_speed(global.ptShine, 0.2 + speed, 0.5 + speed, 0, 0);
+	// part_type_direction(global.ptShine, direction - 90, direction - 90, 0, 0);
+	part_particles_create(global.psEffects, random_range(bbox_right, bbox_left), y, global.ptShine, 1);
+	effectTimer.reset();
+});
+effectTimer.run();
+
+state.step();
+//image_angle += angleSpd;
+//image_alpha = dsin(current_time / 7) * 0.2 + 0.7;

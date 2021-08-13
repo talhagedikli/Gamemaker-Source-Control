@@ -19,9 +19,8 @@ if (bul != noone)
 {
 	if (bul.owner.object_index == objPlayer1 && !bul.state.state_is("death"))
 	{
-		getDamage();
 		var a = audio_play_sound(aHurt, 1, false);
-		bul.destroy();
+		getDamage(bul);
 	}
 		
 }

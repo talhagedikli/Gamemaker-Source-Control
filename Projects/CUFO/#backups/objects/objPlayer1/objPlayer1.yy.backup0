@@ -1,4 +1,4 @@
-// 2021-08-11 22:31:02
+// 2021-08-12 23:40:13
 #event properties (no comments/etc. here are saved)
 parent_index = objAllyParent;
 sprite_index = sprPlayer1;
@@ -51,7 +51,16 @@ ghostTimer		= new Timer();
 #region Functions --------------------------------------------------------------
 // Distance and area functions
 // Array sorting functions
+playShootSound = function()
+{
+	var a = audio_play_sound(aShoot, 2, false);
+	audio_sound_pitch(a, random_range(0.8, 1.2));	
+}
 
+outside = function()
+{
+	return bbox_right < 0 || bbox_left > room_width;
+}
 
 updateShipSpeed = function()
 {
@@ -126,6 +135,9 @@ state.add("move", {
 		shipDir.set(InputManager.p1.horizontalInput, InputManager.p1.verticalInput);
 	 	motion.x = clamp(motion.x, - maxSpd, maxSpd);
 	 	motion.y = clamp(motion.y, - maxSpd, maxSpd);
+	 	// Wrap map
+	 	
+	 	
 		// Get Damage
 		// Getting hit by enemy
 		var b = instance_place(x, y, objBullet);
@@ -156,7 +168,7 @@ state.add("move", {
 			shooting = true;
 			squash_and_stretch(1.2, 0.95);
 	 		shootTimer.start(wepon.delay);
-	 		var a = audio_play_sound(aShoot, 1, false);
+			playShootSound();
 			with(self)
 				wepon.use();
 	 	}
@@ -165,6 +177,7 @@ state.add("move", {
 	 		shootTimer.on_timeout(function()
 	 		{
 				squash_and_stretch(1.2, 0.95);
+				playShootSound();
 				with (self)
 					wepon.use();
 	 			shooting = false;
@@ -339,12 +352,14 @@ state.add("shoot", {
 state.add("death", {
 	enter: function()
 	{
+		audio_play_sound(aDestroy, 1, false);
+		audio_play_sound(aLose, 3, false);
 		Control.state.change("end");
 	},
 	step: function()
 	{
 		image_alpha -= 0.1;
-		if (image_alpha <= 0) instance_destroy();
+		if (image_alpha <= 0 && !audio_is_playing(aLose)) instance_destroy();
 	}
 });
 #endregion //-------------------------------------------------------------------
@@ -355,100 +370,17 @@ Camera.following = self;
 #event step
 image_xscale = approach(image_xscale, 1, 0.03);
 image_yscale = approach(image_yscale, 1, 0.03);
+move_wrap(false, true, 1);
+if (outside()) state.change("death");
 state.step();
+
 // part_type_speed(global.ptFog, 0.2 * global.difficulty, 0.4 * global.difficulty, 0, 0);
-#region oldstep
-////state.call("step");
-// if (state == "move")
-// {
-// 	state_init(function()
-// 	{
-// 		exhaustTimer.start(10);
-// 	});
-// 	updateShipDir();
-// 	updateShipSpeed();
-// 	motion = clamp(motion, - maxSpd, maxSpd);
-// 	if (abs(InputManager.p1keyUp))
-// 	{
-//		exhaustTimer.on_timeout(function()
-//		{
-// 			part_particles_create_color(global.psEffects, x, y, global.ptExhaust, c_fuchsia, 1);
-//			exhaustTimer.reset();
-//		});
-//		exhaustTimer.run();
-// 	}
-// 	// Shooting
-// 	//if (InputManager.p1keyShootPressed)
-// 	//{
-// 	//	shootTimer.start(wepon.delay);
-// 	//	shooting = true;
-// 	//	wepon.use();
-// 	//}
-// 	//else if (InputManager.p1keyShoot)
-// 	//{
-// 	//	shootTimer.on_timeout(function()
-// 	//	{
-// 	//		wepon.use();
-// 	//		shootTimer.reset();
-// 	//	});
-// 	//}
-// 	//else
-// 	//{
-// 	//	shootTimer.stop();
-// 	//	shooting = false;
-// 	//}
-// 	// Cycle wepons
-// 	if (InputManager.p1keySwitchPressed)
-// 	{
-// 		//weponIndex++;
-
-// 		//weponIndex = weponIndex mod array_length(wepons);
-// 	}
-// 	// Dash state
-// 	if (InputManager.p1keyDash) state_change("dash", function()
-// 	{
-//		dashDir = InputManager.p1verticalInput != 0 ? -InputManager.p1verticalInput : dashDir;
-// 	});
-
-// 	shipAngle	+= shipDir;
-// 	image_angle = floor(shipAngle);
-// 	x += lengthdir_x(motion, shipAngle);
-// 	y += lengthdir_y(motion, shipAngle);
-// }
-// else if (state == "dash")
-// {
-// 	state_init(function()
-// 	{
-// 		ghostTimer.start(5)
-// 	});
-// 	motion = approach(motion, dashDir * maxSpd * 2, accel * 2);
-// 	motion = clamp(motion, - maxSpd * 2, maxSpd * 2);
-// 	ghostTimer.on_timeout(function()
-// 	{
-// 		part_type_orientation(global.ptGhostDash, image_angle, image_angle, 0, 0, 1);
-// 		part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
-// 		ghostTimer.reset();
-// 	});
-//	ghostTimer.run();
-//	part_type_gravity(global.ptExhaust, 0.1, shipAngle - 180);
-// 	x += lengthdir_x(motion, shipAngle);
-// 	y += lengthdir_y(motion, shipAngle);
-// 	if (!InputManager.p1keyDash) state_change("move", function()
-// 	{
-// 		ghostTimer.stop();
-// 		shipDir = 0;
-// 		motion	= dashDir * maxSpd;
-// 	});	
-// }
-#endregion
-
 
 #event other_outside Insert description here
 // You can write your code in this editor
 //with Control
 //	state_change("end");
-Control.state.change("end");
-instance_destroy();
+// state.change("death");
 
 #event draw_gui
 var gw = GUI_W, gh = GUI_H;
