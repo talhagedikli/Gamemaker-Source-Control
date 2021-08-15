@@ -1,4 +1,4 @@
-// 2021-08-12 22:53:37
+// 2021-08-13 20:59:10
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 sprite_index = sprAllyBullets;
@@ -51,6 +51,7 @@ state.add("normal", {
 	{
 		angleSpd	= 0;
 		damage		= 1;
+		image_index	= 0;
 	},
 	step: function()
 	{
@@ -60,23 +61,25 @@ state.add("normal", {
 state.add("rotating", {
 	enter: function()
 	{
-		damage = 0.7;
+		damage		= 0.8;
+		image_index = 1;
 	},
 	step: function()
 	{
 		image_angle += angleSpd;
 		direction	= image_angle;
-		if (abs(startPos.x - x) < 1 && abs(startPos.y - y) < 1) alarm[0] = 10;
+		if (abs(startPos.x - x) < 0.1 && abs(startPos.y - y) < 0.1) state.change("death");;
 	}
 });
 state.add("tracking", {
 	enter: function()
 	{
-		var ch = Camera.viewHeight, cw = Camera.viewWidth;
+		image_index = 2;
+		var ch = room_width, cw = room_height;
 		angleSpd	= 0;
-		damage		= 0.3;
+		damage		= 0.5;
 		var w = ch * 3 / 2, h = cw * 3 / 2;
-		nearest		= collision_rectangle(x, y - h, x + owner.image_xscale * w, y + h, trackTarget, false, true);
+		nearest		= collision_rectangle(x, y - h, x + sign(owner.image_xscale) * w, y + h, trackTarget, false, true);
 		if (instance_exists(nearest))
 		{
 			if (outside(nearest)) nearest = noone;

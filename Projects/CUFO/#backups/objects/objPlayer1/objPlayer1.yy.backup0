@@ -1,4 +1,4 @@
-// 2021-08-12 23:40:13
+// 2021-08-13 20:42:50
 #event properties (no comments/etc. here are saved)
 parent_index = objAllyParent;
 sprite_index = sprPlayer1;
@@ -11,46 +11,58 @@ audio_listener_set_position(0, x, y, 0);
 audio_listener_set_orientation(0, 0, 1, 0, 0, 0, 1);
 //speed variables
 // Motion
-motion			= new Vector2(0, 0);
-maxSpd			= 3;
-minSpd			= 2;
-accel			= 0.3;
-decel			= 0.2;
-// Angle
-angleAccel		= 0.2;
-angleDecel		= 0.07;
-shipAngle		= 0;
-shipDir			= new Vector2(0, 0);
-// Dash
-dashDir			= new Vector2(1, 0);
-dashTween		= new Tween(TWEENTYPE.CIRCEASEOUT);
-dashBuffer		= 2;
-dashDurMax		= 120;
-dashDur 		= dashDurMax;
-dashRate		= dashDur / dashDurMax;
-dashType		= "pressDash";
-canDash			= false;
-// Shoot
-shootTimer		= new Timer();
-shootDelay		= 10;
-wepons			= [];
-weponIndex		= 0;
-shooting		= false;
-// Self
-hpMax			= 5;
-hp				= hpMax;
-showInv			= false;
-fadeOut			= false;
+motion				= new Vector2(0, 0);
+maxSpd				= 3;
+minSpd				= 2;
+accel				= 0.3;
+decel				= 0.2;
+// Angle	
+angleAccel			= 0.2;
+angleDecel			= 0.07;
+shipAngle			= 0;
+shipDir				= new Vector2(0, 0);
+// Dash	
+dashDir				= new Vector2(1, 0);
+dashTween			= new Tween(TWEENTYPE.CIRCEASEOUT);
+dashBuffer			= 2;
+dashDurMax			= 120;
+dashDur 			= dashDurMax;
+dashRate			= dashDur / dashDurMax;
+dashType			= "pressDash";
+canDash				= false;
+// Shoot	
+shootTimer			= new Timer();
+shootDelay			= 10;
+wepons				= [];
+weponIndex			= 0;
+shooting			= false;
+wepon				= new Single();
+weponDelay			= wepon.delay;
+bounity 			= noone;
+// Self	
+hpMax				= 5;
+hp					= hpMax;
+showInv				= false;
+fadeOut				= false;
+	
+exhaustTimer		= new Timer();
+ghostTimer			= new Timer();
 
-exhaustTimer	= new Timer();
-ghostTimer		= new Timer();
-
-
+Camera.following	= self;
 #endregion----------------------------------------------------------------------
 
 #region Functions --------------------------------------------------------------
 // Distance and area functions
 // Array sorting functions
+setDefaultVariables = function()
+{
+	maxSpd				= 3;
+	minSpd				= 2;
+	accel				= 0.3;
+	decel				= 0.2;
+	wepon.delay 		= weponDelay;
+}
+
 playShootSound = function()
 {
 	var a = audio_play_sound(aShoot, 2, false);
@@ -167,7 +179,7 @@ state.add("move", {
 	 	{
 			shooting = true;
 			squash_and_stretch(1.2, 0.95);
-	 		shootTimer.start(wepon.delay);
+	 		shootTimer.start(weponDelay);
 			playShootSound();
 			with(self)
 				wepon.use();
@@ -181,7 +193,7 @@ state.add("move", {
 				with (self)
 					wepon.use();
 	 			shooting = false;
-	 			shootTimer.reset();
+	 			shootTimer.reset(weponDelay);
 	 		});
 			shootTimer.run();
 	 	}
@@ -222,7 +234,7 @@ state.add("pressDash", {
 	enter: function()
 	{
 		dashTween.start(0, 10, 15);
-		ghostTimer.start(5);
+		ghostTimer.start(2);
 	},
 	step: function()
 	{
@@ -238,7 +250,9 @@ state.add("pressDash", {
 	 		part_type_sprite(global.ptGhostDash, sprite_index, false, false, false);
 	 		part_type_alpha3(global.ptGhostDash, 0.3, 0.5, 0);
 			
-			part_type_gravity(global.ptBolis, 0.1, 180 - shipDir.angle());
+			part_type_gravity(global.ptBolis, 0.2, 180 - shipDir.angle());
+			// part_type_speed(global.ptBolis, maxSpd, maxSpd, 0.5, 0);
+			
 	 		
 			part_particles_create(global.psEffects, x, y, global.ptGhostDash, 1);
 	 		part_particles_create(global.psEffects, random_range(0, room_width),
@@ -359,12 +373,10 @@ state.add("death", {
 	step: function()
 	{
 		image_alpha -= 0.1;
-		if (image_alpha <= 0 && !audio_is_playing(aLose)) instance_destroy();
+		if (image_alpha <= 0) instance_destroy();
 	}
 });
 #endregion //-------------------------------------------------------------------
-Camera.following = self;
-
 
 
 #event step
@@ -372,15 +384,20 @@ image_xscale = approach(image_xscale, 1, 0.03);
 image_yscale = approach(image_yscale, 1, 0.03);
 move_wrap(false, true, 1);
 if (outside()) state.change("death");
+// Set defaults
+setDefaultVariables();
+
+if (is_struct(bounity))
+{
+	with (self)
+	{
+		bounity.use();
+	}
+}
+log(wepon.delay);
 state.step();
 
 // part_type_speed(global.ptFog, 0.2 * global.difficulty, 0.4 * global.difficulty, 0, 0);
-
-#event other_outside Insert description here
-// You can write your code in this editor
-//with Control
-//	state_change("end");
-// state.change("death");
 
 #event draw_gui
 var gw = GUI_W, gh = GUI_H;
@@ -391,6 +408,11 @@ draw_set_alpha(dashRate < 0.3 ? dsin(current_time * 2) * 0.5 + 0.5 : 1);
 draw_rectangle(0, gh - h, gw * dashRate, gh, false);
 draw_set_alpha(1);
 draw_set_color(c_white);
+// Draw icons
+var scl = 5, sw = scl * sprite_get_width(wepon.sprite), sh = scl * sprite_get_height(wepon.sprite);
+if (is_struct(bounity)) draw_sprite_ext(wepon.sprite, wepon.index, gw - sw, gh, scl, scl, 0, c_white, 1);
+if (is_struct(bounity)) draw_sprite_ext(wepon.sprite, bounity.index, 0, gh, scl, scl, 0, c_white, 1);
 
 
-#event cleanup
+
+

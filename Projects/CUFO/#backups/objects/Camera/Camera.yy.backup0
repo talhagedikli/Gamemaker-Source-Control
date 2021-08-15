@@ -1,0 +1,140 @@
+// 2021-08-14 00:15:41
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+persistent = true;
+uses_physics = false;
+
+#event create
+//width and height 480*270
+viewWidth		=	1920/3;
+viewHeight		=	1080/3;
+windowScale		=	2;
+
+base_width = viewWidth * windowScale;
+base_height = viewHeight * windowScale;
+width = base_width;
+height = base_height;
+
+
+//base_size = 512;
+//width = browser_width;
+//height = browser_height;
+//canvas_fullscreen(base_size);
+
+camX = 0;
+camY = 0;
+//set window size
+//window_set_size(viewWidth * windowScale, viewHeight * windowScale);
+alarm[0] = 1;
+
+//re-set surface and gui 
+//surface_resize(application_surface, viewWidth * windowScale, viewHeight * windowScale);
+display_set_gui_size(base_width, base_height);
+
+
+//shake
+shake			= false;
+shake_time		= 0;
+shake_magnitude = 0;
+shake_fade		= 0;
+
+//enums 
+enum camStates 
+{
+	normal,
+	cell,
+	zoom
+}
+
+// Methods
+/// @func applyScreenShake()
+applyScreenShake = function () 
+{
+	if (shake)
+	{
+		//reduce shake time by 1(every step)
+		shake_time -= 1;
+			
+		//calculate shake magnitude
+		var _xval = random_range(-shake_magnitude, shake_magnitude); 
+		var _yval = random_range(-shake_magnitude, shake_magnitude);
+			
+		//apply the shake
+		camX += _xval;
+		camY += _yval;
+			
+		if (shake_time <= 0) 
+		{
+			//if shake time is zero, shake fade
+			shake_magnitude -= shake_fade; 
+
+			if (shake_magnitude <= 0) 
+			{
+				//if shake fade is zero, turn shake of
+			    shake = false; 
+			} 
+		}
+	}
+	
+}
+
+
+
+
+
+#event alarm0
+// window_center();
+
+
+#event step
+//if WIN_W != APP_W || WIN_H != APP_H 
+//{
+//	surface_resize(application_surface, WIN_W, WIN_H);
+//}
+
+ //if (window_get_fullscreen())
+ //{
+ //	surface_resize(application_surface, DIS_W, DIS_H);
+ //}
+ //else
+ //{
+ //	surface_resize(application_surface, WIN_W, WIN_H);
+ //}
+if (browser_width != width || browser_height != height)
+{
+	width = min(base_width, browser_width);
+	height = min(base_height, browser_height);
+	scale_canvas(base_width, base_height, width, height, true);
+}
+
+
+//if (browser_width != width || browser_height != height)
+//    {
+//    width = browser_width;
+//    height = browser_height;
+//    canvas_fullscreen(base_size);
+//    }
+
+#event step_end
+
+// state.step();
+
+camera_set_view_size(VIEW, viewWidth, viewHeight);
+camera_set_view_pos(VIEW, camX, camY);
+
+
+	
+
+
+#event other_room_start
+view_enabled = true;
+view_visible[0] = true;
+
+
+
+#event draw_gui
+/// @description
+
+
+#event cleanup
+/// @description

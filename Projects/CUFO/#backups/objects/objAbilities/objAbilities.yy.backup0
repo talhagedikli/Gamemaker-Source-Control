@@ -1,4 +1,4 @@
-// 2021-08-12 14:52:27
+// 2021-08-13 15:12:20
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 sprite_index = sprAbilities;
@@ -6,13 +6,14 @@ uses_physics = false;
 
 #event create
 direction		= 180;
-speed			= random_range(0.3, 0.7) * global.difficulty;
+speed			= random_range(0.5, 1);
 var c			= choose(global.starfieldColor);
 color			= merge_color(c_white, c, 0.4)
 angleSpd		= 0;
 fadeOut			= false;
 image_blend		= c_white;
 image_index		= irandom_range(0, image_number - 1);
+// image_index 	= 6;
 image_speed		= 0;
 effectTimer		= new Timer();
 effectTimer.start(5);
@@ -30,7 +31,21 @@ leftOutRoom = function()
 pick = function()
 {
 	var a = audio_play_sound(aPick, 1, false);
-	other.wepon = ability;
+	if (ability.type = AbilityType.wepon)
+	{
+		with (other)
+		{
+			wepon		= other.ability;
+			weponDelay	= wepon.delay;
+		}
+	}
+	else if(ability.type = AbilityType.bounity)
+	{
+		with (other)
+		{
+			bounity = other.ability;
+		}
+	}
 	destroy();
 }
 
@@ -79,6 +94,26 @@ state.add("4", {
 	enter: function()
 	{
 		ability = new Track();
+	},
+	step: function()
+	{
+		
+	}
+});
+state.add("5", {
+	enter: function()
+	{
+		ability = new Speedup();
+	},
+	step: function()
+	{
+		
+	}
+});
+state.add("6", {
+	enter: function()
+	{
+		ability = new Shootrate();
 	},
 	step: function()
 	{

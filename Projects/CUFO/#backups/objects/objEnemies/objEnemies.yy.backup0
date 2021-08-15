@@ -1,4 +1,4 @@
-// 2021-08-12 15:03:58
+// 2021-08-14 00:08:06
 #event properties (no comments/etc. here are saved)
 parent_index = objEnemyParent;
 sprite_index = sprEnemies;
@@ -15,9 +15,17 @@ fadeOut			= false;
 image_blend		= c_white;
 image_index		= irandom_range(0, image_number - 1);
 image_speed		= 0;
+
+
+newScale		= function(xscl, yscl)
+{
+	image_xscale	= xscl;
+	image_yscale	= yscl;
+}
 destroy = function()
 {
-	var a = audio_play_sound(aDestroy, 1, false);
+	audio_play_sound(aDestroy, 1, false);
+	global.score	+= round(hp * 100);
 	fadeOut = true;
 }
 playShootSound = function()
@@ -55,7 +63,11 @@ state = new SnowState(string(image_index));
 state.add("0", {
 	enter: function()
 	{
+		newScale(1.5, 1.5);
+		hp = random_range(3.5, 4.9);
+		point			= hp * 100;
 		angleSpd = 0;
+		newScale(1.5, 1.5);
 		shootTimer[image_index].start(60);
 		cleanTimers();
 	},
@@ -83,7 +95,11 @@ state.add("0", {
 state.add("1", {
 	enter: function()
 	{
+		newScale(1.5, 1.5);
+		hp = random_range(2.5, 3.2);
+		point			= hp * 100;
 		angleSpd = 2;
+		newScale(1.5, 1.5);
 		shootTimer[image_index].start(60);		
 		cleanTimers();
 	},
@@ -110,7 +126,11 @@ state.add("1", {
 state.add("2", {
 	enter: function()
 	{
+		newScale(1.5, 1.5);
+		hp = random_range(3.5, 4.1);
+		point			= hp * 100;
 		shootTimer[image_index].start(30);
+		newScale(1.5, 1.5);
 		angleSpd = 0;
 		cleanTimers();
 	},
@@ -138,16 +158,21 @@ state.add("2", {
 state.add("3", {
 	enter: function()
 	{
+		newScale(-1.5, 1.5);
+		hp = random_range(1.8, 2.2);
+		point			= hp * 100;
+		// angleSpd	= 2;
 		shootTimer[image_index].start(40);
-		image_xscale = -1;
+		newScale(-1.5, 1.5);
 		cleanTimers();
 	},
 	step: function()
 	{
+		newScale(-1.5, 1.5);
 		shootTimer[image_index].on_timeout(function()
 		{
 			playShootSound();
-			var b = instance_create_layer(bbox_left, y, layer, objBullet);
+			var b = instance_create_layer(x, y, layer, objBullet);
 			b.owner			= self;
 			b.trackTarget	= objAllyParent;
 			b.state.change("tracking");
@@ -160,17 +185,23 @@ state.add("3", {
 			shootTimer[image_index].reset();
 		});
 		shootTimer[image_index].run();		
+		// if (instance_exists(objplayer1)) direction = approach(direction, point_direction(x, y, objPlayer1.x, objPlayer1.y), 1);
+		// image_angle = direction;
 	}
 });
 state.add("4", {
 	enter: function()
 	{
+		newScale(-1.5, 1.5);
+		hp = random_range(3.5, 4.2);
+		point			= hp * 100;
 		shootTimer[image_index].start(50);
-		image_xscale = -1;
+		newScale(-1.5, 1.5);
 		cleanTimers();
 	},
 	step: function()
 	{
+		newScale(-1.5, 1.5);
 		shootTimer[image_index].on_timeout(function()
 		{
 			playShootSound();
@@ -193,14 +224,18 @@ state.add("4", {
 state.add("5", {
 	enter: function()
 	{
+		
+		hp = random_range(1.5, 2.1);
+		point			= hp * 100;
 		shootTimer[image_index].start(45);
 		direction = y < room_height / 2 ? irandom_range(180, 225) : irandom_range(135, 180);
 		speed	= 2.5;
-		image_xscale = -1;
+		newScale(-1.5, 1.5);
 		cleanTimers();
 	},
 	step: function()
 	{
+		newScale(-1.5, 1.5);
 		shootTimer[image_index].on_timeout(function()
 		{
 			playShootSound();
@@ -222,6 +257,7 @@ state.add("5", {
 
 #event step
 state.step();
+
 if (leftOutRoom()) instance_destroy();
 if (fadeOut)
 {

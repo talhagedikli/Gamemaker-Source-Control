@@ -1,4 +1,4 @@
-// 2021-08-12 15:04:50
+// 2021-08-13 19:32:24
 #event properties (no comments/etc. here are saved)
 parent_index = objEnemyParent;
 sprite_index = sprObstacles;
@@ -8,9 +8,8 @@ uses_physics = false;
 direction		= 180;
 speed			= 1 * global.difficulty;
 
-color			= surface_getpixel(objSky.sur, room_width / 2, y);
-var c			= choose(global.starfieldColor, c_dkgray, c_gray, c_white);
-color			= merge_color(c_white, c, 0.4)
+var c			= choose(c_gray);
+color			= merge_color(c_white, c, 0.5)
 angleSpd		= choose(-2, -1, 0, 1, 2);
 hp				= 2;
 fadeOut			= false;
@@ -22,6 +21,7 @@ image_yscale	= scale;
 image_speed		= 0;
 destroy = function()
 {
+	global.score	+= 100;
 	var a = audio_play_sound(aDestroy, 1, false);
 	fadeOut = true;
 }
@@ -41,6 +41,18 @@ getDamage = function(bullet)
 	bullet.destroy();
 	if (hp <= 0) destroy();
 	image_blend = c_red;
+}
+if (image_index == 0 || image_index == 1 || image_index == 2 || image_index == 3 || image_index == 4)
+{
+	hp = random_range(3.5, 4.5);
+}
+else if (image_index ==  5 || image_index == 6)
+{
+	hp = random_range(1.8, 2.5);
+}
+else
+{
+	hp = random_range(0.5, 1);
 }
 
 #event step
@@ -62,11 +74,10 @@ if (image_blend != color)
 
 
 var bul = instance_place(x, y, objBullet)
-if (bul =! noone)
+if (instance_exists(bul))
 {
 	if (bul.owner.object_index == objPlayer1 && !bul.state.state_is("death")) 
 	{
-		here;
 		var a = audio_play_sound(aHurt, 1, false);
 		getDamage(bul);
 	}
