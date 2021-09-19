@@ -9,8 +9,8 @@ enum menus {
 }
 
 writer = new Typewriter("");
-alphaTimer	= new Timer();
-alphaTimer.start(180, true);
+alphaxTimer	= new xTimer();
+alphaxTimer.start(180, true);
 
 menu = [
 	["START", "SETTINGS", "QUIT"],		// Main

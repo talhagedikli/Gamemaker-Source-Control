@@ -7,7 +7,7 @@ var i = 0; repeat (length)
 {
 	
 	var c = pos == i ? C_CRIMSON : c_white;
-	var a = (pos == i ? 1 - dsin(alphaTimer.time) : 1) + 0.2;
+	var a = (pos == i ? 1 - dsin(alphaxTimer.time) : 1) + 0.2;
 	var t = menu[menuLevel][i];
 	draw_set_font(fntText);
 	draw_set_aling(fa_center, fa_center);

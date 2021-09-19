@@ -4,7 +4,7 @@
 function __scribble_class_model(_element, _model_cache_name) constructor
 {
     //Record the start time so we can get a duration later
-    if (SCRIBBLE_VERBOSE) var _timer_total = get_timer();
+    if (SCRIBBLE_VERBOSE) var _xTimer_total = get_xTimer();
     
     cache_name = _model_cache_name;
     
@@ -356,7 +356,7 @@ function __scribble_class_model(_element, _model_cache_name) constructor
     
     if (SCRIBBLE_VERBOSE)
     {
-        var _elapsed = (get_timer() - _timer_total)/1000;
+        var _elapsed = (get_xTimer() - _xTimer_total)/1000;
         __scribble_trace("scribble_cache() took ", _elapsed, "ms for ", characters, " characters (ratio=", string_format(_elapsed/characters, 0, 6), ")");
     }
 }

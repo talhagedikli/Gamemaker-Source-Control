@@ -1,0 +1,16 @@
+// 2021-09-19 08:44:49
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
+Draw = function(func = function() {})
+{
+	with (id)
+	{
+		func();
+	}
+}
+
+#event draw
+Draw();

@@ -1,0 +1,19 @@
+BETA VERSION 0.6.1 - Asset Change List
+
+This list covers most changes to assets between patch 0.6.0 and 0.6.1.
+
+Asset Name Changes:
+	* Update_Input_Buffer > Input_Buffer_Update
+	* Update_Input_Buffer_Replay > Input_Buffer_Update_Replay
+
+Asset Additions:
+	+ Input_Buffer_Paused_Load
+	+ Input_Buffer_Paused_Store
+
+Important Variable Changes:
+	(In Player_Init_Start)
+	* pause_input_buffer > input_buffer_paused
+	+ has_paused_inputs
+
+Macro Changes:
+	+ allow_pausing

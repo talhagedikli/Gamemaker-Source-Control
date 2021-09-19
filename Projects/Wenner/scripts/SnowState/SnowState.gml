@@ -27,7 +27,7 @@ function SnowState(_initState) constructor {
 	with (__this) {
 		owner			= _owner;
 		states			= {};
-		stateStartTime	= get_timer();
+		stateStartTime	= get_xTimer();
 		initState		= _initState;
 		execEnter		= _execEnter;
 		currEvent		= undefined;
@@ -141,7 +141,7 @@ function SnowState(_initState) constructor {
 					childQueue = [];
 				}
 				
-				stateStartTime = get_timer();
+				stateStartTime = get_xTimer();
 				history_add(_state);
 			}
 			enter();
@@ -410,7 +410,7 @@ function SnowState(_initState) constructor {
 	
 	get_time = function(_seconds) {
 		if (_seconds == undefined) _seconds = false;
-		var _time = (get_timer()-__this.stateStartTime) * 1/1000000;
+		var _time = (get_xTimer()-__this.stateStartTime) * 1/1000000;
 		return (_seconds ? _time : floor(_time * game_get_speed(gamespeed_fps)));
 	};
 	

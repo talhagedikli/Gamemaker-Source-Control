@@ -1,4 +1,4 @@
-function Vector2(_x = undefined, _y = undefined) constructor
+function Vector2(_x = undefined, _y = _x) constructor
 {
 	self.x	= _x;
 	self.y	= _y;

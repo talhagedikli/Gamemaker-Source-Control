@@ -1,6 +1,6 @@
-// 2021-08-14 17:32:47
+// 2021-09-19 08:38:06
 // Tweens V2
-function Tween(_type = TWEENTYPE.LINEAR, _ticksize = 1) constructor
+function Tween(_type = TWEENTYPE.LINEAR) constructor
 {
 	enum TWEENTYPE
 	{ // Channel indexes
@@ -37,26 +37,28 @@ function Tween(_type = TWEENTYPE.LINEAR, _ticksize = 1) constructor
 	value		= 0;
 	done		= false;
 	active		= false;
-	tickSize	= _ticksize;
+	tickSize	= 1;
 	
 	x1			= 0;
-	x2			= 0;
+	x2			= 1;
 	x			= 0;
+	y1			= 0;
+	y2			= 0;
 	y			= 0;
 	duration	= 0;
 	
 	reverse = false;
-	static start = function(_start, _end, _duration)
+	
+	static start = function(_start, _end, _duration, _ticksize = 1)
 	{
-		if (!active)
-		{
-			active	= true;
-		}
-		x1			= _start;
-		x2			= _end;
+		active		= true;
+		tickSize	= _ticksize;
+		y1			= _start;
+		y2			= _end;
 		duration	= _duration;
-		var rate	= animcurve_channel_evaluate(channel, time / duration);
-		x			= rate;
+		// Already exists in "run" method
+		// var rate	= animcurve_channel_evaluate(channel, time / duration);
+		// x			= rate;
 	}
 	static stop = function()
 	{
@@ -66,7 +68,6 @@ function Tween(_type = TWEENTYPE.LINEAR, _ticksize = 1) constructor
 		done = false;
 		return self;
 	}
-	
 	static reset = function()
 	{
 		time = 0;
@@ -87,12 +88,11 @@ function Tween(_type = TWEENTYPE.LINEAR, _ticksize = 1) constructor
 	}
 	static run = function()
 	{
-
 		if (active)
 		{
 			var rate	= animcurve_channel_evaluate(channel, time / duration);
 			x			= rate;
-			value		= lerp(x1, x2, rate);
+			y			= lerp(y1, y2, rate);
 			if (time >= duration)
 			{
 				done = true;

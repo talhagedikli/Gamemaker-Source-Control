@@ -1,0 +1,2 @@
+/// @description
+rand = 0;

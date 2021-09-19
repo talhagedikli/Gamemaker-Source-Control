@@ -1,0 +1,9 @@
+///@func Profile_Set(profile_num,setting,value)
+///@param profile_num
+///@param setting
+///@param value
+var _list = global.profiles[| argument[0]],
+	_setting = argument[1],
+	_val = argument[2];
+	
+_list[| _setting] = _val;

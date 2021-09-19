@@ -1,0 +1,9 @@
+BETA VERSION 0.6.1 - 
+
+Hotfixes
+- Fixed an issue where Smash Stick would activate even if the player did not flick the stick
+- Players can now perform the second part of Link's Fsmash with the attack button and the special button
+- Pausing can no longer be buffered
+- Added the macro allow_pausing
+- Held inputs can no longer be buffered while the game is paused
+- Fixed an issue where using frame advance would cause the game to not be recorded properly in the replay, causing a desync

@@ -1,0 +1,67 @@
+// 2021-08-23 18:40:32
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+sprite_index = sprBlock;
+uses_physics = false;
+
+#event create
+motion			= new Vector2(0, 0);
+grav			= 0.1;
+image_blend		= C_CRIMSON;
+image_alpha 	= 0;
+hurtbox			= new Hurtbox(x, y, sprite_width, sprite_height);
+
+onGround		= function()
+{
+	return place_meeting(x, y+1, objBlock);
+}
+
+state = new xState();
+
+state.add("move", {
+	enter: function()
+	{
+		// show("entered move");
+	},
+	step: function()
+	{
+		// state.change("dash");
+		
+		hurtbox.obj.Set(x, y, sprite_width, sprite_height);
+		
+		
+		if (!onGround())
+		{
+			motion.y += grav;	
+		}
+	},
+	leave: function()
+	{
+		// show("leaving move")
+	}
+});
+state.add("dash", {
+	enter: function()
+	{
+		// show("entered dash");
+	},
+	step: function()
+	{
+		// state.change("move");
+	},
+	leave: function()
+	{
+		// show("leaving dash")
+	}
+});
+state.init("move");
+
+#event step
+state.call("step");
+check_collisions_pixel_perfect(objBlock);
+
+
+#event cleanup
+
+
+

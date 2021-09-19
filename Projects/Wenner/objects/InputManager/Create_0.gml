@@ -20,7 +20,9 @@ p1 = {
 	keyShoot			: 0,
 	keyShootPressed		: 0,
 	keySwitchPressed	: 0,
-	keySwitch			: 0
+	keySwitch			: 0,
+	keyHitPressed		: 0,
+	searchKeyPressed	: 0
 }
 p2 = {
 	horizontalInput		: 0,
@@ -60,6 +62,9 @@ keySwitchPressed	= 0;
 keySwitch			= 0;
 active		= true;
 
+horizontalInput 	= 0;
+verticalInput		= 0;
+
 global.clock.add_begin_method(function()
 {
 /// @description 
@@ -85,6 +90,7 @@ if (active)
 	keyShootPressed		= keyboard_check_pressed(ord("Z"));
 	keySwitchPressed	= keyboard_check_pressed(ord("Q"));
 	keySwitch			= keyboard_check(ord("Q"));
+	keyHitPressed		= keyboard_check_pressed(ord("A"));
 	with (p1)
 	{
 		horizontalInput		= (keyboard_check(vk_right) - keyboard_check(vk_left));		// Will be -1, 0 or 1
@@ -105,6 +111,8 @@ if (active)
 		keyShootPressed		= keyboard_check_pressed(vk_space);
 		keySwitchPressed	= keyboard_check_pressed(ord("B"));
 		keySwitch			= keyboard_check(ord("B"));
+		keyHitPressed		= keyboard_check_pressed(ord("A"));
+		searchKeyPressed	= keyboard_check_pressed(ord("S"));
 	}
 	with (p2)
 	{
@@ -164,6 +172,7 @@ else
 		keyShootPressed		= 0;
 		keySwitchPressed	= 0;
 		keySwitch			= 0;
+		keyHitPressed		= 0;
 	}
 	with (p2)
 	{

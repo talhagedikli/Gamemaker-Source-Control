@@ -16,7 +16,7 @@ global.psEffects = part_system_create_layer("Effects", true);
 #region Ghost Dash
 	var _p = part_type_create();
 	
-	part_type_sprite(_p, sprPlayer1, false, false, false);
+	part_type_sprite(_p, sprite_index, false, false, false);
 	part_type_life(_p, 15, 20);
 	
 	part_type_alpha3(_p, 0.7, 1, 0);

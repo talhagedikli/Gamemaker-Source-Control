@@ -1,19 +1,3 @@
-function state_change(_state, func = function() {})
-{
-	func();
-	state = _state;
-	changed = true;
-}
-
-function state_init(func = function() {})
-{
-	if (changed)
-	{
-		func();
-		changed = false;
-	}
-}
-
 function draw_set_aling(halign, valign)
 {
 	draw_set_halign(halign);
@@ -53,8 +37,7 @@ function Typewriter(_text, _spd = 0.25) constructor
 	
 }
 
-
-
-
-
-
+function lengthdir(len = new Vector2(0), dir = new Vector2(0)) 
+{
+	return new Vector2(lengthdir_x(len.x, dir.x), lengthdir_y(len.y, dir.y));
+}

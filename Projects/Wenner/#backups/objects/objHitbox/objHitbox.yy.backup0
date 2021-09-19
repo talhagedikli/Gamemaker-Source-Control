@@ -1,0 +1,25 @@
+// 2021-08-21 10:39:12
+#event properties (no comments/etc. here are saved)
+parent_index = objBBox;
+sprite_index = sprPixel;
+uses_physics = false;
+
+#event create
+// Inherit the parent event
+event_inherited();
+color			= c_red;
+image_blend		= color;
+hitList			= ds_list_create();
+
+
+
+
+
+#event step
+// Inherit the parent event
+event_inherited();
+
+
+
+#event cleanup
+ds_list_destroy(hitList);

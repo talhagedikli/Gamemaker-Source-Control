@@ -1,0 +1,8 @@
+if (fade != fade_goal)
+	{
+	fade = lerp(fade, fade_goal, fade_speed);
+	if (abs(fade - fade_goal) < 0.01)
+		{
+		fade = fade_goal;
+		}
+	}

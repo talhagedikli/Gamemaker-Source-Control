@@ -1,0 +1,30 @@
+{
+    "id": "26ea800e-39b3-419b-b9f7-ca7c355df176",
+    "modelName": "GMFolder",
+    "mvc": "1.1",
+    "name": "26ea800e-39b3-419b-b9f7-ca7c355df176",
+    "children": [
+        "2488d4d2-9608-4c24-8537-fe8da994ad81",
+        "14ce1341-070e-4a01-abfb-d22e110032b3",
+        "43a687f9-78a8-49d3-aed7-0cfea8161762",
+        "7c790554-7d34-428f-b090-542716f4f466",
+        "ff81fc9e-3b3c-4325-baec-59d5748277a5",
+        "a85a0990-a015-4f0b-8876-9510389723fc",
+        "78486389-d3d3-4416-acb4-325667d14909",
+        "7302cc18-fa15-4ed6-a7d1-3e6f6a4555bd",
+        "35344479-2c69-4d40-a88b-fc0609d67640",
+        "36442033-bff8-4ac3-853f-8f4b7686138f",
+        "e3763ed7-8ad3-4745-b701-05b382107d31",
+        "1e281379-0c9f-4f0d-bbaa-22e0ff0f42e6",
+        "b314f320-db7e-4dd0-8d5c-3711851fe1d8",
+        "e62b8fe5-84cd-49fc-a476-e2f4bd818302",
+        "50175fd8-afc9-47ef-b3e1-c486da31df31",
+        "54aa175b-a503-4dae-9959-ebee85b5414e",
+        "0cb9ee5f-a033-40ad-9b6a-f56dad538936",
+        "a3e2d3d6-69e8-44d4-b6b8-2f66db7a2d48"
+    ],
+    "filterType": "GMSound",
+    "folderName": "Hit_Sound_Effects",
+    "isDefaultView": false,
+    "localisedFolderName": ""
+}

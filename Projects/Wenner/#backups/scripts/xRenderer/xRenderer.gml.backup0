@@ -1,0 +1,11 @@
+// 2021-09-19 08:36:22
+function xRenderer() constructor
+{
+	static Draw	= function ()
+	{
+		
+	}
+	
+	
+	
+}

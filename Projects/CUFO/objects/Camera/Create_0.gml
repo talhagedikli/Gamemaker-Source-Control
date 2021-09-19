@@ -17,12 +17,12 @@ height = base_height;
 camX = 0;
 camY = 0;
 //set window size
-//window_set_size(viewWidth * windowScale, viewHeight * windowScale);
+window_set_size(viewWidth * windowScale, viewHeight * windowScale);
 alarm[0] = 1;
 
 //re-set surface and gui 
-//surface_resize(application_surface, viewWidth * windowScale, viewHeight * windowScale);
-display_set_gui_size(base_width, base_height);
+surface_resize(application_surface, viewWidth * windowScale, viewHeight * windowScale);
+
 
 
 //shake

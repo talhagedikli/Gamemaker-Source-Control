@@ -3,7 +3,7 @@ viewWidth		=	1920/3;
 viewHeight		=	1080/3;
 windowScale		=	2;
 
-following		= instance_exists(objPlayer) ? objPlayer : noone;
+following		= instance_exists(objExplorer) ? objExplorer : noone;
 
 //spd variables
 followSpd		= 0.1;

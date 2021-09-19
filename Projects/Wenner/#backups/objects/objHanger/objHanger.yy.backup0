@@ -1,0 +1,35 @@
+// 2021-09-02 13:41:39
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+sprite_index = sprBlock;
+uses_physics = false;
+
+#event create
+image_blend = c_aqua;
+hang_timer = new Timer();
+time = 0;
+bt_root = new BTreeRoot(id);
+
+hang_timer.start(60);
+
+// --- 
+var _selector_root = new BTreeSelector();
+var _sequence_normal = new BTreeSequence();
+var _alarm_checker = new TaskAlarmChecker(hang_timer);
+var _show_here = new TaskShowhere();
+////var _chase_in_range = new TaskInstanceInRange(o_mouse_follower, 200);
+//var _chase_behave = new TaskChaseInstance(o_mouse_follower, 2.5, 400, 64);
+//var _hit = new TaskMeleeHitTarget(o_mouse_follower, 1.5);
+
+
+_sequence_normal.ChildAdd(_alarm_checker);
+_sequence_normal.ChildAdd(_show_here);
+bt_root.ChildAdd(_sequence_normal);
+
+
+
+
+
+
+#event step
+

@@ -1,0 +1,77 @@
+// 2021-09-02 13:47:51
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+sprite_index = sprBlock;
+uses_physics = false;
+
+#event create
+motion			= new Vector2(0, 0);
+grav			= 0.1;
+image_blend		= C_CRIMSON;
+
+state = new xState();
+applyMotion = function()
+{
+	x += motion.x;
+	y += motion.y;
+}
+state.default_before(function ()
+{
+});
+state.add("move", {
+	enter: function()
+	{
+		// show("entered move");
+	},
+	step: function()
+	{
+		// state.change("dash");
+		if (InputManager.keyRight)
+		{
+			motion.x = 1;
+		}
+		else if (InputManager.keyLeft)
+		{
+			motion.x = -1;
+		}
+		else
+		{
+			motion.x = 0;
+		}
+		
+	},
+	leave: function()
+	{
+		// show("leaving move")
+	}
+});
+state.add("dash", {
+	enter: function()
+	{
+		// show("entered dash");
+	},
+	step: function()
+	{
+		// state.change("move");
+	},
+	leave: function()
+	{
+		// show("leaving dash")
+	}
+});
+state.default_after(function ()
+{
+});
+
+state.init("move");
+
+#event step
+state.call("step", true);
+applyMotion();
+
+#event cleanup
+// hurtbox.destroy();
+// punch.destroy();
+
+
+

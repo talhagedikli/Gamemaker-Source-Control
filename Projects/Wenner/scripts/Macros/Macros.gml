@@ -33,6 +33,8 @@
 #macro after			; break; })	  
 //#macro func				function()
 
+#macro SHOW_COLLISIONS		true
+#macro ACTIVATE_COLLISIONS	true
 
 //defer {
 //	show("second");

@@ -1,0 +1,50 @@
+// 2021-09-02 10:42:53
+function TaskInstanceInRange(obj, range) : BTreeLeaf() constructor {
+	name = "Task Instance In Range";
+	object_find = obj;
+	range_limit = range;
+	
+	instance_ref = noone;
+
+	/// @override
+	static Init = function(){
+		instance_ref = instance_find(object_find, 0);	
+	}
+	
+	/// @override
+	static Process = function(){
+		if(instance_exists(instance_ref) && point_distance(black_board_ref.user.x, black_board_ref.user.y, instance_ref.x, instance_ref.y) <= range_limit)
+			return BTStates.Success;
+		else 
+			return BTStates.Failure;
+	}
+}
+function TaskAlarmChecker(_timer) : BTreeLeaf() constructor {
+	name = "Task Instance In Range";
+	timer = _timer;
+	
+	/// @override
+	static Process = function()
+	{
+		if (black_board_ref.user.time > 60)
+		{
+			return BTStates.Success;
+		}
+		else
+		{
+			black_board_ref.user.time++;
+			return BTStates.Running;
+		}
+	}
+}
+
+function TaskShowhere() : BTreeLeaf() constructor 
+{
+	static Process = function()
+	{
+		black_board_ref.user.time = 0;
+		here;
+		return BTStates.Success;
+	}
+}
+

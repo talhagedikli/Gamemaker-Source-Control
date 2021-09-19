@@ -1,4 +1,4 @@
-// 2021-08-14 17:35:24
+// 2021-09-17 22:31:33
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -7,6 +7,9 @@ uses_physics = false;
 #event create
 global.clock = new iota_clock();
 global.clock.set_update_frequency(60);
+
+
+
 
 #event step
 global.clock.tick();
