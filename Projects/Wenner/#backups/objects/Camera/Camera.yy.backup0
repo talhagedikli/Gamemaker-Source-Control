@@ -1,4 +1,4 @@
-// 2021-08-14 17:34:12
+// 2021-09-20 13:10:20
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -10,7 +10,9 @@ viewWidth		=	1920/3;
 viewHeight		=	1080/3;
 windowScale		=	2;
 
-following		= instance_exists(objPlayer) ? objPlayer : noone;
+arr = [0, 1, 2];
+
+following		= instance_exists(objExplorer) ? objExplorer : noone;
 
 //spd variables
 followSpd		= 0.1;

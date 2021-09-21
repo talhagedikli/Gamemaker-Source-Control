@@ -1,0 +1,153 @@
+/// @description 
+#region Methods
+system	= _system;
+type	= part_type_create();
+time	= 0;
+
+Shape = function(_shape)
+{
+	part_type_shape(type, _shape);
+}
+
+Sprite = function(_spr, _anim, _stretch, _random)
+{
+	part_type_sprite(type, _spr, _anim, _stretch, _random);
+}
+
+Size = function(sz_min, sz_max = sz_min, sz_increase, sz_wiggle)
+{
+	part_type_size(type, sz_min, sz_max, sz_increase, sz_wiggle);
+}
+
+Scale = function(_xscl, _yscl = _xscl)
+{
+	part_type_scale(type, _xscl, _yscl);
+}
+
+Speed = function(spd_min, spd_max, spd_inc, spd_wig)
+{
+	part_type_speed(type, spd_min, spd_max, spd_inc, spd_wig);
+}
+
+Direction = function(dir_min, dir_max, dir_incr, dir_wig)
+{
+	part_type_direction(type, dir_min, dir_max, dir_incr, dir_wig);
+}
+
+Gravity = function(grv_amount, grv_dir)
+{
+	part_type_gravity(type, grv_amount, grv_dir);
+}
+
+Orientation = function(ang_min, ang_max, ang_incr, ang_wig, ang_relative)
+{
+	part_type_orientation(type, ang_min, ang_max, ang_incr, ang_wig, ang_relative);
+}
+
+ColourMix = function(col1, col2)
+{
+	part_type_color_mix(type, col1, col2);
+}
+
+ColourRGB = function(rmin, rmax, gmin, gmax, bmin, bmax)
+{
+	part_type_color_rgb(type, rmin, rmax, gmin, gmax, bmin, bmax);
+}
+
+ColourHSV = function(hmin, hmax, smin, smax, vmin, vmax)
+{
+	part_type_color_hsv(type, hmin, hmax, smin, smax, vmin, vmax);
+}
+
+Colour = function(col1, col2 = col1, col3 = col1)
+{
+	part_type_color3(type, col1, col2, col3);
+}
+
+Alpha = function(a1, a2 = a1, a3 = a1)
+{
+	part_type_alpha3(type, a1, a2, a3);
+}
+
+Blend = function(additive)
+{
+	part_type_blend(type, additive);
+}
+
+Life = function(l_min, l_max = l_min)
+{
+	part_type_life(type, l_min, l_max);
+}
+
+Step = function(stp_num, stp_type)
+{
+	part_type_step(type, stp_num, stp_type);
+}
+
+Death = function(death_num, death_type)
+{
+	part_type_death(type, death_num, death_type);
+}
+
+Emit = function(_ind, _x, _y, _num, ticksize)
+{
+	time += 1 / ticksize;
+	if (time >= 1)
+	{
+		time = 0;
+		part_particles_create(_ind, _x, _y, type, _num);
+	}
+}
+
+PTClear = function()
+{
+	part_type_clear(type);
+}
+
+PSClear = function()
+{
+	part_system_clear(system);
+}
+
+Destroy = function()
+{
+	if (part_system_exists(system))
+	{
+		part_system_destroy(system);
+	}
+	if (part_type_exists(type))
+	{
+		part_type_destroy(type);
+	}
+}
+#endregion
+/// @description
+global.psEffects = part_system_create_layer("Effects", true);
+
+#region Exhaust
+	var _p = part_type_create();
+	
+	part_type_shape(_p, pt_shape_pixel);
+	part_type_life(_p, 40, 50);
+	part_type_scale(_p, 1.5, 1.5);
+	
+	part_type_alpha3(_p, 0.7, 1, 0);
+	global.ptExhaust = _p;
+	#endregion
+	
+	
+	var p = new xParticle(global.psEffects);
+	p.Shape(pt_shape_pixel).Life(40, 50).Scale(1.5).Alpha3(0.7, 1, 0);
+	
+#region Ghost Dash
+	var _p = part_type_create();
+	
+	part_type_sprite(_p, sprite_index, false, false, false);
+	part_type_life(_p, 15, 20);
+	
+	part_type_alpha3(_p, 0.7, 1, 0);
+	global.ptGhostDash = _p;
+	//set as death
+	//part_type_death(global.ptGhostDash, 1, global.ptExhaust);
+	
+#endregion

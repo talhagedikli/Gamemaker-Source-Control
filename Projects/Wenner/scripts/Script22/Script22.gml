@@ -41,3 +41,27 @@ function lengthdir(len = new Vector2(0), dir = new Vector2(0))
 {
 	return new Vector2(lengthdir_x(len.x, dir.x), lengthdir_y(len.y, dir.y));
 }
+
+function array_shuffled(arr)
+{
+	var len = array_length(arr);
+	for (var i = 0; i < len; i++)
+	{
+		var r = irandom(len-1);
+		
+		var arr1 = arr[i];
+		var arr2 = arr[r];
+		
+		arr[i] = arr2;
+		arr[r] = arr1;
+	}
+	return arr;
+}
+
+function array_shuffle(arr)
+{
+	array_sort(arr, function() {
+		return irandom_range(-1, 1);
+	});
+}
+

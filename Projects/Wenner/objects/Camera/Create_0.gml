@@ -3,6 +3,8 @@ viewWidth		=	1920/3;
 viewHeight		=	1080/3;
 windowScale		=	2;
 
+arr = [0, 1, 2];
+
 following		= instance_exists(objExplorer) ? objExplorer : noone;
 
 //spd variables
