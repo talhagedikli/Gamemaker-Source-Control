@@ -153,7 +153,7 @@
   ],
   "parent": {
     "name": "Animation Curves",
-    "path": "folders/Animation Curves.yy",
+    "path": "folders/Assets/Animation Curves.yy",
   },
   "resourceVersion": "1.2",
   "name": "acTweens",

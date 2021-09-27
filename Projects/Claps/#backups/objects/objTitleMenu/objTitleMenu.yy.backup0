@@ -1,0 +1,111 @@
+// 2021-09-25 17:49:31
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create 
+
+enum menus {
+	main,
+	start,
+	settings,
+	quit,
+	length
+}
+
+writer = new Typewriter("");
+alphaxTimer	= new xTimer();
+alphaxTimer.start(180, true);
+
+menu = [
+	["START", "SETTINGS", "QUIT"],		// Main
+	["1 PLAYER", "2 PLAYERS", "BACK"],			// Start
+	["VOLUME", "RESOLUTION", "BACK"],	// Settings
+	[ ]									// Quit
+];
+
+
+menuLevel		= menus.main;
+lastMenuLevel	= menuLevel;
+pos = 0;
+
+#event step 
+var vmove		= mgrInput.p.keyDownPressed - mgrInput.p.keyUpPressed;
+var keyaccept	= keyboard_check_pressed(vk_space);
+var menul		= array_length(menu[menuLevel])
+
+if (abs(mgrInput.p.verticalInput) or keyaccept) alphaxTimer.reset();
+pos	+= vmove;
+if (pos >= menul) { pos = 0 };
+if (pos < 0) { pos = menul - 1 };
+
+if (menuLevel != lastMenuLevel)
+{
+	writer.reset();
+	lastMenuLevel = menuLevel;
+}
+
+alphaxTimer.on_timeout(function()
+{
+	alphaxTimer.reset();
+});
+
+if (menuLevel == menus.main) {
+	if (pos == 0 && keyaccept) {
+		menuLevel = menus.start;
+	}
+	
+	if (pos == 1 && keyaccept) {
+		menuLevel = menus.settings;
+		pos = 0;
+	}
+	if (pos == 2 && keyaccept) {
+		game_end();
+	}
+} 
+else if (menuLevel == menus.settings) {
+	if (pos == 0 && keyaccept) {
+	}
+	
+	if (pos == 1 && keyaccept) {
+
+	}
+	if (pos == 2 && keyaccept) {
+		menuLevel = menus.main;
+		pos = 0;
+	}
+}
+else if (menuLevel == menus.start) {
+	if (pos == 0 && keyaccept) {
+		room_goto(rWorld);
+	}
+	
+	if (pos == 1 && keyaccept) {
+
+	}
+	if (pos == 2 && keyaccept) {
+		menuLevel = menus.main;
+		pos = 0;
+	}
+}
+
+#event draw_gui
+var gw = display_get_gui_width(), gh = display_get_gui_height();
+var length	= array_length(menu[menuLevel]);
+var midX	= gw / 2;
+var midy	= gh / 4;
+
+var i = 0; repeat (length) 
+{
+	
+	var c = pos == i ? C_CRIMSON : c_white;
+	var a = (pos == i ? 1 - dsin(alphaxTimer.time) : 1) + 0.2;
+	var t = menu[menuLevel][i];
+	draw_set_font(fntText);
+	draw_set_aling(fa_center, fa_center);
+	draw_set_blend(c, a);
+	draw_text(midX, midy + i * (string_height("Test") * 3 + 1), writer.write(t));
+	draw_set_blend(c_white, 1);
+
+	i++;	
+}

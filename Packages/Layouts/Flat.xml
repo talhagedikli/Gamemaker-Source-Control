@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ActiveConfig="Default" Platform="Windows" Runtime="VM" Device="Default">
+	<Desktop x="0" y="23" width="1920" height="1009" id="19" title="Claps - GameMaker Studio 2-Beta*" windowState="Maximized">
+		<Workspaces>
+			<Workspace active="True" chain="True" title="Workspace 1" localise_title="Workspace_TabTitle" localise_arguments="[&#xD;&#xA;    &quot;1&quot;&#xD;&#xA;]" workspace_offset="[824, 3087]" workspace_scale="1">
+				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
+					<DocumentWindow columns="1" fullscreen="False" activeTab="0" isActive="False" w="899.8788dpi_px" h="599.2728dpi_px">
+						<Script column="0" file="${project_dir}\scripts\string_from_file\string_from_file.gml" resource="string_from_file" overridden_title="False" view_readonly="False" />
+						<WorkspaceChain left="930.9091dpi_px" top="1778.424dpi_px" />
+					</DocumentWindow>
+				</Module>
+				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
+					<DocumentWindow columns="1" fullscreen="False" activeTab="0" isActive="False" w="899.8788dpi_px" h="599.2728dpi_px">
+						<Script column="0" file="${project_dir}\scripts\snap_string\snap_string.gml" resource="snap_string" overridden_title="False" view_readonly="False" />
+						<WorkspaceChain left="930.9091dpi_px" top="2445.576dpi_px" />
+					</DocumentWindow>
+				</Module>
+			</Workspace>
+			<Workspace active="False" chain="False" title="rTitle" localise_title="" workspace_offset="[0, 0]" workspace_scale="1">
+				<Module Command="open_room_editor" WorkspaceOwner="true">
+					<Room id="rTitle">
+						<RoomEditArea>
+							<PanArea zoom="1" pan="[0, 0]" />
+							<Properties />
+							<Selected>
+								<Layer GUID="Game" />
+							</Selected>
+						</RoomEditArea>
+					</Room>
+				</Module>
+			</Workspace>
+			<Workspace active="False" chain="False" title="rWorld" localise_title="" workspace_offset="[0, 0]" workspace_scale="1">
+				<Module Command="open_room_editor" WorkspaceOwner="true">
+					<Room id="rWorld">
+						<RoomEditArea>
+							<PanArea zoom="0.4329795" pan="[-670.8856, -372.8058]" />
+							<Properties />
+							<Selected />
+						</RoomEditArea>
+					</Room>
+				</Module>
+			</Workspace>
+		</Workspaces>
+		<Dock state="Expanded" type="eLeft" restore_size="315dpi_px" active_tab="0">
+			<DockTab localise_title="RoomEditor_DockTab" cell_sizes="[403,346,250]" layout_id="room_editor_tab" layout_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" />
+		</Dock>
+		<Dock state="Expanded" type="eRight" restore_size="305dpi_px" active_tab="0">
+			<DockTab localise_title="ResourceTree_Title" cell_sizes="[883]" layout_id="dock_tab_1" layout_guid="37f18c5e-7943-4f45-8d44-69decf609505">
+				<Module Command="open_asset_browser">
+					<AssetBrowser sort="Custom" foldersFirst="True" zoom="100">
+						<Window left="" right="" top="" bottom="" width="370dpi_px" height="463dpi_px" flags="Default" title="Asset Browser" localise_title="AssetBrowser_Title" />
+					</AssetBrowser>
+				</Module>
+			</DockTab>
+		</Dock>
+		<Dock state="Collapsed" type="eBottom" restore_size="184.2424dpi_px" active_tab="0">
+			<DockTab localise_title="OutputPanel_Output" cell_sizes="[1000]" layout_id="dock_tab_1" layout_guid="fb126be6-dc4c-4def-bc48-73654e783d95">
+				<Module Command="open_output_panel">
+					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Output" localise_title="OutputPanel_Title" />
+				</Module>
+			</DockTab>
+			<DockTab localise_title="OutputPanel_SearchResults" cell_sizes="[1000]" layout_id="dock_tab_2" layout_guid="85109376-ead9-4398-ab85-2cec890d74a7">
+				<Module Command="open_search_output_panel">
+					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Search Results" localise_title="OutputPanel_SearchResults" />
+				</Module>
+			</DockTab>
+			<DockTab localise_title="OutputPanel_SourceControl" cell_sizes="[1000]" layout_id="dock_tab_3" layout_guid="5d5ad8f0-dc67-40e2-9f78-d640f649aeb1">
+				<Module Command="open_sc_output_panel">
+					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Source Control" localise_title="OutputPanel_SourceControl" />
+				</Module>
+			</DockTab>
+			<DockTab localise_title="Breakpoints" cell_sizes="[1000]" layout_id="dock_tab_4" layout_guid="a7f9ed54-3077-476e-ac49-c51808d228f2">
+				<Module Command="open_breakpoint_mgr">
+					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Breakpoints" localise_title="Breakpoints" />
+				</Module>
+			</DockTab>
+			<DockTab localise_title="CompileErrors" cell_sizes="[1000]" layout_id="dock_tab_5" layout_guid="71cb8780-e25f-4b39-8d22-25d8aa86e41e">
+				<Module Command="show_compile_errors">
+					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Compile Errors" localise_title="CompileErrors" />
+				</Module>
+			</DockTab>
+			<DockTab localise_title="SyntaxErrors" cell_sizes="[1000]" layout_id="dock_tab_6" layout_guid="d4bd92ef-b277-4185-ab38-8c62ade164eb">
+				<Module Command="show_syntax_errors">
+					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Syntax Errors" localise_title="SyntaxErrors" />
+				</Module>
+			</DockTab>
+		</Dock>
+	</Desktop>
+	<Modules>
+		<YoYoStudio.Plugins.CorePlugins.RoomEditorModule>
+			<RoomEditor>
+				<LayerProperties left="20dpi_px" right="" top="" bottom="350dpi_px" width="260dpi_px" height="330dpi_px" flags="Default" title=" Layer Properties - rWorld" localise_title="RoomEditor_LayerProperties" dock_type="eLeft" dock_tab_index="0" dock_list_index="1" dock_proportion="1.038202" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
+				<Layers left="340dpi_px" right="" top="" bottom="270dpi_px" width="320dpi_px" height="250dpi_px" flags="CloseButton, MinimizeButton, ResizeButton" title="Layers - rWorld" localise_title="RoomEditor_Layers" dock_type="eLeft" dock_tab_index="0" dock_list_index="0" dock_proportion="1.210112" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
+				<RoomProperties left="10dpi_px" right="" top="125dpi_px" bottom="" width="300dpi_px" height="240dpi_px" flags="Default" title="Properties - rWorld" localise_title="RoomEditor_RoomProperties" dock_type="eLeft" dock_tab_index="0" dock_list_index="2" dock_proportion="0.7505797" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
+			</RoomEditor>
+		</YoYoStudio.Plugins.CorePlugins.RoomEditorModule>
+	</Modules>
+	<FoldRegions>
+		<FoldState docFile="scripts/Script22/Script22.gml" foldedRegions="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54" />
+	</FoldRegions>
+</Project>

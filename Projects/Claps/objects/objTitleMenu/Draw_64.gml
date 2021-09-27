@@ -1,4 +1,4 @@
-var gw = GUI_W, gh = GUI_H;
+var gw = display_get_gui_width(), gh = display_get_gui_height();
 var length	= array_length(menu[menuLevel]);
 var midX	= gw / 2;
 var midy	= gh / 4;

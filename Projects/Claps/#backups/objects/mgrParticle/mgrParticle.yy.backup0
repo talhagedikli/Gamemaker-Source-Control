@@ -1,0 +1,36 @@
+// 2021-09-25 12:08:56
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+persistent = true;
+uses_physics = false;
+
+#event create
+surPS = -1;
+
+#region Systems
+global.PS = part_system_create();
+part_system_depth(global.PS, -100002);
+part_system_automatic_update(global.PS, true);
+part_system_automatic_draw(global.PS, false);
+#endregion
+
+#event draw
+if (!surface_exists(surPS))
+{
+	surPS = surface_create(mgrCamera.viewWidth, mgrCamera.viewHeight);
+}
+else
+{
+	surface_set_target(surPS);
+	part_system_drawit(global.PS);
+	surface_reset_target();
+}
+
+
+
+#event cleanup
+part_system_destroy(global.PS);
+
+surface_free_safe(surPS);
+
+

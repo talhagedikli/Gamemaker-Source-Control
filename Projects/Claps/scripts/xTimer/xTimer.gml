@@ -79,7 +79,7 @@ function xTimer() constructor
 	{
 		return active;
 	}
-	global.gameplayClock.add_cycle_method(function() 
+	global.gpClock.add_cycle_method(function() 
 	{
 		run();
 	});

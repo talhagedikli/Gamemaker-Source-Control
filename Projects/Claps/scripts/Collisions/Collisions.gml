@@ -1,34 +1,34 @@
 /// @description check 1 pixel collisions
 //
-function check_collisions_classic() {
+function check_collisions_classic(_motion) {
 	//horizontal collision
-	if (tile_meeting(x+motion.x, y, "Matrix"))
+	if (tile_meeting(x+_motion.x, y, "Matrix"))
 	{
-		while (!tile_meeting(x+sign(motion.x), y, "Matrix"))
+		while (!tile_meeting(x+sign(_motion.x), y, "Matrix"))
 		{
-			x = x + sign(motion.x);
+			x = x + sign(_motion.x);
 		}
-		motion.x = 0;
+		_motion.x = 0;
 	}
-	//applying motion.x
-	x = x + motion.x;
+	//applying _motion.x
+	x = x + _motion.x;
 
 	//vertical collision
-	if (tile_meeting(x, y+motion.y, "Matrix"))
+	if (tile_meeting(x, y+_motion.y, "Matrix"))
 	{
-		while (!tile_meeting(x, y+sign(motion.y), "Matrix"))
+		while (!tile_meeting(x, y+sign(_motion.y), "Matrix"))
 		{
-			y = y + sign(motion.y);
+			y = y + sign(_motion.y);
 		}
-		motion.y = 0;
+		_motion.y = 0;
 	}
-	//applying motion.y
-	y = y + motion.y;
+	//applying _motion.y
+	y = y + _motion.y;
 
 }
 
 
-function check_collisions_pixel_perfect(_object = objBlock) { /// @description the pixel perfect collisions
+function check_collisions_pixel_perfect(_object = objBlock, _motion) { /// @description the pixel perfect collisions
 
 	//I think this is better calculation for single mask
 	var sprite_bbox_top		= sprite_get_bbox_top(sprite_index)		- sprite_get_yoffset(sprite_index);
@@ -37,41 +37,41 @@ function check_collisions_pixel_perfect(_object = objBlock) { /// @description t
 	var sprite_bbox_left	= sprite_get_bbox_left(sprite_index)	- sprite_get_xoffset(sprite_index);
 
 	//Applying horizontal speed if there is no collision with block
-	x += motion.x;
+	x += _motion.x;
 	//Horizontal collisions
-	if place_meeting(x + sign(motion.x), y, _object) {
-		var wall = instance_place(x + sign(motion.x), y, _object);
-		if (motion.x > 0)
+	if place_meeting(x + sign(_motion.x), y, _object) {
+		var wall = instance_place(x + sign(_motion.x), y, _object);
+		if (_motion.x > 0)
 		{ //right
 			x = (wall.bbox_left - 1) - sprite_bbox_right;
 		} 
-		else if (motion.x < 0)
+		else if (_motion.x < 0)
 		{ //left
 			x = (wall.bbox_right + 1) - sprite_bbox_left;
 		}
-		motion.x = 0;
+		_motion.x = 0;
 	}
 
 	//Applying vertical speed if there is no collision with block
-	y += motion.y;
+	y += _motion.y;
 	//Vertical collisions
-	if place_meeting(x, y + sign(motion.y), _object) {
-		var wall = instance_place(x, y + sign(motion.y), _object);
-		if (motion.y > 0)
+	if place_meeting(x, y + sign(_motion.y), _object) {
+		var wall = instance_place(x, y + sign(_motion.y), _object);
+		if (_motion.y > 0)
 		{ //down
 			y = (wall.bbox_top - 1) - sprite_bbox_bottom;
 		}
-		else if (motion.y < 0)
+		else if (_motion.y < 0)
 		{ //up
 			y = (wall.bbox_bottom + 1) - sprite_bbox_top;
 		}
-		motion.y = 0;
+		_motion.y = 0;
 	}
 
 
 }
 
-function check_collisions_tile_perfect() { /// @description the pixel perfect collisions
+function check_collisions_tile_perfect(_motion) { /// @description the pixel perfect collisions
 
 	//I think this is better calculation for single mask
 	var sprite_bbox_top		= sprite_get_bbox_top(sprite_index)		- sprite_get_yoffset(sprite_index);
@@ -80,35 +80,35 @@ function check_collisions_tile_perfect() { /// @description the pixel perfect co
 	var sprite_bbox_left	= sprite_get_bbox_left(sprite_index)	- sprite_get_xoffset(sprite_index);
 	
 	//Applying horizontal speed if there is no collision with block
-	x += motion.x;
+	x += _motion.x;
 	//Horizontal collisions
-	if tile_meeting(x + sign(motion.x), y, "TileCollision") {
-		var wall = tilemap_get_at_pixel(tile, x + sign(motion.x), y);
-		if (motion.x > 0)
+	if tile_meeting(x + sign(_motion.x), y, "CollidibleTile") {
+		var wall = tilemap_get_at_pixel(tile, x + sign(_motion.x), y);
+		if (_motion.x > 0)
 		{ //right
 			x = (wall.bbox_left - 1) - sprite_bbox_right;
 		} 
-		else if (motion.x < 0)
+		else if (_motion.x < 0)
 		{ //left
 			x = (wall.bbox_right + 1) - sprite_bbox_left;
 		}
-		motion.x = 0;
+		_motion.x = 0;
 	}
 
 	//Applying vertical speed if there is no collision with block
-	y += motion.y;
+	y += _motion.y;
 	//Vertical collisions
-	if tile_meeting(x, y + sign(motion.y), "Matrix") {
-		var wall = tilemap_get_at_pixel(tile, x, y + sign(motion.y));
-		if (motion.y > 0)
+	if tile_meeting(x, y + sign(_motion.y), "CollidibleTile") {
+		var wall = tilemap_get_at_pixel(tile, x, y + sign(_motion.y));
+		if (_motion.y > 0)
 		{ //down
 			y = (wall.bbox_top - 1) - sprite_bbox_bottom;
 		}
-		else if (motion.y < 0)
+		else if (_motion.y < 0)
 		{ //up
 			y = (wall.bbox_bottom + 1) - sprite_bbox_top;
 		}
-		motion.y = 0;
+		_motion.y = 0;
 	}
 
 

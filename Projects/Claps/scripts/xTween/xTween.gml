@@ -112,7 +112,7 @@ function xTween(_type = TWEENTYPE.LINEAR) constructor
 		return self;
 	}
 	
-	global.gameplayClock.add_cycle_method(function() 
+	global.gpClock.add_cycle_method(function() 
 	{
 		run();
 	});

@@ -1,24 +1,23 @@
-global.gameplayClock = new iota_clock();
-global.gameplayClock.set_update_frequency(60);
+global.gpClock = new iota_clock();
+global.gpClock.set_update_frequency(60);
 
 global.uiClock	= new iota_clock();
 global.uiClock.set_update_frequency(60);
 
 #region Create Default Objects
-instance_create_layer(x, y, layer, Camera);
-instance_create_layer(x, y, layer, BackgroundManager);
-instance_create_layer(x, y, layer, InputManager);
-instance_create_layer(x, y, layer, RoomManager);
-
-instance_create_layer(x, y, layer, test);
+Manager = 
+{
+	Save		: instance_create_layer(x, y, layer, mgrSave),
+	Input		: instance_create_layer(x, y, layer, mgrInput),
+	Camera		: instance_create_layer(x, y, layer, mgrCamera),
+	Room		: instance_create_layer(x, y, layer, mgrRoom),
+	Particle	: instance_create_layer(x, y, layer, mgrParticle),
+	Background	: instance_create_layer(x, y, layer, mgrBackground)
+}
+//instance_create_layer(x, y, layer, mgrSave);
+//instance_create_layer(x, y, layer, mgrInput);
+//instance_create_layer(x, y, layer, mgrCamera);
+//instance_create_layer(x, y, layer, mgrRoom);
+//instance_create_layer(x, y, layer, mgrParticle);
+//instance_create_layer(x, y, layer, mgrBackground);
 #endregion
-
-global.psTest = part_system_create_layer(layer, true);
-ptTest = new xParticle(global.psTest);
-ptTest.Shape(pt_shape_pixel);
-ptTest.Gravity(0.1, 270);
-ptTest.Life(60);
-
-time = 0;
-timer = new xTimer();
-timer.start(200);

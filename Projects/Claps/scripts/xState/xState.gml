@@ -5,6 +5,7 @@ function xState(_first, _owner = other.id) constructor
 	owner	= _owner;
 	inited	= false;
 	first	= _first;
+	base	= {};
 	with (owner)
 	{
 		__state			= {};
@@ -51,6 +52,13 @@ function xState(_first, _owner = other.id) constructor
 		}
 		return self;
 	}
+	// add	= method(owner, function(name, struct)
+	// {
+	// 	__states[$ name]			= struct;
+	// 	__states[$ name][$ "name"]	= name;
+	// 	return self;
+	// });
+
 	// Inits the function and runs first code
 	static init = function(name)
 	{
@@ -158,8 +166,7 @@ function xState(_first, _owner = other.id) constructor
 	// Get number of states
 	static get_state_length = function()
 	{
-		var size = variable_struct_names_count(owner.__states);
-		return size;
+		return variable_struct_names_count(owner.__states);
 	}
 	// Get array includes all states name in string (in a row you add them)
 	static get_state_array = function()

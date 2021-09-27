@@ -20,7 +20,7 @@ function SnowState(_initState) constructor {
 	}
 	
 	var _execEnter = (argument_count > 1) ? argument[1] : true;
-	var _owner = other;
+	var _owner = other.id;
 	
 	__this = {};
 	

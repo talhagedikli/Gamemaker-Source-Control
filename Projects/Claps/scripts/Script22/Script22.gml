@@ -61,12 +61,11 @@ function ds_list_safe(_list, _value)
 	}
 	return true;
 }
-#endregion
 
 #region Foreach
 #macro as , function
 /// @function foreach(array as (element, [index])
-function foreach(array, func) { 
+function foreach_array(array, func) { 
     var size = array_length(array);
 	ttt = method(self, func);
 	for (var i = 0; i < size; i++) 
@@ -154,20 +153,33 @@ function foreach_struct(struct, func) {
     }
 }
 #endregion
+#endregion
 
 #region Functions
+// Set surface free safely
+function surface_free_safe(sur)
+{
+	if (surface_exists(sur))
+	{
+		surface_free(sur);
+	}
+}
+
+// Quick set halign and valign
 function draw_set_aling(halign, valign)
 {
 	draw_set_halign(halign);
 	draw_set_valign(valign);
 }
 
+// Quick set color and alpha
 function draw_set_blend(color, alpha)
 {
 	draw_set_color(color);
 	draw_set_alpha(alpha);
 }
 
+// lengthdir_x and lengthdir_y together with vectors
 function lengthdir(len = new Vector2(0), dir = new Vector2(0)) 
 {
 	return new Vector2(lengthdir_x(len.x, dir.x), lengthdir_y(len.y, dir.y));
@@ -264,7 +276,6 @@ function flerp(val1, val2, amount, epsilon = EPSILON)
 {
 	return abs(val1 - val2) > epsilon ? lerp(val1, val2, amount) : val2;
 }
-
 #endregion
 
 #region Constructors
@@ -292,5 +303,26 @@ function Typewriter(_text, _spd = 0.25) constructor
 		text = _text;
 		char = 1;
 	}
+}
+#endregion
+
+#region Save&Load
+/// Saving a string as a buffer
+function save_string(_string, _filename) 
+{
+	var _buffer = buffer_create(string_byte_length(_string) + 1, buffer_fixed, 1);
+	buffer_write(_buffer, buffer_string, _string);
+	buffer_save(_buffer, _filename);
+	buffer_delete(_buffer);
+}
+
+/// Loading a string from a buffer
+function load_string(_filename) 
+{
+	var _buffer = buffer_load(_filename);
+	var _string = buffer_read(_buffer, buffer_string);
+
+	buffer_delete(_buffer);
+	return _string;
 }
 #endregion

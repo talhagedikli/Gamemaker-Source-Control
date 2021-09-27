@@ -1,4 +1,4 @@
-// 2021-09-21 18:51:20
+// 2021-09-24 14:25:09
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -7,58 +7,65 @@ uses_physics = false;
 t = new xTimer()
 fsm = new xState("0");
 
-// fsm.add("0", {
-// 	enter: function()
-// 	{
-// 		t.start(120);
-// 	},
-// 	step: function()
-// 	{
-// 		t.on_timeout(function()
-// 		{
-// 			fsm.change("1", function()
-// 			{
-// 				t.reset();
-// 				here;
-// 			})
-// 		})
-// 	}
-// })
+fsm.add("0", {
+	enter: function()
+	{
+		t.start(120);
+			fsm.change("1", function()
+			{
+				t.reset();
+				here;
+			})
+		here;
+	},
+	step: function()
+	{
+		here;
+		t.on_timeout(function()
+		{
+			here;
+			fsm.change("1", function()
+			{
+				t.reset();
+				here;
+			})
+		})
+	}
+})
 
-// fsm.add("1", {
-// 	enter: function()
-// 	{
-// 		show("i am at 1");
-// 		t.reset();
-// 		t.start(300);
-// 	},
-// 	step: function()
-// 	{
-// 		t.on_timeout(function()
-// 		{
-// 			here;
-// 			fsm.change("0", function()
-// 			{
-// 				t.reset();
-// 				show("i am going to be a zero");
-// 			})
-// 		})
-// 	}
-// })
+fsm.add("1", {
+	enter: function()
+	{
+		show("i am at 1");
+		t.reset();
+		t.start(300);
+	},
+	step: function()
+	{
+		t.on_timeout(function()
+		{
+			here;
+			fsm.change("0", function()
+			{
+				t.reset();
+				show("i am going to be a zero");
+			})
+		})
+	}
+})
 
-// fsm.add("2", {
-// 	enter: function()
-// 	{
-// 		show(fsm.get_state_history());
-// 		fsm.change("0", function()
-// 		{
-// 			show("switched");
-// 		});
+fsm.add("2", {
+	enter: function()
+	{
+		show(fsm.get_state_history());
+		fsm.change("0", function()
+		{
+			show("switched");
+		});
 		
-// 	}
-// })
+	}
+})
 
-// fsm.init("0");
 
 
 // fsm = new SnowState("0");
@@ -95,12 +102,11 @@ fsm = new xState("0");
 // 		{
 // 			show("switched");
 // 		});
-		
 // 	}
 // })
 
 
 #event step
-fsm.call("step");
+// fsm.call("step");
 // fsm.step();
 
