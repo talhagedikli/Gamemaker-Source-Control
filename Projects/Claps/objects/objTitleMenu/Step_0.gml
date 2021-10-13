@@ -2,8 +2,10 @@
 var vmove		= mgrInput.p.keyDownPressed - mgrInput.p.keyUpPressed;
 var keyaccept	= keyboard_check_pressed(vk_space);
 var menul		= array_length(menu[menuLevel])
+var rm			= Control.Manager.Room;
+var im			= Control.Manager.Input;
 
-if (abs(mgrInput.p.verticalInput) or keyaccept) alphaxTimer.reset();
+if (abs(im.p.verticalInput) or keyaccept) alphaxTimer.reset();
 pos	+= vmove;
 if (pos >= menul) { pos = 0 };
 if (pos < 0) { pos = menul - 1 };
@@ -46,7 +48,7 @@ else if (menuLevel == menus.settings) {
 }
 else if (menuLevel == menus.start) {
 	if (pos == 0 && keyaccept) {
-		room_goto(rWorld);
+		rm.change(rWorld);
 	}
 	
 	if (pos == 1 && keyaccept) {

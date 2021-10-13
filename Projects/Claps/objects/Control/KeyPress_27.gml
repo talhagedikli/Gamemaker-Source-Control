@@ -1,2 +1,2 @@
 /// @description 
-game_end();
+gameEnd();

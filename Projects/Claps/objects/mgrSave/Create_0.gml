@@ -1,5 +1,5 @@
 /// @description
-fileName = "svHighscore"
+fileName = "save";
 save = function(_rs)
 {
 	var _highscore = max(global.score, global.highScore);

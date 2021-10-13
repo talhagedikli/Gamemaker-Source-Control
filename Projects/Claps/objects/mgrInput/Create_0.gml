@@ -12,6 +12,9 @@ p = {
 	keyDown				: 0,
 	keyUp				: 0,
 	
+	rotateLeft			: 0,
+	rotateRight			: 0,
+	
 	keyRightPressed 	: 0,
 	keyLeftPressed		: 0,
 	keyDownPressed		: 0,
@@ -46,6 +49,9 @@ global.gpClock.add_begin_method(function()
 			keyLeft				= keyboard_check(vk_left);
 			keyDown				= keyboard_check(vk_down);
 			keyUp				= keyboard_check(vk_up);
+			
+			rotateLeft			= keyboard_check(ord("E"));
+			rotateRight			= keyboard_check(ord("Q"));
 
 			keyRightPressed 	= keyboard_check_pressed(ord("D"));
 			keyLeftPressed		= keyboard_check_pressed(ord("A"));
@@ -76,6 +82,9 @@ global.gpClock.add_begin_method(function()
 			keyLeft				= 0;
 			keyDown				= 0;
 			keyUp				= 0;
+			
+			rotateLeft			= 0;
+			rotateRight			= 0;
 		
 			keyRightPressed 	= 0;
 			keyLeftPressed		= 0;

@@ -26,7 +26,6 @@ state.add(room_get_name(rTitle), {	// ----------TITLE
 	{
 	}
 });
-	
 state.add(room_get_name(rWorld), {	// ----------WORLD
 	enter: function() 
 	{
@@ -38,10 +37,11 @@ state.add(room_get_name(rWorld), {	// ----------WORLD
 	{
 	}
 });
-global.gpClock.add_cycle_method(function()
+
+
+global.uiClock.add_cycle_method(function()
 {
 	state.step();
-	checkRoom();
 });
 
 

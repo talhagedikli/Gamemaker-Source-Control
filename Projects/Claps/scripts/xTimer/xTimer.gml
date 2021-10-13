@@ -7,7 +7,7 @@ function xTimer() constructor
 	duration	= 0;
 	loop		= false;
 	tickSize	= 1;
-	/// @func start(duration, [tickSize], [loop]))
+	/// @func start(duration, [loop], [tickSize])
 	static start = function(_duration = infinity, _loop = false, _tickSize = 1)
 	{
 		duration	= _duration;
@@ -25,7 +25,7 @@ function xTimer() constructor
 			if (time >= duration)
 			{
 				done = true;
-				if (loop)	reset();
+				//if (loop)	reset();
 				//else		stop();
 			}
 			else
@@ -46,6 +46,7 @@ function xTimer() constructor
 		if (done)
 		{
 			_func();
+			if (loop) reset();
 		}
 		return self;
 	}

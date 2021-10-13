@@ -1,4 +1,4 @@
-// 2021-09-25 12:08:56
+// 2021-10-02 20:48:25
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -11,8 +11,15 @@ surPS = -1;
 global.PS = part_system_create();
 part_system_depth(global.PS, -100002);
 part_system_automatic_update(global.PS, true);
-part_system_automatic_draw(global.PS, false);
 #endregion
+
+
+global.Particles = {};
+
+with (global.Particles)
+{
+	upper	= new xParticle(global.PS).Shape(pt_shape_flare).Alpha3(0.3, 1, 0.2).Life(30, 50).Gravity(0.03, 90).Scale(0.05).Blend(true).Direction(80, 110, 0, false);
+}
 
 #event draw
 if (!surface_exists(surPS))
@@ -33,4 +40,9 @@ part_system_destroy(global.PS);
 
 surface_free_safe(surPS);
 
-
+foreach(global.Particles, function(val)
+{
+	var t = val.Type();
+	part_type_destroy(t);
+	if (part_type_exists(t)) show("ERROR: part type not destroyed");
+});

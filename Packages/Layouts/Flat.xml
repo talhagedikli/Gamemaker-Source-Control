@@ -2,25 +2,76 @@
 <Project ActiveConfig="Default" Platform="Windows" Runtime="VM" Device="Default">
 	<Desktop x="0" y="23" width="1920" height="1009" id="19" title="Claps - GameMaker Studio 2-Beta*" windowState="Maximized">
 		<Workspaces>
-			<Workspace active="True" chain="True" title="Workspace 1" localise_title="Workspace_TabTitle" localise_arguments="[&#xD;&#xA;    &quot;1&quot;&#xD;&#xA;]" workspace_offset="[824, 3087]" workspace_scale="1">
-				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="False" activeTab="0" isActive="False" w="899.8788dpi_px" h="599.2728dpi_px">
-						<Script column="0" file="${project_dir}\scripts\string_from_file\string_from_file.gml" resource="string_from_file" overridden_title="False" view_readonly="False" />
-						<WorkspaceChain left="930.9091dpi_px" top="1778.424dpi_px" />
-					</DocumentWindow>
+			<Workspace active="False" chain="True" title="Workspace 1" localise_title="Workspace_TabTitle" localise_arguments="[&#xD;&#xA;    &quot;1&quot;&#xD;&#xA;]" workspace_offset="[1204, 6027]" workspace_scale="1">
+				<Module Command="open_object_editor">
+					<ObjectEditor objectName="objTitleMenu" eventsOpen="true" parentOpen="false" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="parent">
+						<WorkspaceChain left="1201.455dpi_px" top="4421.818dpi_px" />
+						<DocumentWindow columns="1" fullscreen="False" activeTab="1" isActive="False" w="0dpi_px" h="598.7097dpi_px" linkIndex="-1">
+							<Script column="0" file="${project_dir}\objects\objTitleMenu\Create_0.gml" resource="objTitleMenu" subResource="0_0" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\objTitleMenu\Step_0.gml" resource="objTitleMenu" subResource="3_0" overridden_title="False" view_readonly="False" />
+						</DocumentWindow>
+					</ObjectEditor>
 				</Module>
-				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="False" activeTab="0" isActive="False" w="899.8788dpi_px" h="599.2728dpi_px">
-						<Script column="0" file="${project_dir}\scripts\snap_string\snap_string.gml" resource="snap_string" overridden_title="False" view_readonly="False" />
-						<WorkspaceChain left="930.9091dpi_px" top="2445.576dpi_px" />
-					</DocumentWindow>
+				<Module Command="open_object_editor">
+					<ObjectEditor objectName="mgrBackground" eventsOpen="true" parentOpen="false" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="parent">
+						<WorkspaceChain left="1201.455dpi_px" top="6425.211dpi_px" />
+					</ObjectEditor>
+				</Module>
+				<Module Command="open_object_editor">
+					<ObjectEditor objectName="mgrParticle" eventsOpen="true" parentOpen="false" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="parent">
+						<WorkspaceChain left="1201.455dpi_px" top="6940.124dpi_px" />
+						<DocumentWindow columns="1" fullscreen="False" activeTab="2" isActive="False" w="0dpi_px" h="598.7097dpi_px" linkIndex="-1">
+							<Script column="0" file="${project_dir}\objects\mgrParticle\Create_0.gml" resource="mgrParticle" subResource="0_0" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\mgrParticle\CleanUp_0.gml" resource="mgrParticle" subResource="12_0" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\mgrParticle\Draw_0.gml" resource="mgrParticle" subResource="8_0" overridden_title="False" view_readonly="False" />
+						</DocumentWindow>
+					</ObjectEditor>
+				</Module>
+				<Module Command="open_object_editor">
+					<ObjectEditor objectName="mgrInput" eventsOpen="true" parentOpen="false" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="parent">
+						<WorkspaceChain left="1201.455dpi_px" top="7608.245dpi_px" />
+						<DocumentWindow columns="1" fullscreen="False" activeTab="1" isActive="False" w="0dpi_px" h="598.7097dpi_px" linkIndex="-1">
+							<Script column="0" file="${project_dir}\objects\mgrInput\Create_0.gml" resource="mgrInput" subResource="0_0" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\mgrInput\Step_1.gml" resource="mgrInput" subResource="3_1" overridden_title="False" view_readonly="False" />
+						</DocumentWindow>
+					</ObjectEditor>
+				</Module>
+				<Module Command="open_object_editor">
+					<ObjectEditor objectName="mgrRoom" eventsOpen="true" parentOpen="false" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="parent">
+						<WorkspaceChain left="1201.455dpi_px" top="5089.939dpi_px" />
+						<DocumentWindow columns="1" fullscreen="False" activeTab="1" isActive="False" w="0dpi_px" h="598.7097dpi_px" linkIndex="-1">
+							<Script column="0" file="${project_dir}\objects\mgrRoom\Create_0.gml" resource="mgrRoom" subResource="0_0" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\mgrRoom\Step_0.gml" resource="mgrRoom" subResource="3_0" overridden_title="False" view_readonly="False" />
+						</DocumentWindow>
+					</ObjectEditor>
+				</Module>
+				<Module Command="open_object_editor">
+					<ObjectEditor objectName="Control" eventsOpen="true" parentOpen="false" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="parent">
+						<WorkspaceChain left="1201.455dpi_px" top="3754.667dpi_px" />
+						<DocumentWindow columns="1" fullscreen="False" activeTab="5" isActive="False" w="0dpi_px" h="598.7097dpi_px" linkIndex="-1">
+							<Script column="0" file="${project_dir}\objects\Control\Create_0.gml" resource="Control" subResource="0_0" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\Control\KeyPress_82.gml" resource="Control" subResource="9_82" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\Control\KeyPress_27.gml" resource="Control" subResource="9_27" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\Control\Draw_64.gml" resource="Control" subResource="8_64" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\Control\Step_0.gml" resource="Control" subResource="3_0" overridden_title="False" view_readonly="False" />
+							<Script column="0" file="${project_dir}\objects\Control\CleanUp_0.gml" resource="Control" subResource="12_0" overridden_title="False" view_readonly="False" />
+						</DocumentWindow>
+					</ObjectEditor>
+				</Module>
+				<Module Command="open_object_editor">
+					<ObjectEditor objectName="mgrSave" eventsOpen="true" parentOpen="false" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="parent">
+						<WorkspaceChain left="1201.455dpi_px" top="5758.061dpi_px" />
+						<DocumentWindow columns="1" fullscreen="False" activeTab="0" isActive="False" w="0dpi_px" h="598.7097dpi_px" linkIndex="-1">
+							<Script column="0" file="${project_dir}\objects\mgrSave\Create_0.gml" resource="mgrSave" subResource="0_0" overridden_title="False" view_readonly="False" />
+						</DocumentWindow>
+					</ObjectEditor>
 				</Module>
 			</Workspace>
-			<Workspace active="False" chain="False" title="rTitle" localise_title="" workspace_offset="[0, 0]" workspace_scale="1">
+			<Workspace active="True" chain="False" title="rTitle" localise_title="" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="open_room_editor" WorkspaceOwner="true">
 					<Room id="rTitle">
 						<RoomEditArea>
-							<PanArea zoom="1" pan="[0, 0]" />
+							<PanArea zoom="1" pan="[-179, -87]" />
 							<Properties />
 							<Selected>
 								<Layer GUID="Game" />
@@ -33,18 +84,20 @@
 				<Module Command="open_room_editor" WorkspaceOwner="true">
 					<Room id="rWorld">
 						<RoomEditArea>
-							<PanArea zoom="0.4329795" pan="[-670.8856, -372.8058]" />
+							<PanArea zoom="0.4329795" pan="[-670.8856, -142]" />
 							<Properties />
-							<Selected />
+							<Selected>
+								<Layer GUID="Background" />
+							</Selected>
 						</RoomEditArea>
 					</Room>
 				</Module>
 			</Workspace>
 		</Workspaces>
-		<Dock state="Expanded" type="eLeft" restore_size="315dpi_px" active_tab="0">
+		<Dock state="Expanded" type="eLeft" restore_size="281.5013dpi_px" active_tab="0">
 			<DockTab localise_title="RoomEditor_DockTab" cell_sizes="[403,346,250]" layout_id="room_editor_tab" layout_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" />
 		</Dock>
-		<Dock state="Expanded" type="eRight" restore_size="305dpi_px" active_tab="0">
+		<Dock state="Expanded" type="eRight" restore_size="225.4088dpi_px" active_tab="0">
 			<DockTab localise_title="ResourceTree_Title" cell_sizes="[883]" layout_id="dock_tab_1" layout_guid="37f18c5e-7943-4f45-8d44-69decf609505">
 				<Module Command="open_asset_browser">
 					<AssetBrowser sort="Custom" foldersFirst="True" zoom="100">
@@ -53,7 +106,7 @@
 				</Module>
 			</DockTab>
 		</Dock>
-		<Dock state="Collapsed" type="eBottom" restore_size="184.2424dpi_px" active_tab="0">
+		<Dock state="Expanded" type="eBottom" restore_size="184.2424dpi_px" active_tab="0">
 			<DockTab localise_title="OutputPanel_Output" cell_sizes="[1000]" layout_id="dock_tab_1" layout_guid="fb126be6-dc4c-4def-bc48-73654e783d95">
 				<Module Command="open_output_panel">
 					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Output" localise_title="OutputPanel_Title" />
@@ -89,9 +142,9 @@
 	<Modules>
 		<YoYoStudio.Plugins.CorePlugins.RoomEditorModule>
 			<RoomEditor>
-				<LayerProperties left="20dpi_px" right="" top="" bottom="350dpi_px" width="260dpi_px" height="330dpi_px" flags="Default" title=" Layer Properties - rWorld" localise_title="RoomEditor_LayerProperties" dock_type="eLeft" dock_tab_index="0" dock_list_index="1" dock_proportion="1.038202" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
-				<Layers left="340dpi_px" right="" top="" bottom="270dpi_px" width="320dpi_px" height="250dpi_px" flags="CloseButton, MinimizeButton, ResizeButton" title="Layers - rWorld" localise_title="RoomEditor_Layers" dock_type="eLeft" dock_tab_index="0" dock_list_index="0" dock_proportion="1.210112" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
-				<RoomProperties left="10dpi_px" right="" top="125dpi_px" bottom="" width="300dpi_px" height="240dpi_px" flags="Default" title="Properties - rWorld" localise_title="RoomEditor_RoomProperties" dock_type="eLeft" dock_tab_index="0" dock_list_index="2" dock_proportion="0.7505797" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
+				<LayerProperties left="20dpi_px" right="" top="" bottom="350dpi_px" width="260dpi_px" height="330dpi_px" flags="Default" title="Game Layer Properties - rTitle" localise_title="RoomEditor_LayerProperties" dock_type="eLeft" dock_tab_index="0" dock_list_index="1" dock_proportion="1.038202" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
+				<Layers left="340dpi_px" right="" top="" bottom="270dpi_px" width="320dpi_px" height="250dpi_px" flags="CloseButton, MinimizeButton, ResizeButton" title="Layers - rTitle" localise_title="RoomEditor_Layers" dock_type="eLeft" dock_tab_index="0" dock_list_index="0" dock_proportion="1.210112" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
+				<RoomProperties left="10dpi_px" right="" top="125dpi_px" bottom="" width="300dpi_px" height="240dpi_px" flags="Default" title="Properties - rTitle" localise_title="RoomEditor_RoomProperties" dock_type="eLeft" dock_tab_index="0" dock_list_index="2" dock_proportion="0.7505797" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="ffdd9aee-eb6c-4e7e-8711-7120e127537e" desktop="19" />
 			</RoomEditor>
 		</YoYoStudio.Plugins.CorePlugins.RoomEditorModule>
 	</Modules>

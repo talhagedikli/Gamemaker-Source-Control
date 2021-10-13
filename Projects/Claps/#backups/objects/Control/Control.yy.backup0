@@ -1,4 +1,4 @@
-// 2021-09-25 12:18:50
+// 2021-09-27 18:12:27
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -11,27 +11,40 @@ global.gpClock.set_update_frequency(60);
 global.uiClock	= new iota_clock();
 global.uiClock.set_update_frequency(60);
 
-#region Create Default Objects
-instance_create_layer(x, y, layer, mgrCamera);
-instance_create_layer(x, y, layer, mgrRoom);
-instance_create_layer(x, y, layer, mgrBackground);
-instance_create_layer(x, y, layer, mgrParticle);
-instance_create_layer(x, y, layer, mgrInput);
-#endregion
+Manager = {
+	Save		: instance_create_layer(x, y, layer, mgrSave),
+	Input		: instance_create_layer(x, y, layer, mgrInput),
+	Camera		: instance_create_layer(x, y, layer, mgrCamera),
+	Room		: instance_create_layer(x, y, layer, mgrRoom),
+	Particle	: instance_create_layer(x, y, layer, mgrParticle),
+	Background	: instance_create_layer(x, y, layer, mgrBackground)
+}
 
+instance_create_layer(x, y, layer, objTest);
+// Methods
+gameEnd = function()
+{
+	log("game ended");
+	game_end();
+}
+
+gameRestart = function()
+{
+	log("game restarted");
+	game_restart();	
+}
 
 #event step
 global.gpClock.tick();
 global.uiClock.tick();
 
-
 #event draw_gui
 
 
 #event keypress:vk_escape 
-game_end();
+gameEnd();
 
 #event keypress:R
-game_restart();
+gameRestart();
 
 #event cleanup
