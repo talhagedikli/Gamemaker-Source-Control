@@ -1,0 +1,49 @@
+// 2021-11-15 09:49:14
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+persistent = true;
+uses_physics = false;
+
+#event create
+surPS = -1;
+
+#region Systems
+global.PS = part_system_create();
+part_system_depth(global.PS, -100002);
+part_system_automatic_update(global.PS, true);
+#endregion
+
+
+global.Particles = {};
+
+with (global.Particles)
+{
+	// upper		= new Particle(global.PS).Shape(pt_shape_flare).Alpha3(0.3, 1, 0.2).Life(30, 50).Gravity(0.03, 90).Scale(0.05).Blend(true).Direction(80, 110, 0, false);
+	// ghostDash	= new Particle(global.PS).Alpha3(0.3, 1, 0.2).Life(20, 50).Death(1, upper.Type());
+}
+
+#event draw
+if (!surface_exists(surPS))
+{
+	surPS = surface_create(objCamera.viewWidth, objCamera.viewHeight);
+}
+else
+{
+	surface_set_target(surPS);
+	part_system_drawit(global.PS);
+	surface_reset_target();
+}
+
+
+
+#event cleanup
+part_system_destroy(global.PS);
+
+surface_free_safe(surPS);
+
+foreach(global.Particles, function(val)
+{
+	var t = val.Type();
+	part_type_destroy(t);
+	if (part_type_exists(t)) show("ERROR: part type not destroyed");
+});

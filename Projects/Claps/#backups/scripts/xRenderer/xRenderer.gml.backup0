@@ -1,0 +1,17 @@
+// 2021-11-14 11:09:59
+#macro X_RENDERER global.__renderer
+
+global.__renderer = [];
+
+// Static vertexes
+function xRenderer() constructor
+{
+	array_push(global.__renderer, self);
+	static Sprite	= function ()
+	{
+		
+	}
+	
+	
+	
+}

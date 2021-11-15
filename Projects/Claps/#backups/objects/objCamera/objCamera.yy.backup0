@@ -1,0 +1,166 @@
+// 2021-11-15 09:43:47
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+persistent = true;
+uses_physics = false;
+
+#event create
+//width and height 480*270
+defWidth		=	1920/3;
+defHeight		=	1080/3;
+windowScale		=	2;
+
+view			= 
+{
+	width	: 1920/3,
+	height	: 1080/3,
+	scale	: 2,
+	x		: x,
+	y		: y
+}
+
+Follow = function(_id = self.id)
+{
+	following = _id;
+}
+
+following		= noone;
+
+//spd variables
+followSpd		= 0.1;
+
+//cam width and height
+viewWidth		= defWidth;
+viewHeight		= defHeight;
+
+//first set to default
+camW = viewWidth;
+camH = viewHeight;
+
+view.x = 0;
+view.y = 0;
+
+//camera target
+if (instance_exists(following)) 
+{
+	targetX	= following.x - view.width/2;
+	targetY	= following.y - view.height/2;
+}
+
+//set window size
+window_set_size(view.width * view.scale, view.height * view.scale);
+alarm[0] = 1;
+
+//re-set surface and gui 
+surface_resize(application_surface, view.width * view.scale, view.height * view.scale);
+// display_set_gui_size(viewWidth * view.scale, viewHeight * view.scale);
+
+//shake
+shake			= false;
+shake_time		= 0;
+shake_magnitude = 0;
+shake_fade		= 0;
+
+ApplyScreenShake = function () 
+{
+	if (shake)
+	{
+		//reduce shake time by 1(every step)
+		shake_time -= 1;
+			
+		//calculate shake magnitude
+		var _xval = random_range(-shake_magnitude, shake_magnitude); 
+		var _yval = random_range(-shake_magnitude, shake_magnitude);
+			
+		//apply the shake
+		view.x += _xval;
+		view.y += _yval;
+			
+		if (shake_time <= 0) 
+		{
+			//if shake time is zero, shake fade
+			shake_magnitude -= shake_fade; 
+
+			if (shake_magnitude <= 0) 
+			{
+				//if shake fade is zero, turn shake of
+			    shake = false; 
+			} 
+		}
+	}
+	
+}
+
+state = new SnowState("normal");
+state.add("normal", {
+	step: function()
+	{
+		var xTo, yTo;
+		if (instance_exists(following))
+		{
+			xTo = round(following.x) - (view.width / 2);
+			yTo = round(following.y) - (view.height / 2);
+		}
+		else
+		{
+			xTo = x;
+			yTo = y;
+		}
+		
+		//view.x = abs(difX) < EPSILON ? targetX : lerp(view.x, targetX, followSpd);
+		// view.x = 0;
+		// view.y = 0;
+		view.x = flerp(view.x, xTo, followSpd);
+		view.y = flerp(view.y, yTo, followSpd);
+		//view.y = abs(difY) < EPSILON ? targetY : lerp(view.y, targetY, followSpd);
+		ApplyScreenShake();
+		view.x = clamp(view.x, -shake_magnitude, room_width - view.width + shake_magnitude);
+		view.y = clamp(view.y, -shake_magnitude, room_height - view.height + shake_magnitude);		
+	}
+});
+
+
+#event alarm0
+window_center();
+
+#event step
+var dw = display_get_width(), dh = display_get_height();
+var ww = window_get_width(), wh = window_get_height();
+if (window_get_fullscreen())
+{
+	surface_resize(application_surface, dw, dh);
+}
+else
+{
+	surface_resize(application_surface, ww, wh);
+}
+
+#event step_end
+
+state.step();
+
+camera_set_view_size(VIEW, view.width, view.height);
+camera_set_view_pos(VIEW, view.x, view.y);
+
+//track the transition layer
+//if (layer_sequence_exists("transitions", global.sequenceLayer))
+//{
+//	layer_sequence_x(global.sequenceLayer, camX);
+//	layer_sequence_y(global.sequenceLayer, camY);
+//}	
+	
+	
+
+
+#event other_room_start
+view_enabled = true;
+view_visible[0] = true;
+
+
+
+#event draw_gui
+/// @description
+
+
+#event cleanup
+/// @description

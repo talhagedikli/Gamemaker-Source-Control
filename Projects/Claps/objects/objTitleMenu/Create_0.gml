@@ -9,8 +9,8 @@ enum menus {
 }
 
 writer = new Typewriter("");
-alphaxTimer	= new xTimer();
-alphaxTimer.start(180, true);
+alphaxTimer	= new Timer();
+alphaxTimer.Start(180, true);
 
 menu = [
 	["START", "SETTINGS", "QUIT"],		// Main

@@ -1,0 +1,60 @@
+// 2021-10-27 16:52:17
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+persistent = true;
+uses_physics = false;
+
+#event create
+global.gpClock = new iota_clock();
+global.gpClock.set_update_frequency(60);
+
+global.uiClock	= new iota_clock();
+global.uiClock.set_update_frequency(60);
+
+Manager = {
+	Save		: instance_create_layer(x, y, layer, mgrSave),
+	Input		: instance_create_layer(x, y, layer, mgrInput),
+	Camera		: instance_create_layer(x, y, layer, mgrCamera),
+	Room		: instance_create_layer(x, y, layer, mgrRoom),
+	Particle	: instance_create_layer(x, y, layer, mgrParticle),
+	Background	: instance_create_layer(x, y, layer, mgrBackground)
+}
+
+player = instance_create_layer(x, y, layer, objTomb);
+player.x = 10;
+player.y = 10;
+// Methods
+gameEnd = function()
+{
+	log("-----------------------------------", "Game Ended");
+	game_end();
+}
+
+gameRestart = function()
+{
+	log("-----------------------------------", "Game Restarted");
+	game_restart();
+}
+
+
+
+
+#event step
+global.gpClock.tick();
+global.uiClock.tick();
+
+//ultiTimer.on_timeout(function()
+//{
+//	show("yer çekimi değeri normale döndü");
+//});
+
+#event draw_gui
+
+
+#event keypress:vk_escape 
+gameEnd();
+
+#event keypress:R
+gameRestart();
+
+#event cleanup

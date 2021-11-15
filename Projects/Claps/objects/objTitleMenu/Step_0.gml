@@ -1,11 +1,11 @@
 /// @description 
-var vmove		= mgrInput.p.keyDownPressed - mgrInput.p.keyUpPressed;
+var vmove		= objInputManager.p.keyDownPressed - objInputManager.p.keyUpPressed;
 var keyaccept	= keyboard_check_pressed(vk_space);
 var menul		= array_length(menu[menuLevel])
 var rm			= Control.Manager.Room;
 var im			= Control.Manager.Input;
 
-if (abs(im.p.verticalInput) or keyaccept) alphaxTimer.reset();
+if (abs(im.p.verticalInput) or keyaccept) alphaxTimer.Reset();
 pos	+= vmove;
 if (pos >= menul) { pos = 0 };
 if (pos < 0) { pos = menul - 1 };
@@ -16,9 +16,9 @@ if (menuLevel != lastMenuLevel)
 	lastMenuLevel = menuLevel;
 }
 
-alphaxTimer.on_timeout(function()
+alphaxTimer.OnTimeout(function()
 {
-	alphaxTimer.reset();
+	alphaxTimer.Reset();
 });
 
 if (menuLevel == menus.main) {
@@ -48,7 +48,7 @@ else if (menuLevel == menus.settings) {
 }
 else if (menuLevel == menus.start) {
 	if (pos == 0 && keyaccept) {
-		rm.change(rWorld);
+		rm.Change(rWorld);
 	}
 	
 	if (pos == 1 && keyaccept) {

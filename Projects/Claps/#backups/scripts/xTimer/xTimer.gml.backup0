@@ -1,4 +1,7 @@
-// 2021-09-21 12:55:16
+// 2021-11-14 01:09:44
+#macro X_TIMERS global.__timers
+
+global.__timers = [];
 function xTimer() constructor
 { // For basic timer
 	time		= 0;
@@ -8,8 +11,9 @@ function xTimer() constructor
 	duration	= 0;
 	loop		= false;
 	tickSize	= 1;
-	/// @func start(duration, [tickSize], [loop]))
-	static start = function(_duration = infinity, _loop = false, _tickSize = 1)
+	array_push(X_TIMERS, self);
+	/// @func start(duration, [loop], [tickSize])
+	static start = function(_duration = infinity, _loop = false, _tickSize = 1, _onto = function() {})
 	{
 		duration	= _duration;
 		loop		= _loop;
@@ -26,7 +30,7 @@ function xTimer() constructor
 			if (time >= duration)
 			{
 				done = true;
-				if (loop)	reset();
+				//if (loop)	reset();
 				//else		stop();
 			}
 			else
@@ -47,6 +51,7 @@ function xTimer() constructor
 		if (done)
 		{
 			_func();
+			if (loop) reset();
 		}
 		return self;
 	}
@@ -80,8 +85,8 @@ function xTimer() constructor
 	{
 		return active;
 	}
-	global.gameplayClock.add_cycle_method(function() 
-	{
-		run();
-	});
+	//global.gpClock.add_cycle_method(function() 
+	//{
+	//	run();
+	//});
 }

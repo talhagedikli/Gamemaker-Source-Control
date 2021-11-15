@@ -1,0 +1,11 @@
+// 2021-11-12 22:42:41
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
+
+
+
+
+#event step_begin

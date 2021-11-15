@@ -1,10 +1,18 @@
-// 2021-09-27 18:12:27
+// 2021-11-15 09:49:34
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
 uses_physics = false;
 
 #event create
+// Make sure i am created first
+if (instance_number(object_index) > 1)
+{
+  instance_destroy();
+  exit;
+}
+log("-----------------------------------", "Game Started");
+
 global.gpClock = new iota_clock();
 global.gpClock.set_update_frequency(60);
 
@@ -12,39 +20,68 @@ global.uiClock	= new iota_clock();
 global.uiClock.set_update_frequency(60);
 
 Manager = {
-	Save		: instance_create_layer(x, y, layer, mgrSave),
-	Input		: instance_create_layer(x, y, layer, mgrInput),
-	Camera		: instance_create_layer(x, y, layer, mgrCamera),
-	Room		: instance_create_layer(x, y, layer, mgrRoom),
-	Particle	: instance_create_layer(x, y, layer, mgrParticle),
-	Background	: instance_create_layer(x, y, layer, mgrBackground)
+	Save		: instance_create_layer(x, y, layer, objSaveManager),
+	Input		: instance_create_layer(x, y, layer, objInputManager),
+	Camera		: instance_create_layer(x, y, layer, objCamera),
+	Room		: instance_create_layer(x, y, layer, objRoomManager),
+	Part		: instance_create_layer(x, y, layer, objParticleManager),
+	Background	: instance_create_layer(x, y, layer, objBackgroundManager)
 }
-
-instance_create_layer(x, y, layer, objTest);
 // Methods
-gameEnd = function()
+GameEnd = function()
 {
-	log("game ended");
+	log("-----------------------------------", "Game Ended");
 	game_end();
 }
 
-gameRestart = function()
+GameRestart = function()
 {
-	log("game restarted");
-	game_restart();	
+	log("-----------------------------------", "Game Restarted");
+	game_restart();
+}
+
+RunAllTimers = function()
+{
+	var _timers_len = array_length(TIMERS);
+	
+	for (var i = 0; i < _timers_len; ++i) 
+	{
+	    TIMERS[i].Run();
+	}	
+}
+
+RunAllTweens = function()
+{
+	var _tweens_len = array_length(TWEENS);
+	
+	for (var i = 0; i < _tweens_len; ++i) 
+	{
+	    TWEENS[i].Run();
+	}	
 }
 
 #event step
 global.gpClock.tick();
 global.uiClock.tick();
 
+
+#event step_begin
+
+
+
+
+#event step_end
+RunAllTimers();
+RunAllTweens();
+
+
 #event draw_gui
 
 
 #event keypress:vk_escape 
-gameEnd();
+GameEnd();
 
 #event keypress:R
-gameRestart();
+GameRestart();
 
 #event cleanup

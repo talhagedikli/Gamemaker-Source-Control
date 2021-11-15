@@ -1,4 +1,4 @@
-// 2021-10-02 20:44:39
+// 2021-11-14 19:47:26
 function xParticle(_system) constructor
 {
 	system	= _system;

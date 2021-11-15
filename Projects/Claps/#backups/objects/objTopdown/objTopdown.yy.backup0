@@ -1,0 +1,51 @@
+// 2021-11-15 09:50:00
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+sprite_index = sprWhiteBlock;
+uses_physics = false;
+
+#event create
+Control.Manager.Camera.Follow(self.id);
+motion			= new Vector2(0);
+mSpeed			= new Vector2(3);
+dir 			= 0;
+accel			= 0.3;
+decel			= 0.4;
+
+
+#event step
+var in = Control.Manager.Input.Td;
+if (abs(in.horizontalInput))
+{
+	motion.x = approach(motion.x, mSpeed.x, accel);
+}
+else
+{
+	motion.x = approach(motion.x, 0, decel);
+}
+if (abs(in.verticalInput))
+{
+	motion.y = approach(motion.y, mSpeed.y, accel);
+}
+else
+{
+	motion.y = approach(motion.y, 0, decel);
+}
+
+
+if (abs(in.verticalInput) || abs(in.horizontalInput))
+{
+	dir = point_direction(0, 0, in.horizontalInput, in.verticalInput);
+}
+x += lengthdir_x(motion.x, dir);
+y += lengthdir_y(motion.y, dir);
+check_collisions_pixel_perfect_topdown(objBlock, motion, dir);
+
+
+
+
+#event draw
+draw_self();
+
+
+

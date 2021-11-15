@@ -1,3 +1,4 @@
+instance_destroy();
 motion		= new Vector2(0);
 motionDir	= point_direction(0, 0, motion.x, motion.y);
 facing		= 1;
@@ -5,12 +6,25 @@ accel		= 0.3;
 decel		= 0.5;
 mSpeed		= 3;
 grav		= 0.05;
-onGround	= false;
-moving		= false;
 
-upperVfxTimer	= new xTimer();
-ghostDashTimer	= new xTimer();
+jumping 	= false;
+jPower		= 3;
 
+
+upperVfxTimer	= new Timer();
+ghostDashTimer	= new Timer();
+blurTimer		= new Timer();
+blurMagnitude	= 0;
+blurMax			= 7;
+isMoving		= function()
+{
+	return bool(abs(sign(motion.x)));
+}
+
+onGround		= function()
+{
+	return place_meeting(x, y+1, objBlock);
+}
 
 updateMotion	= function()
 {
@@ -30,12 +44,23 @@ updateMotion	= function()
 	if (motion.x =! 0)
 	{
 		facing	= sign(motion.x);
-		moving = false;
+	}
+	
+	if (onGround())
+	{
+		if (!jumping && im.p.keyJump)
+		{
+			motion.y = -jPower;
+			jumping = true;
+		}
 	}
 	else
 	{
-		moving = true;
+		jumping = false;
 	}
+	
+	// var fx = layer_get_fx("fxBlurLayer");
+	// fx_set_parameter(fx, "g_Radius", blurMagnitude);
 }
 updateDirection		= function()
 {
@@ -73,13 +98,6 @@ applyMotion			= function()
 	y	+= motion.y;	
 }
 
-createUpperVfx		= function(_x, _y)
-{
-	var n = choose(1, 1, 2, 2, 3);
-	part_particles_create(global.PS, _x + random_range(-6, 6), _y + random_range(-1, 2), global.Particles.upper.Type(), n);
-	// global.Particles.upper.Emit(_x + random_range(-6, 6), _y + random_range(-1, 2), n, 10);
-}
-
 applyGravity		= function()
 {
 	if (!place_meeting(x, y + 1, objBlock))
@@ -101,10 +119,8 @@ state.add("move", {
 	{
 		ghostDashTimer.on_timeout(function()
 		{
-			if (moving)
+			if (isMoving())
 			{
-				global.Particles.ghostDash.Sprite(sprite_index, false, false, false);
-				part_particles_create(global.PS, x, y, global.Particles.ghostDash.Type(), 1);
 				//ghostDashTimer.reset();
 			}
 		});
