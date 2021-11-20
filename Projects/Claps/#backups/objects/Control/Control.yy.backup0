@@ -1,4 +1,4 @@
-// 2021-11-15 09:49:34
+// 2021-11-20 09:54:36
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -40,29 +40,12 @@ GameRestart = function()
 	game_restart();
 }
 
-RunAllTimers = function()
-{
-	var _timers_len = array_length(TIMERS);
-	
-	for (var i = 0; i < _timers_len; ++i) 
-	{
-	    TIMERS[i].Run();
-	}	
-}
-
-RunAllTweens = function()
-{
-	var _tweens_len = array_length(TWEENS);
-	
-	for (var i = 0; i < _tweens_len; ++i) 
-	{
-	    TWEENS[i].Run();
-	}	
-}
 
 #event step
 global.gpClock.tick();
 global.uiClock.tick();
+
+
 
 
 #event step_begin
@@ -71,8 +54,8 @@ global.uiClock.tick();
 
 
 #event step_end
-RunAllTimers();
-RunAllTweens();
+run_all_timers();
+run_all_tweens();
 
 
 #event draw_gui

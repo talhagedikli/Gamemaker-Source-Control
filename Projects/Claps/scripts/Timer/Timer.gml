@@ -1,47 +1,59 @@
 #macro TIMERS global.__timers
 
 global.__timers = [];
-function Timer() constructor
+
+function run_all_timers()
+{
+	var _timers_len = array_length(TIMERS);
+	
+	for (var i = 0; i < _timers_len; ++i) 
+	{
+	    TIMERS[i].Run();
+	}	
+}
+
+function Timer(_duration, _loop = false, _autostart = false) constructor
 { // For basic timer
 	time		= 0;
 	timeLeft	= 0;
+	duration	= _duration;
+
+	active		= _autostart;
+	loop		= _loop;
 	done		= false;
-	active		= false;
-	duration	= 0;
-	loop		= false;
-	tickSize	= 1;
 	array_push(TIMERS, self);
-	/// @func start(duration, [loop], [tickSize])
-	static Start = function(_duration = infinity, _loop = false, _tickSize = 1, _onto = function() {})
+
+	static Start = function(_duration = duration, _loop = loop)
 	{
 		duration	= _duration;
 		loop		= _loop;
-		tickSize	= _tickSize;
 		timeLeft	= duration - time;
-		if (done == true)		done	= false;
-		if (active == false)	active	= true;
+		done	= false;
+		active	= true;
 		return self;
 	}
 	static Run = function()
 	{
 		if (active)
 		{
+			time		+= 1;
+			timeLeft	= duration - time;
 			if (time >= duration)
 			{
-				done = true;
-			}
-			else
-			{
-				time		+= 1 / tickSize;
-				timeLeft	= duration - time;
+				done	= true;
+				active	= false;
 			}
 		}
 		return self;
 	}
-	static SetDuration = function(dur)
+	static SetDuration = function(_duration)
 	{
-		duration	= dur;
+		duration	= _duration;
 		return self;
+	}
+	static SetLoop = function(_loop)
+	{
+		loop = _loop;
 	}
 	static OnTimeout = function(_func)
 	{
@@ -78,7 +90,7 @@ function Timer() constructor
 		active = true;
 		return self;
 	}
-	static GetPaused = function()
+	static IsActive = function()
 	{
 		return active;
 	}
@@ -90,8 +102,4 @@ function Timer() constructor
 	{
 		return self.timeLeft
 	}
-	//global.gpClock.add_cycle_method(function() 
-	//{
-	//	run();
-	//});
 }

@@ -3,7 +3,18 @@
 
 global.__tweens = [];
 
-function Tween(_type = TweenType.Linear) constructor
+
+function run_all_tweens()
+{
+	var _l = array_length(TWEENS);
+	
+	for (var i = 0; i < _l; ++i) 
+	{
+	    TWEENS[i].Run();
+	}	
+}
+
+function Tween(_type = TweenType.Linear, _start = 0, _end = 0, _dur = 0) constructor
 {
 	enum TweenType
 	{ // Channel indexes
@@ -35,36 +46,36 @@ function Tween(_type = TweenType.Linear) constructor
 		FastToSlow,
 		MidSlow
 	}
-	channel		= animcurve_get_channel(acTweens, _type);
+	channel		= animcurve_get_channel(acTweens, argument[0]);
+	duration	= _dur;
 	time		= 0;
-	value		= 0;
+	timeLeft	= duration - time;
 	done		= false;
 	active		= false;
-	tickSize	= 1;
+	loop		= false;
 	
 	x1			= 0;
 	x2			= 1;
 	x			= 0;
-	y1			= 0;
-	y2			= 0;
-	y			= 0;
-	duration	= 0;
+	
+	y1			= _start;
+	y2			= _end;
+	y			= y1;
+	
+	// Not used yet
 	reverse 	= false;
 	
 	array_push(TWEENS, self);
-	
-	static __clamp = function()
-	{
-		x = clamp(x, 0, 1);
-		y = clamp(y, y1, y2);
-	}
-	static Start = function(_start, _end, _duration, _ticksize = 1)
+
+	static Start = function(_start, _end, _duration, _ticksize = 1, _loop = false)
 	{
 		active		= true;
-		tickSize	= _ticksize;
+		y1			= _end;
 		y1			= _start;
 		y2			= _end;
 		duration	= _duration;
+		loop		= _loop;
+		timeLeft	= duration - time;
 		// !!! Already exists in "run" method
 		// var rate	= animcurve_channel_evaluate(channel, time / duration);
 		// x			= rate;
@@ -72,19 +83,51 @@ function Tween(_type = TweenType.Linear) constructor
 	static Stop = function()
 	{
 		time	= 0;
-		value	= 0;
 		active	= false;
 		done	= false;
 		return self;
 	}
-	static Reset = function(_ticksize = ticksize)
+	static Reset = function(_start = y1, _end = y2, _duration = duration)
 	{
-		ticksize	= _ticksize;
-		time		= 0;
-		value		= 0;
-		done		= false;
 		active		= true;
+		y1			= _start;
+		y2			= _end;
+		duration	= _duration;
+		time		= 0;
+		timeLeft	= duration - time;
+		done		= false;
 		return self;
+	}
+	static Run = function()
+	{
+		if (active)
+		{
+			time		+= 1;
+			timeLeft	= duration - time;
+			var rate	= animcurve_channel_evaluate(channel, time / duration);
+			x			= rate;
+			y			= lerp(y1, y2, rate);
+			// x = clamp(x, 0, 1);
+			// y = clamp(y, y1, y2);
+			if (time >= duration)
+			{
+				done	= true;
+				active	= false;
+			}
+		}
+		return self;
+	}
+	static GetValue = function()
+	{
+		return self.y;
+	}
+	static GetRate = function()
+	{
+		return self.x;
+	}
+	static IsActive = function()
+	{
+		return active;
 	}
 	static Pause = function()
 	{
@@ -96,34 +139,22 @@ function Tween(_type = TweenType.Linear) constructor
 		active = true;
 		return self;
 	}
-	static Run = function()
+	static SeekTime = function(_time)
 	{
-		if (active)
+		return _time == floor(time) ? true : false;
+	}
+	static SeekRate = function(_rate)
+	{
+		// Rate is a value between 0 and 1
+		// 0 means just started 1 means ended
+		return _rate >= rate ? true : false;
+	}
+	static OnTimeout = function(_func = function() {})
+	{
+		if (done)
 		{
-			var rate	= animcurve_channel_evaluate(channel, time / duration);
-			x			= rate;
-			y			= lerp(y1, y2, rate);
-			__clamp();
-			if (time >= duration)
-			{
-				done = true;
-				//if (loop)	reset();
-				//else		stop();
-			}
-			else
-			{
-				time		+= 1 / tickSize;
-			}			
-		}
-		return self;
-	}
-	static GetValueX = function()
-	{
-		return self.x;
-	}
-	static GetValueY = function()
-	{
-		return self.y;
+			_func();
+		}		
 	}
 	// global.gpClock.add_cycle_method(function() 
 	// {

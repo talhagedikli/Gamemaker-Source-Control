@@ -10,7 +10,7 @@ function check_collisions_classic(_motion) {
 		}
 		_motion.x = 0;
 	}
-	//applying _motion.x
+	// applying _motion.x
 	x = x + _motion.x;
 
 	//vertical collision

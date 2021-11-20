@@ -32,23 +32,3 @@ GameRestart = function()
 	log("-----------------------------------", "Game Restarted");
 	game_restart();
 }
-
-RunAllTimers = function()
-{
-	var _timers_len = array_length(TIMERS);
-	
-	for (var i = 0; i < _timers_len; ++i) 
-	{
-	    TIMERS[i].Run();
-	}	
-}
-
-RunAllTweens = function()
-{
-	var _tweens_len = array_length(TWEENS);
-	
-	for (var i = 0; i < _tweens_len; ++i) 
-	{
-	    TWEENS[i].Run();
-	}	
-}

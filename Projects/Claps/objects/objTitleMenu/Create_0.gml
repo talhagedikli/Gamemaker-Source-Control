@@ -9,7 +9,7 @@ enum menus {
 }
 
 writer = new Typewriter("");
-alphaxTimer	= new Timer();
+alphaxTimer	= new Timer(10);
 alphaxTimer.Start(180, true);
 
 menu = [

@@ -33,12 +33,6 @@ camH = viewHeight;
 view.x = 0;
 view.y = 0;
 
-//camera target
-if (instance_exists(following)) 
-{
-	targetX	= following.x - view.width/2;
-	targetY	= following.y - view.height/2;
-}
 
 //set window size
 window_set_size(view.width * view.scale, view.height * view.scale);

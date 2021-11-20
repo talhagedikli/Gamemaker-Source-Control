@@ -1,27 +1,26 @@
 instance_destroy();
-motion		= new Vector2(0);
-motionDir	= point_direction(0, 0, motion.x, motion.y);
-facing		= 1;
-accel		= 0.3;
-decel		= 0.5;
-mSpeed		= 3;
-grav		= 0.05;
+motion			= new Vector2(0);
+motionDir		= point_direction(0, 0, motion.x, motion.y);
+facing			= 1;
+accel			= 0.3;
+decel			= 0.5;
+mSpeed			= 3;
+grav			= 0.05;
 
-jumping 	= false;
-jPower		= 3;
-
+jumping 		= false;
+jPower			= 3;
 
 upperVfxTimer	= new Timer();
 ghostDashTimer	= new Timer();
 blurTimer		= new Timer();
 blurMagnitude	= 0;
 blurMax			= 7;
-isMoving		= function()
+IsMoving		= function()
 {
 	return bool(abs(sign(motion.x)));
 }
 
-onGround		= function()
+OnGround		= function()
 {
 	return place_meeting(x, y+1, objBlock);
 }
@@ -46,7 +45,7 @@ updateMotion	= function()
 		facing	= sign(motion.x);
 	}
 	
-	if (onGround())
+	if (OnGround())
 	{
 		if (!jumping && im.p.keyJump)
 		{
@@ -119,7 +118,7 @@ state.add("move", {
 	{
 		ghostDashTimer.on_timeout(function()
 		{
-			if (isMoving())
+			if (IsMoving())
 			{
 				//ghostDashTimer.reset();
 			}

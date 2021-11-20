@@ -1,4 +1,4 @@
-// 2021-11-15 09:43:47
+// 2021-11-17 00:56:17
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -40,12 +40,6 @@ camH = viewHeight;
 view.x = 0;
 view.y = 0;
 
-//camera target
-if (instance_exists(following)) 
-{
-	targetX	= following.x - view.width/2;
-	targetY	= following.y - view.height/2;
-}
 
 //set window size
 window_set_size(view.width * view.scale, view.height * view.scale);

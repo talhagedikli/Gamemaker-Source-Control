@@ -1,3 +1,4 @@
+// 2021-11-18 00:46:52
 function Vector2(_x = undefined, _y = _x) constructor
 {
 	self.x	= _x;

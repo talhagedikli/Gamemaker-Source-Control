@@ -1,4 +1,4 @@
-// 2021-11-15 09:50:00
+// 2021-11-20 10:06:31
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 sprite_index = sprWhiteBlock;
@@ -7,45 +7,75 @@ uses_physics = false;
 #event create
 Control.Manager.Camera.Follow(self.id);
 motion			= new Vector2(0);
+spd 			= new Vector2(0);
 mSpeed			= new Vector2(3);
 dir 			= 0;
 accel			= 0.3;
 decel			= 0.4;
+dashTween		= new Tween(TweenType.QuartEaseOut);
 
+
+state			= new SnowState("normal");
+state.add("normal", {
+	enter: function()
+	{
+		
+	},
+	step: function()
+	{
+		var in = Control.Manager.Input.td;
+		if (abs(in.horizontalInput))
+		{
+			motion.x = approach(motion.x, mSpeed.x, accel);
+		}
+		else
+		{
+			motion.x = approach(motion.x, 0, decel);
+		}
+		if (abs(in.verticalInput))
+		{
+			motion.y = approach(motion.y, mSpeed.y, accel);
+		}
+		else
+		{
+			motion.y = approach(motion.y, 0, decel);
+		}
+		
+		if (abs(in.keyDashPressed))
+		{
+			state.change("dash");
+		}
+		
+		if (abs(in.verticalInput) || abs(in.horizontalInput))
+		{
+			dir = point_direction(0, 0, in.horizontalInput, in.verticalInput);
+		}		
+	}
+})
+state.add("dash", {
+	enter: function()
+	{
+		var in = Control.Manager.Input.td;
+		dashTween.Start(x, x + in.horizontalInput * 120, 20);
+	},
+	step: function()
+	{
+		x = dashTween.GetValue();
+		dashTween.OnTimeout(function()
+		{
+			dashTween.Stop();
+			state.change("normal");
+		})
+	}
+})
 
 #event step
-var in = Control.Manager.Input.Td;
-if (abs(in.horizontalInput))
-{
-	motion.x = approach(motion.x, mSpeed.x, accel);
-}
-else
-{
-	motion.x = approach(motion.x, 0, decel);
-}
-if (abs(in.verticalInput))
-{
-	motion.y = approach(motion.y, mSpeed.y, accel);
-}
-else
-{
-	motion.y = approach(motion.y, 0, decel);
-}
-
-
-if (abs(in.verticalInput) || abs(in.horizontalInput))
-{
-	dir = point_direction(0, 0, in.horizontalInput, in.verticalInput);
-}
-x += lengthdir_x(motion.x, dir);
-y += lengthdir_y(motion.y, dir);
-check_collisions_pixel_perfect_topdown(objBlock, motion, dir);
-
-
+state.step();
+spd.x = lengthdir_x(motion.x, dir);
+spd.y = lengthdir_y(motion.y, dir);
+check_collisions_pixel_perfect(objBlock, spd);
 
 
 #event draw
 draw_self();
-
-
-
+draw_sprite(sprite_index, image_index, wave(x - 50, x + 50, 1, 0), y - 40);

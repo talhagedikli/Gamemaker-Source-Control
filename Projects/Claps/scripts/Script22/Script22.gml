@@ -63,6 +63,34 @@ function ds_list_safe(_list, _value)
 }
 #endregion
 
+#region Constructors
+function Typewriter(_text, _spd = 0.25) constructor
+{
+	text	= _text;
+	char	= 1;
+	charSpd = _spd;
+	len		= string_length(text);
+	static write = function(_text = text)
+	{
+		if (text != _text)
+		{
+			text = _text;
+			len		= string_length(text);
+		}
+		if (char < len)
+		{
+			char += charSpd;
+		}
+		return string_copy(text, 1, char);
+	}
+	static reset = function(_text = text)
+	{
+		text = _text;
+		char = 1;
+	}
+}
+#endregion
+
 #region Functions
 // Set surface free safely
 function surface_free_safe(sur)
@@ -71,20 +99,6 @@ function surface_free_safe(sur)
 	{
 		surface_free(sur);
 	}
-}
-
-// Create instances safely
-function instance_create_layer_safe(_x, _y, _layer, _obj)
-{
-	if (!instance_exists(_obj)) return instance_create_layer(_x, _y, _layer, _obj);	
-	return noone;
-}
-
-// Create instances safely
-function instance_create_depth_safe(_x, _y, _depth, _obj)
-{
-	if (!instance_exists(_obj)) return instance_create_depth(_x, _y, _depth, _obj);	
-	return noone;
 }
 
 // Quick set halign and valign
@@ -164,7 +178,7 @@ function wrap(_value, _minimum, _wrapAt)
     if ( _mod < 0 ) return _mod + _wrapAt else return _mod + _minimum;
 }
 
-function normalize_value(value, min, max)
+function normalize(value, min, max)
 {
 	var normalized = (value - min) / (max - min);
 	normalized = clamp(normalized, 0, 1);
@@ -198,33 +212,6 @@ function flerp(val1, val2, amount, epsilon = EPSILON)
 }
 #endregion
 
-#region Constructors
-function Typewriter(_text, _spd = 0.25) constructor
-{
-	text	= _text;
-	char	= 1;
-	charSpd = _spd;
-	len		= string_length(text);
-	static write = function(_text = text)
-	{
-		if (text != _text)
-		{
-			text = _text;
-			len		= string_length(text);
-		}
-		if (char < len)
-		{
-			char += charSpd;
-		}
-		return string_copy(text, 1, char);
-	}
-	static reset = function(_text = text)
-	{
-		text = _text;
-		char = 1;
-	}
-}
-#endregion
 
 #region Save&Load
 /// Saving a string as a buffer

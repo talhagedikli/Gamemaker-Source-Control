@@ -1,4 +1,4 @@
-// 2021-11-15 09:15:03
+// 2021-11-15 21:52:00
 /// @description check 1 pixel collisions
 //
 function check_collisions_classic(_motion) {
@@ -11,7 +11,7 @@ function check_collisions_classic(_motion) {
 		}
 		_motion.x = 0;
 	}
-	//applying _motion.x
+	// applying _motion.x
 	x = x + _motion.x;
 
 	//vertical collision

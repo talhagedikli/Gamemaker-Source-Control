@@ -4,7 +4,7 @@ uiInput 	= true;
 gpInput 	= true;
 active		= true;
 // These values will be used in step event for all other objects
-Td = {
+td = {
 	horizontalInput		: 0,
 	verticalInput		: 0,
 	
@@ -14,6 +14,7 @@ Td = {
 	keyUp				: 0,
 	
 	keyJump 			: 0,
+	keyDashPressed		: 0,
 	
 	keyRightPressed 	: 0,
 	keyLeftPressed		: 0,
@@ -87,7 +88,8 @@ global.gpClock.add_begin_method(function()
 			keyDown				= keyboard_check(vk_down);
 			keyUp				= keyboard_check(vk_up);
 			
-			keyJump 			= keyboard_check(vk_space);			
+			keyJump 			= keyboard_check(vk_space);	
+			keyDashPressed		= keyboard_check_pressed(ord("Z"));
 
 			keyRightPressed 	= keyboard_check_pressed(ord("D"));
 			keyLeftPressed		= keyboard_check_pressed(ord("A"));
