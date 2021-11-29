@@ -1,0 +1,7 @@
+// 2021-11-21 20:44:00
+- Auto Particle Emitter
+- Particle system rework
+- Camera rework
+- tilemap_get() and tilemap_set()
+- understand tiles
+- understand surfaces

@@ -3,6 +3,9 @@ defWidth		=	1920/3;
 defHeight		=	1080/3;
 windowScale		=	2;
 
+
+
+
 view			= 
 {
 	width	: 1920/3,

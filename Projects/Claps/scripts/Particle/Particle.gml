@@ -1,9 +1,14 @@
+#macro PARTICLES global.__particles
+
+global.__particles = [];
+
 function Particle(_system) constructor
 {
 	system	= _system;
 	type	= part_type_create();
 	time	= 0;
-	timer	= new Timer();
+	timer	= new Timer(0);
+	array_push(PARTICLES, self);
 	
 	/// @func Shape([shape])
 	static Shape = function(_shape)

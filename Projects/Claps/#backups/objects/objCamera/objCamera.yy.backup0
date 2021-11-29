@@ -1,4 +1,4 @@
-// 2021-11-17 00:56:17
+// 2021-11-26 08:59:51
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -9,6 +9,9 @@ uses_physics = false;
 defWidth		=	1920/3;
 defHeight		=	1080/3;
 windowScale		=	2;
+
+
+
 
 view			= 
 {

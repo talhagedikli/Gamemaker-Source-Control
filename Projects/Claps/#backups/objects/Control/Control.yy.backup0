@@ -1,4 +1,4 @@
-// 2021-11-20 09:54:36
+// 2021-11-26 08:45:02
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -19,7 +19,8 @@ global.gpClock.set_update_frequency(60);
 global.uiClock	= new iota_clock();
 global.uiClock.set_update_frequency(60);
 
-Manager = {
+Manager = 
+{
 	Save		: instance_create_layer(x, y, layer, objSaveManager),
 	Input		: instance_create_layer(x, y, layer, objInputManager),
 	Camera		: instance_create_layer(x, y, layer, objCamera),
@@ -39,6 +40,14 @@ GameRestart = function()
 	log("-----------------------------------", "Game Restarted");
 	game_restart();
 }
+
+
+
+
+
+
+
+
 
 
 #event step

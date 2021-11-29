@@ -14,14 +14,14 @@ function run_all_tweens()
 	}	
 }
 
-function Tween(_type = TweenType.Linear, _start = 0, _end = 0, _dur = 0) constructor
+function Tween(_type = TweenType.Linear, _start = 0, _end = 0, _dur = 0, _autostart = false) constructor
 {
 	enum TweenType
 	{ // Channel indexes
 		Linear,
 		EaseIn,
 		EaseOut,
-		EaseOut,
+		EaseInOut,
 		CubicEaseIn,
 		CubicEaseInOut,
 		CubicEaseOut,
@@ -46,12 +46,12 @@ function Tween(_type = TweenType.Linear, _start = 0, _end = 0, _dur = 0) constru
 		FastToSlow,
 		MidSlow
 	}
-	channel		= animcurve_get_channel(acTweens, argument[0]);
+	channel		= animcurve_get_channel(acTweens, _type);
 	duration	= _dur;
 	time		= 0;
 	timeLeft	= duration - time;
 	done		= false;
-	active		= false;
+	active		= _autostart;
 	loop		= false;
 	
 	x1			= 0;

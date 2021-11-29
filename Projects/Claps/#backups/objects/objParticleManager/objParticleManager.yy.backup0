@@ -1,4 +1,4 @@
-// 2021-11-15 09:49:14
+// 2021-11-21 20:57:59
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -8,9 +8,25 @@ uses_physics = false;
 surPS = -1;
 
 #region Systems
+#macro PARTICLE_SYSTEM global.__part_systems
+
+global.__part_systems = 
+{
+	main : part_system_create(),
+};
+part_system_depth(PARTICLE_SYSTEM.main, -100002);
+part_system_automatic_update(PARTICLE_SYSTEM.main, true);
+part_system_automatic_draw(PARTICLE_SYSTEM.main, true);
+
 global.PS = part_system_create();
 part_system_depth(global.PS, -100002);
 part_system_automatic_update(global.PS, true);
+part_system_automatic_draw(global.PS, true);
+
+global.PPS = part_system_create();
+part_system_depth(global.PPS, -1);
+part_system_automatic_update(global.PPS, true);
+part_system_automatic_draw(global.PPS, true);
 #endregion
 
 
@@ -38,8 +54,12 @@ else
 
 #event cleanup
 part_system_destroy(global.PS);
+part_system_destroy(global.PPS);
 
-surface_free_safe(surPS);
+if (surface_exists(surPS)) 
+{
+	surface_free(surPS);
+}
 
 foreach(global.Particles, function(val)
 {

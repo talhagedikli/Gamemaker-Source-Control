@@ -12,7 +12,8 @@ global.gpClock.set_update_frequency(60);
 global.uiClock	= new iota_clock();
 global.uiClock.set_update_frequency(60);
 
-Manager = {
+Manager = 
+{
 	Save		: instance_create_layer(x, y, layer, objSaveManager),
 	Input		: instance_create_layer(x, y, layer, objInputManager),
 	Camera		: instance_create_layer(x, y, layer, objCamera),
@@ -32,3 +33,11 @@ GameRestart = function()
 	log("-----------------------------------", "Game Restarted");
 	game_restart();
 }
+
+
+
+
+
+
+
+

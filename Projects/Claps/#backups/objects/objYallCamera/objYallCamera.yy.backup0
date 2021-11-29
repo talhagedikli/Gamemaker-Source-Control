@@ -1,0 +1,37 @@
+// 2021-11-26 08:58:28
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
+application_surface_enable(false);
+// game_width, game_height are your base resolution (ideally constants)
+game_width = 1920 / 3;
+game_height = 1080 / 3;
+game_height = camera_get_view_height(view_camera[0]);
+// in GMS1, set view_wview and view_hview instead
+camera_set_view_size(view_camera[0], game_width + 1, game_height + 1);
+display_set_gui_size(game_width, game_height);
+view_surf = -1;
+
+#event step
+// in GMS1, set view_xview and view_yview instead
+camera_set_view_pos(view_camera[0], floor(x), floor(y));
+if (!surface_exists(view_surf)) {
+    view_surf = surface_create(game_width + 1, game_height + 1);
+}
+view_surface_id[0] = view_surf;
+
+
+#event draw
+if (surface_exists(view_surf)) {
+    draw_surface_part(view_surf, frac(x), frac(y), game_width, game_height, 0, 0);
+    // or draw_surface(view_surf, -frac(x), -frac(y));
+}
+
+#event cleanup
+if (surface_exists(view_surf)) {
+    surface_free(view_surf);
+    view_surf = -1;
+}
+

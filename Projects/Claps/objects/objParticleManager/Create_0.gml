@@ -1,9 +1,25 @@
 surPS = -1;
 
 #region Systems
+#macro PARTICLE_SYSTEM global.__part_systems
+
+global.__part_systems = 
+{
+	main : part_system_create(),
+};
+part_system_depth(PARTICLE_SYSTEM.main, -100002);
+part_system_automatic_update(PARTICLE_SYSTEM.main, true);
+part_system_automatic_draw(PARTICLE_SYSTEM.main, true);
+
 global.PS = part_system_create();
 part_system_depth(global.PS, -100002);
 part_system_automatic_update(global.PS, true);
+part_system_automatic_draw(global.PS, true);
+
+global.PPS = part_system_create();
+part_system_depth(global.PPS, -1);
+part_system_automatic_update(global.PPS, true);
+part_system_automatic_draw(global.PPS, true);
 #endregion
 
 

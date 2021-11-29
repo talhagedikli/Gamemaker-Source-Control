@@ -98,6 +98,10 @@ function Timer(_duration, _loop = false, _autostart = false) constructor
 	{
 		return self.time;
 	}
+	static SeekTime = function(_time)
+	{
+		return time == _time ? true : false;
+	}
 	static GetTimeLeft = function()
 	{
 		return self.timeLeft

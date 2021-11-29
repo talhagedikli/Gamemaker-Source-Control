@@ -1,0 +1,6 @@
+// 2021-11-25 02:07:18
+function Input(_active) constructor
+{
+	active	= _active;
+	main	= { };
+}

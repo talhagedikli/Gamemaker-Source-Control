@@ -1,6 +1,10 @@
 part_system_destroy(global.PS);
+part_system_destroy(global.PPS);
 
-surface_free_safe(surPS);
+if (surface_exists(surPS)) 
+{
+	surface_free(surPS);
+}
 
 foreach(global.Particles, function(val)
 {

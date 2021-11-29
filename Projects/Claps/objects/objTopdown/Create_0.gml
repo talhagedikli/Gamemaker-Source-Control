@@ -7,7 +7,6 @@ accel			= 0.3;
 decel			= 0.4;
 dashTween		= new Tween(TweenType.QuartEaseOut);
 
-
 state			= new SnowState("normal");
 state.add("normal", {
 	enter: function()
