@@ -1,6 +1,20 @@
 #macro GUI		global.__gui
 #macro WINDOW	global.__window
 #macro DISPLAY	global.__display
+#macro CAMERA	global.__camera
+global.__camera = 
+{
+	Width : function()
+	{
+		return camera_get_view_width(VIEW);
+	},
+	Height : function()
+	{
+		return camera_get_view_height(VIEW);
+	},
+	x : camera_get_view_x(VIEW),
+	y : camera_get_view_y(VIEW)
+}
 global.__gui = 
 {
 	width : display_get_gui_width(),

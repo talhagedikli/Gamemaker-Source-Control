@@ -14,12 +14,10 @@ global.uiClock.set_update_frequency(60);
 
 Manager = 
 {
+	Cam			: instance_create_layer(x, y, layer, objSmoothCamera),
 	Save		: instance_create_layer(x, y, layer, objSaveManager),
 	Input		: instance_create_layer(x, y, layer, objInputManager),
-	Camera		: instance_create_layer(x, y, layer, objCamera),
-	Room		: instance_create_layer(x, y, layer, objRoomManager),
 	Part		: instance_create_layer(x, y, layer, objParticleManager),
-	Background	: instance_create_layer(x, y, layer, objBackgroundManager)
 }
 // Methods
 GameEnd = function()

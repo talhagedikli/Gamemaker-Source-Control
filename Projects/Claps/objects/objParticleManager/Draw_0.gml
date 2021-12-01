@@ -1,6 +1,6 @@
 if (!surface_exists(surPS))
 {
-	surPS = surface_create(objCamera.viewWidth, objCamera.viewHeight);
+	surPS = surface_create(WINDOW.width, WINDOW.height);
 }
 else
 {

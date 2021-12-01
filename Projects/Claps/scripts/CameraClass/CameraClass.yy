@@ -6,7 +6,7 @@
     "path": "folders/Scripts/xTools.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Camera",
+  "name": "CameraClass",
   "tags": [],
   "resourceType": "GMScript",
 }

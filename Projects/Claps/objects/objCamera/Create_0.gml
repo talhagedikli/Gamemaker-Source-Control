@@ -3,9 +3,6 @@ defWidth		=	1920/3;
 defHeight		=	1080/3;
 windowScale		=	2;
 
-
-
-
 view			= 
 {
 	width	: 1920/3,
@@ -14,13 +11,13 @@ view			=
 	x		: x,
 	y		: y
 }
+following		= noone;
 
 Follow = function(_id = self.id)
 {
 	following = _id;
 }
 
-following		= noone;
 
 //spd variables
 followSpd		= 0.1;
@@ -43,7 +40,9 @@ alarm[0] = 1;
 
 //re-set surface and gui 
 surface_resize(application_surface, view.width * view.scale, view.height * view.scale);
-// display_set_gui_size(viewWidth * view.scale, viewHeight * view.scale);
+display_set_gui_size(viewWidth * view.scale, viewHeight * view.scale);
+
+
 
 //shake
 shake			= false;
