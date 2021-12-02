@@ -1,3 +1,9 @@
+// 2021-12-02 11:11:55
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
 application_surface_enable(false);
 // game_width, game_height are your base resolution (ideally constants)
 following = noone;
@@ -56,4 +62,45 @@ Shake = function(_time, _magnitude, _fade = _magnitude)
 	self.shake_magnitude = _magnitude;
 	self.shake_fade = _fade;
 	self.shake = true;
+}
+
+#event step_end
+// in GMS1, set view_xview and view_yview instead
+var xTo, yTo;
+if (instance_exists(following))
+{
+	var cs = CAMERA.GetSize();
+	xTo = round(following.x) - (cs.x / 2);
+	yTo = round(following.y) - (cs.y / 2);
+}
+else
+{
+	xTo = x;
+	yTo = y;
+}
+x = flerp(x, xTo, 0.15);
+y = flerp(y, yTo, 0.15);
+CAMERA.SetPos(floor(x), floor(y));
+if (!surface_exists(view_surf)) {
+    view_surf = surface_create(game_width + 1, game_height + 1);
+}
+view_surface_id[0] = view_surf;
+
+
+#event draw_gui
+if (surface_exists(view_surf)) {
+    //draw_surface_part(view_surf, frac(x), frac(y), game_width, game_height, 0, 0);
+	//draw_surface_part(view_surf, frac(x), frac(y), game_width, game_height, 0, 0);
+	//var ax = camera_get_view_x(VIEW) - x;
+	//var ay = camera_get_view_y(VIEW) - y;
+	//draw_surface(view_surf, ax, ay);
+	// draw_surface(view_surf, 0, 0);
+	draw_surface(view_surf, -frac(x), -frac(y));
+	// draw_surface_part(view_surf, frac(x), frac(y), game_width, game_height, 0, 0);
+}
+
+#event cleanup
+if (surface_exists(view_surf)) {
+    surface_free(view_surf);
+    view_surf = -1;
 }

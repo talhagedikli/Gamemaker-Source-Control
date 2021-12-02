@@ -1,3 +1,4 @@
+// 2021-12-02 10:59:12
 #macro GUI		global.__gui
 #macro WINDOW	global.__window
 #macro DISPLAY	global.__display
