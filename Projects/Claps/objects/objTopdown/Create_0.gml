@@ -1,12 +1,12 @@
-//Control.Manager.Camera.Follow(self.id);
-motion			= new Vec2(0);
-spd 			= new Vec2(0);
-mSpeed			= new Vec2(3);
+//Control.Manager.camera.Follow(self.id);
+Control.Cm.Follow(self.id);
+motion			= new Vector2(0);
+spd 			= new Vector2(0);
+mSpeed			= new Vector2(3);
 dir 			= 0;
 accel			= 0.3;
 decel			= 0.4;
 dashTween		= new Tween(TweenType.QuartEaseOut);
-objSmoothCamera.Follow(self.id);
 state			= new SnowState("normal");
 state.add("normal", {
 	enter: function()
@@ -15,7 +15,7 @@ state.add("normal", {
 	},
 	step: function()
 	{
-		var in = Control.Manager.Input.td;
+		var in = Control.In.td;
 		if (abs(in.horizontalInput))
 		{
 			motion.x = approach(motion.x, mSpeed.x, accel);
@@ -47,7 +47,7 @@ state.add("normal", {
 state.add("dash", {
 	enter: function()
 	{
-		var in = Control.Manager.Input.td;
+		var in = Control.In.td;
 		dashTween.Start(x, x + in.horizontalInput * 120, 20);
 	},
 	step: function()

@@ -1,24 +1,33 @@
-// Make sure i am created first
+log("-----------------------------------", "Game Started");
+// Make sure i am created firs
 if (instance_number(object_index) > 1)
 {
+	show("ERROR: MULTIPLE CONTROL OBJECT EXISTS");
   instance_destroy();
   exit;
 }
-log("-----------------------------------", "Game Started");
-
+here;
 global.gpClock = new iota_clock();
 global.gpClock.set_update_frequency(60);
 
 global.uiClock	= new iota_clock();
 global.uiClock.set_update_frequency(60);
 
-Manager = 
-{
-	Cam			: instance_create_layer(x, y, layer, objSmoothCamera),
-	Save		: instance_create_layer(x, y, layer, objSaveManager),
-	Input		: instance_create_layer(x, y, layer, objInputManager),
-	Part		: instance_create_layer(x, y, layer, objParticleManager),
-}
+Cm			= instance_create_layer(x, y, layer, objCamera);
+Sl			= instance_create_layer(x, y, layer, objSaveManager);
+In			= instance_create_layer(x, y, layer, objInputManager);
+Pt			= instance_create_layer(x, y, layer, objParticleManager);
+
+
+//#macro manager				global.__managers
+//global.__managers = 
+//{
+//	cam			: instance_create_layer(x, y, layer, objSmoothCamera),
+//	saveload	: instance_create_layer(x, y, layer, objSaveManager),
+//	input		: instance_create_layer(x, y, layer, objInputManager),
+//	part		: instance_create_layer(x, y, layer, objParticleManager)
+//}
+
 // Methods
 GameEnd = function()
 {

@@ -1,6 +1,6 @@
 if (!surface_exists(surPS))
 {
-	surPS = surface_create(WINDOW.width, WINDOW.height);
+	surPS = surface_create(window.width, window.height);
 }
 else
 {

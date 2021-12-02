@@ -1,5 +1,5 @@
 instance_destroy();
-motion			= new Vec2(0);
+motion			= new Vector2(0);
 motionDir		= point_direction(0, 0, motion.x, motion.y);
 facing			= 1;
 accel			= 0.3;
@@ -110,7 +110,7 @@ state = new SnowState("move");
 state.add("move", {
 	enter: function()
 	{
-		var cm = Control.Manager.Camera;
+		var cm = Control.Manager.Cam;
 		cm.following = self.id;
 		ghostDashTimer.start(12, true);
 	},

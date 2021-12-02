@@ -7,7 +7,7 @@ CheckRoom = function()
 	}
 }
 
-Change = function(_room, _spawnerPos = new Vec2(0), _roomFunc = function() {})
+Change = function(_room, _spawnerPos = new Vector2(0), _roomFunc = function() {})
 {
 	room_goto(_room);
 	state.change(room_get_name(_room), _roomFunc);

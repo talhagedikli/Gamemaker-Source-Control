@@ -4,27 +4,6 @@ uiInput 	= true;
 gpInput 	= true;
 active		= true;
 // These values will be used in step event for all other objects
-
-#macro INPUT_GP global.__input_player
-global.__input_player = {
-	active				: false,
-	
-	horizontalInput		: 0,
-	verticalInput		: 0,
-	
-	keyRight			: 0,
-	keyLeft				: 0,
-	keyDown				: 0,
-	keyUp				: 0,
-	
-	keyJump 			: 0,
-	keyDashPressed		: 0,
-	
-	keyRightPressed 	: 0,
-	keyLeftPressed		: 0,
-	keyDownPressed		: 0,
-	keyUpPressed		: 0,	
-}
 td = {
 	horizontalInput		: 0,
 	verticalInput		: 0,
@@ -100,24 +79,6 @@ global.gpClock.add_begin_method(function()
 			keyUpPressed		= keyboard_check_pressed(ord("W"));
 		}
 		with (td)
-		{
-			horizontalInput		= (keyboard_check(vk_right) - keyboard_check(vk_left));		// Will be -1, 0 or 1
-			verticalInput		= (keyboard_check(vk_down) - keyboard_check(vk_up));		// Will be -1, 0 or 1
-
-			keyRight			= keyboard_check(vk_right);
-			keyLeft				= keyboard_check(vk_left);
-			keyDown				= keyboard_check(vk_down);
-			keyUp				= keyboard_check(vk_up);
-			
-			keyJump 			= keyboard_check(vk_space);	
-			keyDashPressed		= keyboard_check_pressed(ord("Z"));
-
-			keyRightPressed 	= keyboard_check_pressed(ord("D"));
-			keyLeftPressed		= keyboard_check_pressed(ord("A"));
-			keyDownPressed		= keyboard_check_pressed(ord("S"));
-			keyUpPressed		= keyboard_check_pressed(ord("W"));
-		}
-		with (INPUT_GP)
 		{
 			horizontalInput		= (keyboard_check(vk_right) - keyboard_check(vk_left));		// Will be -1, 0 or 1
 			verticalInput		= (keyboard_check(vk_down) - keyboard_check(vk_up));		// Will be -1, 0 or 1
