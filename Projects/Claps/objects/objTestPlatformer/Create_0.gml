@@ -1,5 +1,5 @@
 instance_destroy();
-motion			= new Vector2(0);
+motion			= new Vec2(0);
 motionDir		= point_direction(0, 0, motion.x, motion.y);
 facing			= 1;
 accel			= 0.3;

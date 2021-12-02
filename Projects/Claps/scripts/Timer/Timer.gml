@@ -80,14 +80,9 @@ function Timer(_duration, _loop = false, _autostart = false) constructor
 		done	= true;
 		return self;
 	}
-	static Pause = function()
+	static SetActive = function(_active)
 	{
-		active = false;
-		return self;
-	}
-	static Resume = function()
-	{
-		active = true;
+		active = _active;
 		return self;
 	}
 	static IsActive = function()

@@ -1,5 +1,4 @@
 #region// Camera
-#macro VIEW		view_camera[0]
 #endregion
 
 #region// General 
@@ -30,8 +29,8 @@
 #endregion
 
 #region Vectors
-#macro VECTOR2_ZERO		new Vector2(0)
-#macro VECTOR2_RANDOM	new Vector2(lengthdir_x(1, random(360), lengthdir_y(1, random(360))
+#macro VECTOR2_ZERO		new Vec2(0)
+#macro VECTOR2_RANDOM	new Vec2(lengthdir_x(1, random(360), lengthdir_y(1, random(360))
 #endregion
 
 #region// Colours

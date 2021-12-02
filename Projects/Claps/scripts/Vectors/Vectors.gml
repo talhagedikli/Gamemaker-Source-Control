@@ -1,4 +1,4 @@
-function Vector2(_x = undefined, _y = _x) constructor
+function Vec2(_x = undefined, _y = _x) constructor
 {
 	self.x	= _x;
 	self.y	= _y;
@@ -56,7 +56,7 @@ function Vector2(_x = undefined, _y = _x) constructor
 	
 	static Absv = function()
 	{
-	    return (new Vector2(abs(x), abs(y)));
+	    return (new Vec2(abs(x), abs(y)));
 	}
 
 	static Angle = function(radians)
@@ -73,17 +73,6 @@ function Vector2(_x = undefined, _y = _x) constructor
 	{
 	    return (x * x + y * y);
 	}
-
-	// static normalize = function()
-	// {
-	//     var _l = LengthSquared();
-	//     if (_l != 0)
-	//     {
-	//         _l = sqrt(_l);
-	//         x = x / _l;
-	//         y = y / _l;
-	//     }
-	// }
 
 	static Normalized = function()
 	{
@@ -163,39 +152,39 @@ function Vector2(_x = undefined, _y = _x) constructor
 
 	static Signv = function()
 	{
-	    return (new Vector2(sign(x), sign(y)));
+	    return (new Vec2(sign(x), sign(y)));
 	}
 
 	static Floorv = function()
 	{
-	    return (new Vector2(floor(x), floor(y)));
+	    return (new Vec2(floor(x), floor(y)));
 	}
 
-	static ceilv = function()
+	static Ceilv = function()
 	{
-	    return (new Vector2(ceil(x), ceil(x)));
+	    return (new Vec2(ceil(x), ceil(x)));
 	}
 
-	static roundv = function()
+	static Roundv = function()
 	{
-	    return (new Vector2(round(x), round(y)));
+	    return (new Vec2(round(x), round(y)));
 	}
 
 	/// @func rotated()
 	/// @param by_amount
 	/// @param {bool} by_radians?
 	/// @desc Returns the vector rotated by the amount supplied in degrees or radians.
-	static rotated = function(by_amount, radians)
+	static Rotated = function(by_amount, radians)
 	{
 	    var _sine = (radians) ? sin(by_amount) : dsin(by_amount);
 	    var _cosi = (radians) ? cos(by_amount) : dcos(by_amount);
-	    return (new Vector2(x * _cosi - y * _sine, x * _sine + y * _cosi));
+	    return (new Vec2(x * _cosi - y * _sine, x * _sine + y * _cosi));
 	}
 
 	/// @func project()
 	/// @param vector2
 	/// @desc Returns the vector projected onto the given vector.
-	static project = function(vector2)
+	static Project = function(vector2)
 	{
 	    return (vector2 * (dot(vector2) / vector2.length_squared()));
 	}
@@ -203,15 +192,15 @@ function Vector2(_x = undefined, _y = _x) constructor
 	/// @func snapped()
 	/// @param vector2
 	/// @desc Returns this vector with each component snapped to the nearest multiple of step.
-	static snapped = function(vector2)
+	static Snapped = function(vector2)
 	{
-	    return new Vector2(floor(x / vector2.x + 0.5) * vector2.x, floor(y / vector2.y + 0.5) * vector2.y);
+	    return new Vec2(floor(x / vector2.x + 0.5) * vector2.x, floor(y / vector2.y + 0.5) * vector2.y);
 	}
 
 	/// @func clamped()
 	/// @param max_length
 	/// @desc Returns the vector with a maximum length by limiting its length to length.
-	static clamped = function(max_length)
+	static Clamped = function(max_length)
 	{
 	    var _length = length();
 	    var _vector = self;
@@ -230,11 +219,11 @@ function Vector2(_x = undefined, _y = _x) constructor
 	/// @param vector2
 	/// @param delta
 	/// @desc Moves the vector toward vector2 by the fixed delta amount.
-	static move_toward = function(vector2, delta)
+	static MoveToward = function(vector2, delta)
 	{
 	    var _vector = self;
 	    var _epsilon = 0.0001;
-	    var _vector_delta = new Vector2(vector2.x - _vector.x, vector2.y - _vector.y);
+	    var _vector_delta = new Vec2(vector2.x - _vector.x, vector2.y - _vector.y);
 	    var _length = _vector_delta.length();
 
 	    if (_length <= delta or _length < _epsilon)
@@ -243,14 +232,14 @@ function Vector2(_x = undefined, _y = _x) constructor
 	    }
 	    else
 	    {
-	        return new Vector2(_vector.x + _vector_delta.x / _length * delta, _vector.y + _vector_delta.y / _length * delta);
+	        return new Vec2(_vector.x + _vector_delta.x / _length * delta, _vector.y + _vector_delta.y / _length * delta);
 	    }
 	}
 
 	/// @func is_approx_equal()
 	/// @param vector2
 	/// @desc Returns true if this vector and v are approximately equal.
-	static is_approx_equal = function(vector2)
+	static IsApproxEqual = function(vector2)
 	{
 	    var _epsilon = 0.0001;
 	    var _x_difference = abs(x - vector2.x);
@@ -260,12 +249,12 @@ function Vector2(_x = undefined, _y = _x) constructor
 	
 	/// @func is_equal()
 	/// @param vector2
-	static is_equal = function(vector2)
+	static IsEqual = function(vector2)
 	{
 		return vector2.x == x && vector2.y == y;
 	}
 
-	static toString = function()
+	static ToString = function()
 	{
 	    return ("{" + string(x) + ", " + string(y) + "}");
 	}

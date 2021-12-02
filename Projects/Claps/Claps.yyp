@@ -81,7 +81,6 @@
     {"id":{"name":"sprSquareBg","path":"sprites/sprSquareBg/sprSquareBg.yy",},"order":1,},
     {"id":{"name":"objCamera","path":"objects/objCamera/objCamera.yy",},"order":0,},
     {"id":{"name":"CleanCircle","path":"scripts/CleanCircle/CleanCircle.yy",},"order":2,},
-    {"id":{"name":"rWorld","path":"rooms/rWorld/rWorld.yy",},"order":1,},
     {"id":{"name":"snap_from_csv","path":"scripts/snap_from_csv/snap_from_csv.yy",},"order":0,},
     {"id":{"name":"objSaveManager","path":"objects/objSaveManager/objSaveManager.yy",},"order":4,},
     {"id":{"name":"snap_from_binary","path":"scripts/snap_from_binary/snap_from_binary.yy",},"order":0,},
@@ -90,7 +89,6 @@
     {"id":{"name":"CleanPolyline","path":"scripts/CleanPolyline/CleanPolyline.yy",},"order":7,},
     {"id":{"name":"Control","path":"objects/Control/Control.yy",},"order":0,},
     {"id":{"name":"CleanRectangleXYWH","path":"scripts/CleanRectangleXYWH/CleanRectangleXYWH.yy",},"order":9,},
-    {"id":{"name":"rTitle","path":"rooms/rTitle/rTitle.yy",},"order":0,},
     {"id":{"name":"objTopdown","path":"objects/objTopdown/objTopdown.yy",},"order":4,},
     {"id":{"name":"Array","path":"scripts/Array/Array.yy",},"order":5,},
     {"id":{"name":"CameraClass","path":"scripts/CameraClass/CameraClass.yy",},"order":1,},
@@ -111,8 +109,6 @@
   },
   "RoomOrderNodes": [
     {"roomId":{"name":"rZero","path":"rooms/rZero/rZero.yy",},},
-    {"roomId":{"name":"rTitle","path":"rooms/rTitle/rTitle.yy",},},
-    {"roomId":{"name":"rWorld","path":"rooms/rWorld/rWorld.yy",},},
   ],
   "Folders": [
     {"folderPath":"folders/Assets/Sprites.yy","order":0,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},

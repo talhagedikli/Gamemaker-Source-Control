@@ -102,23 +102,23 @@ function surface_free_safe(sur)
 }
 
 // Quick set halign and valign
-function draw_set_aling(halign, valign)
+function draw_set_aling(halign = fa_left, valign = fa_top)
 {
 	draw_set_halign(halign);
 	draw_set_valign(valign);
 }
 
 // Quick set color and alpha
-function draw_set_blend(color, alpha)
+function draw_set_blend(color = c_white, alpha = 1)
 {
 	draw_set_color(color);
 	draw_set_alpha(alpha);
 }
 
 // lengthdir_x and lengthdir_y together with vectors
-function lengthdir(len = new Vector2(0), dir = new Vector2(0)) 
+function lengthdir(len = new Vec2(0), dir = new Vec2(0)) 
 {
-	return new Vector2(lengthdir_x(len.x, dir.x), lengthdir_y(len.y, dir.y));
+	return new Vec2(lengthdir_x(len.x, dir.x), lengthdir_y(len.y, dir.y));
 }
 
 //Concatenate a series of arguments into a string

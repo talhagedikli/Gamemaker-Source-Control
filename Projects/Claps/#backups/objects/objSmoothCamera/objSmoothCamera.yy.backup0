@@ -1,54 +1,54 @@
-// 2021-12-02 11:11:55
+// 2021-12-02 11:33:10
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
 
 #event create
 application_surface_enable(false);
-// game_width, game_height are your base resolution (ideally constants)
+// viewWidth, viewHeight are your base resolution (ideally constants)
 following = noone;
 Follow = function(_id = self.id)
 {
 	/// @func Follow(id)
 	self.following = _id;
 }
-game_width = camera_get_view_width(VIEW);
-game_height = camera_get_view_height(VIEW);
-scale = 3;
+viewWidth = camera_get_view_width(VIEW);
+viewHeight = camera_get_view_height(VIEW);
+scale = 4;
 // in GMS1, set view_wview and view_hview instead
-//camera_set_view_size(VIEW, game_width, game_height);
-surface_resize(application_surface, game_width, game_height);
-CAMERA.SetSize(game_width + 1, game_height + 1);
-GUI.SetSize(game_width, game_height);
-WINDOW.SetSize(game_width*scale, game_height*scale);
+//camera_set_view_size(VIEW, viewWidth, viewHeight);
+surface_resize(application_surface, viewWidth, viewHeight);
+CAMERA.SetSize(viewWidth + 1, viewHeight + 1);
+GUI.SetSize(viewWidth, viewHeight);
+WINDOW.SetSize(viewWidth*scale, viewHeight*scale);
 view_surf = -1;
 
 //shake
 shake			= false;
-shake_time		= 0;
-shake_magnitude = 0;
-shake_fade		= 0;
+shakeTime		= 0;
+shakeMagnitude	= 0;
+shakeFade		= 0;
 ApplyScreenShake = function () 
 {
 	if (shake)
 	{
 		//reduce shake time by 1(every step)
-		shake_time -= 1;
+		shakeTime -= 1;
 			
 		//calculate shake magnitude
-		var _xval = random_range(-shake_magnitude, shake_magnitude); 
-		var _yval = random_range(-shake_magnitude, shake_magnitude);
+		var _xval = random_range(-shakeMagnitude, shakeMagnitude); 
+		var _yval = random_range(-shakeMagnitude, shakeMagnitude);
 			
 		//apply the shake
 		x += _xval;
 		y += _yval;
 			
-		if (shake_time <= 0) 
+		if (shakeTime <= 0) 
 		{
 			//if shake time is zero, shake fade
-			shake_magnitude -= shake_fade; 
+			shakeMagnitude -= shakeFade; 
 
-			if (shake_magnitude <= 0) 
+			if (shakeMagnitude <= 0) 
 			{
 				//if shake fade is zero, turn shake of
 			    shake = false; 
@@ -58,9 +58,9 @@ ApplyScreenShake = function ()
 }
 Shake = function(_time, _magnitude, _fade = _magnitude)
 {
-	self.shake_time = _time;
-	self.shake_magnitude = _magnitude;
-	self.shake_fade = _fade;
+	self.shakeTime = _time;
+	self.shakeMagnitude = _magnitude;
+	self.shakeFade = _fade;
 	self.shake = true;
 }
 
@@ -82,21 +82,21 @@ x = flerp(x, xTo, 0.15);
 y = flerp(y, yTo, 0.15);
 CAMERA.SetPos(floor(x), floor(y));
 if (!surface_exists(view_surf)) {
-    view_surf = surface_create(game_width + 1, game_height + 1);
+    view_surf = surface_create(viewWidth + 1, viewHeight + 1);
 }
 view_surface_id[0] = view_surf;
 
 
 #event draw_gui
 if (surface_exists(view_surf)) {
-    //draw_surface_part(view_surf, frac(x), frac(y), game_width, game_height, 0, 0);
-	//draw_surface_part(view_surf, frac(x), frac(y), game_width, game_height, 0, 0);
+    //draw_surface_part(view_surf, frac(x), frac(y), viewWidth, viewHeight, 0, 0);
+	//draw_surface_part(view_surf, frac(x), frac(y), viewWidth, viewHeight, 0, 0);
 	//var ax = camera_get_view_x(VIEW) - x;
 	//var ay = camera_get_view_y(VIEW) - y;
 	//draw_surface(view_surf, ax, ay);
 	// draw_surface(view_surf, 0, 0);
 	draw_surface(view_surf, -frac(x), -frac(y));
-	// draw_surface_part(view_surf, frac(x), frac(y), game_width, game_height, 0, 0);
+	// draw_surface_part(view_surf, frac(x), frac(y), viewWidth, viewHeight, 0, 0);
 }
 
 #event cleanup

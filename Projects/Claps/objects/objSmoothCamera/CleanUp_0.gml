@@ -1,4 +1,4 @@
-if (surface_exists(view_surf)) {
-    surface_free(view_surf);
-    view_surf = -1;
+if (surface_exists(surView)) {
+    surface_free(surView);
+    surView = -1;
 }
