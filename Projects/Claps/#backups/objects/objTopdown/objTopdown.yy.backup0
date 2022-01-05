@@ -1,20 +1,22 @@
-// 2021-11-23 22:54:22
+// 2021-12-08 12:47:55
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
-sprite_index = sprWhiteBlock;
+sprite_index = spr16;
 uses_physics = false;
 
 #event create
-Control.Manager.Camera.Follow(self.id);
-motion			= new Vector2(0);
-spd 			= new Vector2(0);
-mSpeed			= new Vector2(3);
+//Control.Manager.camera.Follow(self.id);
+Control.Cm.Follow(self.id);
+motion			= vec2(0);
+facing			= 1;
+spd 			= vec2(0);
+mSpeed			= vec2(3);
 dir 			= 0;
 accel			= 0.3;
 decel			= 0.4;
-dashTween		= new Tween(TweenType.QuartEaseOut);
-
-
+dashPower		= 8;
+dashDur			= 10;
+dashTween		= tween(TweenType.BackEaseOut, 0, dashPower, dashDur);
 state			= new SnowState("normal");
 state.add("normal", {
 	enter: function()
@@ -23,10 +25,11 @@ state.add("normal", {
 	},
 	step: function()
 	{
-		var in = Control.Manager.Input.td;
+		var in = Control.In.td;
 		if (abs(in.horizontalInput))
 		{
 			motion.x = approach(motion.x, mSpeed.x, accel);
+			facing = in.horizontalInput;
 		}
 		else
 		{
@@ -40,42 +43,78 @@ state.add("normal", {
 		{
 			motion.y = approach(motion.y, 0, decel);
 		}
-		
 		if (abs(in.keyDashPressed))
 		{
 			state.change("dash");
 		}
-		
 		if (abs(in.verticalInput) || abs(in.horizontalInput))
 		{
 			dir = point_direction(0, 0, in.horizontalInput, in.verticalInput);
-		}		
+		}
+		spd.x = round(lengthdir_x(abs(motion.x), dir));
+		spd.y = round(lengthdir_y(abs(motion.y), dir));
+		var bl = instance_place(x, y, objRounder);
+		if (instance_exists(bl))
+		{
+			bl.image_blend = c_red;
+		}
+		check_collisions_pixel_perfect(objBlock, spd);
 	}
+	
 })
 state.add("dash", {
 	enter: function()
 	{
-		var in = Control.Manager.Input.td;
-		dashTween.Start(x, x + in.horizontalInput * 120, 20);
+		var in = Control.In.td;
+		spd.x = 0;
+		spd.y = 0;
+		dashTween.Start();
 	},
 	step: function()
 	{
-		x = dashTween.GetValue();
+		var dis = dashTween.GetValue() - x;
+		var d = point_direction(0, 0, facing, Control.In.td.verticalInput);
+		
+		//var tarx = lengthdir_x(dashTween.GetValue(), d) - x;
+		//var tary = lengthdir_y(dashTween.GetValue(), d) - y;
+		
+
+		spd.x = lengthdir_x(dashTween.GetValue(), d);
+		spd.y = lengthdir_y(dashTween.GetValue(), d);
+		//var s = vec2(x, y);
+		//s.x  = lengthdir_x(dashTween.GetValue(), d);
+		//s.y  = lengthdir_y(dashTween.GetValue(), d);
 		dashTween.OnTimeout(function()
 		{
 			dashTween.Stop();
 			state.change("normal");
 		})
+		check_collisions_pixel_perfect(objBlock, spd);
 	}
 })
 
 #event step
 state.step();
-spd.x = lengthdir_x(motion.x, dir);
-spd.y = lengthdir_y(motion.y, dir);
-check_collisions_pixel_perfect(objBlock, spd);
+
+
 
 
 #event draw
+//draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 draw_self();
-draw_sprite(sprite_index, image_index, wave(x - 50, x + 50, 1, 0), y - 40);
+//draw_sprite(sprite_index, image_index, wave(x - 50, x + 50, 1, 0), y - 40);
+
+
+#event draw_gui
+
+//var gc = gui.GetCenter();
+//draw_set_font(fntText);
+//draw_set_aling(fa_center, fa_center);
+//draw_set_color(c_red);
+//draw_text_transformed(gc.x, gc.y, "I am a text", 2, 2, 0);
+//draw_set_color(c_white);
+//draw_set_blend();
+//draw_set_aling();
+
+
+

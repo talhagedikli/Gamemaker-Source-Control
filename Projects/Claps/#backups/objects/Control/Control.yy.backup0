@@ -1,33 +1,41 @@
-// 2021-11-26 08:45:02
+// 2021-12-12 21:16:21
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
 uses_physics = false;
 
 #event create
-// Make sure i am created first
+#macro GRID_WIDTH 32
+#macro GRID_HEIGHT 32
+log("-----------------------------------", "Game Started");
+// Make sure i am created firs
 if (instance_number(object_index) > 1)
 {
+	show("ERROR: MULTIPLE CONTROL OBJECT EXISTS");
   instance_destroy();
   exit;
 }
-log("-----------------------------------", "Game Started");
-
 global.gpClock = new iota_clock();
 global.gpClock.set_update_frequency(60);
 
 global.uiClock	= new iota_clock();
 global.uiClock.set_update_frequency(60);
 
-Manager = 
-{
-	Save		: instance_create_layer(x, y, layer, objSaveManager),
-	Input		: instance_create_layer(x, y, layer, objInputManager),
-	Camera		: instance_create_layer(x, y, layer, objCamera),
-	Room		: instance_create_layer(x, y, layer, objRoomManager),
-	Part		: instance_create_layer(x, y, layer, objParticleManager),
-	Background	: instance_create_layer(x, y, layer, objBackgroundManager)
-}
+Cm			= instance_create_layer(x, y, layer, objCamera);
+Sl			= instance_create_layer(x, y, layer, objSaveManager);
+In			= instance_create_layer(x, y, layer, objInputManager);
+Pt			= instance_create_layer(x, y, layer, objParticleManager);
+
+
+//#macro manager				global.__managers
+//global.__managers = 
+//{
+//	cam			: instance_create_layer(x, y, layer, objSmoothCamera),
+//	saveload	: instance_create_layer(x, y, layer, objSaveManager),
+//	input		: instance_create_layer(x, y, layer, objInputManager),
+//	part		: instance_create_layer(x, y, layer, objParticleManager)
+//}
+
 // Methods
 GameEnd = function()
 {
@@ -49,16 +57,13 @@ GameRestart = function()
 
 
 
-
 #event step
 global.gpClock.tick();
 global.uiClock.tick();
 
 
 
-
 #event step_begin
-
 
 
 
@@ -72,6 +77,12 @@ run_all_tweens();
 
 #event keypress:vk_escape 
 GameEnd();
+
+#event keypress:0
+room_goto(rZero);
+
+#event keypress:1
+room_goto(rOne);
 
 #event keypress:R
 GameRestart();

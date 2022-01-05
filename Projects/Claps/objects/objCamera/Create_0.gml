@@ -10,7 +10,7 @@ scale	= WINDOW_SCALE;
 //surface_resize(application_surface, viewWidth, viewHeight);
 camera.SetSize(width + 1, height + 1);
 window.SetSize(width * scale, height * scale);
-gui.SetSize();
+gui.SetSize(width, height);
 // Center window
 alarm[0] = 1;
 surView = -1;
