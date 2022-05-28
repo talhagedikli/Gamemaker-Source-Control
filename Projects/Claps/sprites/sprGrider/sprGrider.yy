@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"sprGrider","path":"sprites/sprGrider/sprGrider.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "sprGrider",
     "tags": [],
     "resourceType": "GMSequence",

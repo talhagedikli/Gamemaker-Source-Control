@@ -1,0 +1,1 @@
+x = tween.getValue();

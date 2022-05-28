@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"sprGrayBlock","path":"sprites/sprGrayBlock/sprGrayBlock.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "sprGrayBlock",
     "tags": [],
     "resourceType": "GMSequence",

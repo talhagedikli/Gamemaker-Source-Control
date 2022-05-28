@@ -1,0 +1,1 @@
+danceTween = new Tween(TweenType.Linear, 20, x, x+sprite_width*10,true);

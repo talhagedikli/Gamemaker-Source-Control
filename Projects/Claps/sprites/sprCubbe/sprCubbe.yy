@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"sprCubbe","path":"sprites/sprCubbe/sprCubbe.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "sprCubbe",
     "tags": [],
     "resourceType": "GMSequence",

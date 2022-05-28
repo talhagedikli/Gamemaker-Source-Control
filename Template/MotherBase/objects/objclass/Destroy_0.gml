@@ -1,0 +1,1 @@
+//if (destroy != undefined) destroy();
