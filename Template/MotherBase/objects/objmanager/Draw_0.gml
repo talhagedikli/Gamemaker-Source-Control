@@ -1,0 +1,1 @@
+if (draw!=undefined) draw();

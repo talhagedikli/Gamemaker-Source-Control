@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Scripts",
-    "path": "folders/Scripts.yy",
+    "name": "SnowState",
+    "path": "folders/Scripts/SnowState.yy",
   },
   "resourceVersion": "1.0",
-  "name": "libLwo",
+  "name": "__snowstate_config",
   "tags": [],
   "resourceType": "GMScript",
 }

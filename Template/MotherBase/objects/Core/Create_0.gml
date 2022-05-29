@@ -9,10 +9,12 @@ if (instance_number(self.object_index) > 1)
 
 
 
-cm			= instance_create_layer(x, y, layer, objCamera);
+cm			= instance_create_layer(x, y, layer, objManager, new Camera());
 sl			= instance_create_layer(x, y, layer, objSaveManager);
-in			= instance_create_layer(x, y, layer, objInputManager);
+in			= instance_create_layer(x, y, layer, objManager, new Input());
 pt			= instance_create_layer(x, y, layer, objParticleManager);
+
+
 
 
 //var i = 0 repeat(TweenType.Length-1)
@@ -21,7 +23,7 @@ pt			= instance_create_layer(x, y, layer, objParticleManager);
 //	ins.type = i;
 //	i++;
 //}
-instance_create_layer(x,y,layer,objClass,new Tweener());
+instance_create_layer(x, y, layer, objPlayer, new TweenerGuy());
 
 
 // Methods

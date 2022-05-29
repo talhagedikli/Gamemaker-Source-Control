@@ -1,15 +1,3 @@
-//#macro TWEENS global.__tweens
-//global.__tweens = [];
-
-//function run_all_tweens()
-//{
-//	var _l = array_length(TWEENS);
-//	for (var i = 0; i < _l; ++i) 
-//	{
-//		TWEENS[i].run();
-//	}	
-//}
-/// @enum {number}
 enum TweenType
 {
 	Linear,
@@ -41,16 +29,6 @@ enum TweenType
 	MidSlow,
 	Length
 }
-	
-/// @param {*}		_type
-/// @param {real}	[_dur]
-/// @param {real}	[_start]
-/// @param {real}	[_end]
-/// @param {bool}	[_autostart]
-/// @param {real}	[_ticksize]
-/// @param {bool}	[_autorun]
-
-
 function Tween(_type=TweenType.Linear, _start, _end, _duration=-1, _args=[], _autostart=false) constructor
 {
 	channel		= animcurve_get_channel(acTweens, _type);

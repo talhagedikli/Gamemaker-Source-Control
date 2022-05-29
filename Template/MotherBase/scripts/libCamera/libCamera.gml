@@ -8,7 +8,7 @@
 #macro camera			__CameraInstance()
 
 
-
+#region Methods
 function __data_view()
 {
 	static data =
@@ -20,7 +20,6 @@ function __data_view()
 	}
 	return data;
 }
-
 
 function __Camera() constructor
 {
@@ -146,3 +145,8 @@ function __WindowInstance()
 	static instance = new __Window();
 	return instance;
 }
+#endregion
+
+#region Class
+
+#endregion

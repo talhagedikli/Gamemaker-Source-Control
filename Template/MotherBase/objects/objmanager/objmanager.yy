@@ -35,7 +35,7 @@
     "path": "folders/Objects/Classes.yy",
   },
   "resourceVersion": "1.0",
-  "name": "objClass",
+  "name": "objManager",
   "tags": [],
   "resourceType": "GMObject",
 }
