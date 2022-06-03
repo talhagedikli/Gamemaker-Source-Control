@@ -1,1 +1,0 @@
-if (cleanUp != undefined) cleanUp();

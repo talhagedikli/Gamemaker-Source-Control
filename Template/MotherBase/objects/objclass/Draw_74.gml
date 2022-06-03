@@ -1,1 +1,0 @@
-if (drawGuiBegin!=undefined) drawGuiBegin();

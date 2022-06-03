@@ -1,1 +1,0 @@
-if (create!=undefined) create();

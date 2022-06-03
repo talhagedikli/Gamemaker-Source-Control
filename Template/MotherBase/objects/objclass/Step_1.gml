@@ -1,1 +1,0 @@
-if (stepBegin != undefined) stepBegin();
