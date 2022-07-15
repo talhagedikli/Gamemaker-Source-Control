@@ -1,0 +1,1 @@
+if (event_destroy != undefined) event_destroy();

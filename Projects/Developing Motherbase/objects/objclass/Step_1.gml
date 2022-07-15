@@ -1,0 +1,1 @@
+if (event_step_begin != undefined) event_step_begin();

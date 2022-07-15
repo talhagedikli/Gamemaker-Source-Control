@@ -1,0 +1,1 @@
+if (event_post_draw!=undefined) event_post_draw();

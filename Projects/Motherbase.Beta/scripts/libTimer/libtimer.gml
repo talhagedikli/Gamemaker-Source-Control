@@ -22,6 +22,8 @@ function Timer(_duration, _loop=false, _autostart=false) : Lwo() constructor
 	//	run();
 	//}
 	//if (_autorun) array_push(TIMERS, self)
+	
+
 	static start = function()
 	{
 		//duration	= _duration;

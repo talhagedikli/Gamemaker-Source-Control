@@ -1,0 +1,1 @@
+if (event_cleanup != undefined) event_cleanup();

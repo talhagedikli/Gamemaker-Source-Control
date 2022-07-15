@@ -1,0 +1,1 @@
+if (event_pre_draw!=undefined) event_pre_draw();

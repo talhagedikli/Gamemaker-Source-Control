@@ -1,0 +1,1 @@
+if (event_create!=undefined) event_create();

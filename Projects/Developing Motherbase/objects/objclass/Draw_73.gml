@@ -1,0 +1,1 @@
+if (event_draw_end!=undefined) event_draw_end();
