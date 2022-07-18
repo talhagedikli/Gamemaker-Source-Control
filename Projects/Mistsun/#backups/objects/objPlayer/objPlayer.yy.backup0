@@ -1,0 +1,106 @@
+// 2022-07-18 15:12:30
+#event properties (no comments/etc. here are saved)
+parent_index = objAlly;
+sprite_index = sprPlayer;
+uses_physics = false;
+
+#event create
+event_inherited();
+spd = 0;
+facing = 1;
+spdMax = 2.5;
+spdMin = 1.5;
+accel = 0.7;
+decel = 0.7;
+
+state = PlayerStates.idle;
+moving = false;
+array_push(weponInventory, instance_create_layer(x, y, "Wepons", objPistol));
+array_push(weponInventory, instance_create_layer(x, y, "Wepons", objShotgun));
+array_push(weponInventory, instance_create_layer(x, y, "Wepons", objThompson));
+array_push(weponInventory, instance_create_layer(x, y, "Wepons", objRifle));
+array_push(weponInventory, instance_create_layer(x, y, "Wepons", objCrossbow));
+
+weponIndex = 0;
+wepon = weponInventory[weponIndex];
+// Just activate current wepon
+//var i = 0; repeat (array_length(weponInventory))
+//{
+instance_deactivate_object(objGun);
+	//i++;
+//}
+instance_activate_object(weponInventory[weponIndex]);
+
+// changeWepon = function()
+// {
+	
+// 	var _in = mouse_wheel();
+// 	var _invlen = array_length(weponInventory);
+// 	// with (objGun)
+// 	// {
+// 	// 	if (object_get_parent(owner.object_index) == object_get_parent(other.object_index))
+// 	// 	{
+// 	// 		instance_deactivate_object(id);
+// 	// 	}
+// 	// }
+// 	if (abs(_in))
+// 	{
+// 		weponIndex += _in;
+// 		weponIndex = abs(weponIndex) mod _invlen;
+// 		instance_deactivate_object(objGun);
+// 		wepon = weponInventory[weponIndex];
+// 		instance_activate_object(wepon);
+// 		wepon.x = bbox_left + sprite_width*0.5;
+// 		wepon.y = y-sprite_height*0.5;
+
+// 	}
+// }
+
+
+#event step
+if (state == PlayerStates.idle)
+{
+	var _horizontalInput	= INPUT.horizontalInput;// Will be -1, 0 or 1
+	var _verticalInput		= INPUT.verticalInput;
+	var _keyShoot			= INPUT.keyShoot;
+	var _pdir = point_direction(x, y, mouse_x, mouse_y);
+
+	var _mdir = point_direction(0, 0, _horizontalInput, _verticalInput);
+	var _xto, _yto;
+
+
+	if (abs(_horizontalInput) || abs(_verticalInput))
+	{
+		//if (wepon.getState() == WeponStates.attack) spd = approach(spd, spdMin, accel);
+		//else spd = approach(spd, spdMax, accel);
+		spd = approach(spd, spdMax, accel);
+		facing = sign(_horizontalInput);
+	}
+	else
+	{
+		spd = approach(spd, 0, accel);
+	}
+	
+	
+	if (spd != 0)	moving = true;
+	else			moving = false;
+	
+	_xto = lengthdir_x(spd, _mdir);
+	_yto = lengthdir_y(spd, _mdir);
+
+	changeWepon();
+	//depth = -y;
+	// image_angle = _pdir;
+	// direction = _pdir;
+	//var _jiggle = 0.4;
+	//light.x = x + random_range(-_jiggle, _jiggle);
+	//light.y = y + random_range(-_jiggle, _jiggle);
+	x += _xto;
+	y += _yto;		
+}
+
+
+
+#event draw
+draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+wepon.drawSelf();

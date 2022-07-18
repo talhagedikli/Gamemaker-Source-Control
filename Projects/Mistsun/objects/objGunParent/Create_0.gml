@@ -1,0 +1,237 @@
+event_inherited();
+#region INIT
+state			= WeponStates.idle;
+
+numofBullets	= 0;
+bulletSpread	= 0;
+
+barrelWidth 	= sprite_get_bbox_right(sprite_index) - sprite_get_xoffset(sprite_index);
+
+recoilPower		= 0;
+recoilAngle		= 0;
+	
+attackSound		= undefined;
+reloadSound		= undefined;
+	
+reloadTime		= 15;
+reloadTween		= new Tween(TweenType.QuartEaseOut, 0, 0, reloadTime);
+	
+runningLoopDurMin		= 30;
+runningLoopDurMax		= 90;
+runningLoopMarginMax	= 2; // Means animcurvevalue*value
+runningLoopMarginMin	= 0.8; // Means animcurvevalue*value
+runningCurve			= new Animcurve(acGuns, "running", runningLoopDurMax);
+runningCurve.start();
+
+//recoilDur				= 5;
+//recoilCurve				= new Animcurve(acGuns, "recoil", recoilDur);
+
+ptAttack		= part_type_create();	// Must be cleaned
+addToEffectList(ptAttack);
+
+ptSpark			= part_type_create();
+addToEffectList(ptSpark);
+
+part_type_sprite(ptSpark, sprSparks, false, false, true);
+part_type_scale(ptSpark, 0.8, 0.8);
+part_type_life(ptSpark, 2, 5);
+
+heatTime		= 0;
+var _f = function() {};
+heatTimer = time_source_create(time_source_game, heatTime, time_source_units_frames, _f);
+	
+// Methods
+playSound = function(_soundid, _priority, _loop, _pitchRange)
+{
+	if (_soundid != undefined)
+	{
+		var _snd = audio_play_sound(_soundid, _priority, _loop);	
+		audio_sound_pitch(_snd, _pitchRange);
+	}		
+}
+playAttackSound		= function()
+{
+	if (attackSound != undefined)
+	{
+		var _snd = audio_play_sound(attackSound, 5, false);	
+		audio_sound_pitch(_snd, random_range(0.9, 1.1));
+	}
+}
+playReloadSound		= function()
+{
+	if (reloadSound != undefined)
+	{
+		var _snd = audio_play_sound(reloadSound, 5, false);	
+		audio_sound_pitch(_snd, random_range(0.9, 1.1));
+	}
+}
+walkingEffect		= function()	// #Optimize
+{
+	if (runningCurve.isFinished())
+	{
+		runningCurve.reset();
+		runningCurve.start();
+	}
+	else
+	{
+		var _dur = runningCurve.getDuration();
+		if (owner.moving == true) 
+		{
+			if (_dur != runningLoopDurMin) 
+			{
+				runningCurve.reset();
+				runningCurve.setDuration(runningLoopDurMin);
+				runningCurve.start();
+					
+			}
+		}
+		else 
+		{
+			if (_dur != runningLoopDurMax)
+			{
+				runningCurve.reset();
+				runningCurve.setDuration(runningLoopDurMax);
+				runningCurve.start();
+			}
+		}			
+	}
+
+	y += owner.moving == true ? runningLoopMarginMax*runningCurve.getValue() : runningLoopMarginMin*runningCurve.getValue();		
+}
+followOwner			= function()
+{
+	var _gunFacingX = sign(mouse_x-owner.x);
+	var _gunFacingY = sign(mouse_y-owner.y);
+	
+	var _margin = 8;
+	var _x = owner.x + facing*(sprite_width*0.15) + owner.spd*real(INPUT.horizontalInput);
+	var _y = owner.y - owner.sprite_height*0.25 + owner.spd*real(INPUT.verticalInput);
+	x = lerp(x, _x, 0.4);
+	y = lerp(y, _y, 0.4);
+		
+}
+faceMouse			= function()
+{
+	var _pdir = point_direction(owner.x, owner.y, mouse_x, mouse_y);
+	var _gdir = point_direction(x, y, mouse_x, mouse_y);
+	image_angle = _gdir;
+	direction	= image_angle;
+	if (_pdir<90 || _pdir>270)
+	{
+		facing = 1;
+	}
+	else
+	{
+		facing = -1;
+	}
+	image_yscale = facing;		
+}
+createAttackEffect	= function()
+{
+	var _x = x + lengthdir_x(sprite_width*1.5, image_angle);	
+	var _y = y + lengthdir_y(sprite_height*1.5, image_angle);
+	var _m = 5;
+	// part_type_direction(ptAttack, 80, 100, 0, 0);
+	// part_type_speed(ptAttack, 0.5, 1.2, -0.01, 0);
+	part_type_gravity(ptAttack, 0.05, random_range(image_angle-_m, image_angle+_m)+90*facing);
+	//part_particles_create(global.PSEffects, _x, _y, ptAttack, 1);
+}
+createSparkEffect = function()
+{
+	var _x			= x + lengthdir_x(barrelWidth, image_angle);
+	var _y			= y + lengthdir_y(barrelWidth, image_angle);
+	//part_type_direction(ptSpark, image_angle, image_angle, 0, 0);
+	part_type_orientation(ptSpark, image_angle, image_angle, 0, 0, false);
+	part_particles_create(global.PSEffects, _x, _y, ptSpark, 1);
+}
+shoot				= function()
+{
+	repeat (numofBullets)
+	{
+		var _x			= x + lengthdir_x(sprite_width, image_angle);
+		var _y			= y + lengthdir_y(sprite_width, image_angle);
+		var _b			= instance_create_layer(_x, _y, "Bullets", objSmallBullet);
+		_b.image_angle	= random_range(image_angle-bulletSpread, image_angle+bulletSpread);
+		_b.direction	= _b.image_angle;
+	}
+}
+recoil				= function() 
+{
+	var _recoilAngle = random_range(image_angle-160, image_angle-200);
+	var _power = random_range(recoilPower*0.8, recoilPower);
+	x += lengthdir_x(_power, _recoilAngle);
+	y += lengthdir_y(_power, _recoilAngle);	
+}
+#endregion
+	
+#region STATES
+idle			= function() 
+{
+	faceMouse();
+	followOwner();
+	walkingEffect();
+		
+	// Change State
+	var _tsstate = time_source_get_state(heatTimer);
+	if (INPUT.keyShoot && (_tsstate == time_source_state_initial || _tsstate == time_source_state_stopped))
+	{
+		stateChange(WeponStates.attack);
+	}
+	if (INPUT.keyReloadPressed)
+	{
+		reloadTween.start(image_angle, image_angle + 360);
+		playReloadSound();
+		stateChange(WeponStates.reload);	
+	}
+}
+reload = function()
+{
+	if (reloadTween.getState() == time_source_state_initial)
+	{
+		playReloadSound();		
+		reloadTween.start(image_angle, image_angle + 360);
+	}
+	else if (reloadTween.getState() != time_source_state_stopped)
+	{
+		image_angle = reloadTween.getValue();
+		direction = image_angle;			
+	}
+	else
+	{
+		reloadTween.reset();
+		stateChange(WeponStates.idle);
+	}
+	followOwner();
+}
+attack = function()
+{
+	var _tstate = time_source_get_state(heatTimer);
+	if (_tstate == time_source_state_initial)
+	{
+		shoot();
+		recoil();
+		//recoilCurve.reset();
+		//recoilCurve.start();
+		playSound(attackSound, 5, false, random_range(0.9, 1.1));
+		createAttackEffect();
+		createSparkEffect();
+		time_source_start(heatTimer);
+	}
+	else if (_tstate == time_source_state_stopped)
+	{
+		time_source_reset(heatTimer);
+	}
+	followOwner();
+	faceMouse();
+
+	// Change state
+	if (!INPUT.keyShoot)
+	{
+		stateChange(WeponStates.idle);
+	}
+	if (INPUT.keyReloadPressed)
+	{
+		stateChange(WeponStates.reload);	
+	}
+}
+#endregion

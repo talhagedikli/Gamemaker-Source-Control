@@ -7,9 +7,10 @@ if (instance_number(self.object_index) > 1)
 	exit;
 }
 
+
 cm			= instance_create_layer(x, y, layer, objCamera);
 lc			= instance_create_layer(x, y, layer, objLightController);
-//sl			= instance_create_layer(x, y, layer, objSaveManager);
+sl			= instance_create_layer(x, y, layer, objSaveManager);
 pt			= instance_create_layer(x, y, layer, objParticle);
 
 mouse		= instance_create_layer(x, y, layer, objMouse);

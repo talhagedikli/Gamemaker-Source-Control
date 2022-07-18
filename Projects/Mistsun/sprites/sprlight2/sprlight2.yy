@@ -25,8 +25,8 @@
   "gridY": 0,
   "frames": [
     {"compositeImage":{"FrameId":{"name":"c32e9a91-ba86-4014-883e-c2d5d1b4b61e","path":"sprites/sprLight2/sprLight2.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"c32e9a91-ba86-4014-883e-c2d5d1b4b61e","path":"sprites/sprLight2/sprLight2.yy",},"LayerId":{"name":"4603ef0e-e9ca-438e-9dea-c71512aa6b0d","path":"sprites/sprLight2/sprLight2.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"c32e9a91-ba86-4014-883e-c2d5d1b4b61e","path":"sprites/sprLight2/sprLight2.yy",},"LayerId":{"name":"d8dd0fc6-3ab5-4a09-b21c-81efdaa6599a","path":"sprites/sprLight2/sprLight2.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+        {"FrameId":{"name":"c32e9a91-ba86-4014-883e-c2d5d1b4b61e","path":"sprites/sprLight2/sprLight2.yy",},"LayerId":{"name":"4603ef0e-e9ca-438e-9dea-c71512aa6b0d","path":"sprites/sprLight2/sprLight2.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"sprLight2","path":"sprites/sprLight2/sprLight2.yy",},"resourceVersion":"1.0","name":"c32e9a91-ba86-4014-883e-c2d5d1b4b61e","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
@@ -71,8 +71,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Misc",
+    "path": "folders/Sprites/Misc.yy",
   },
   "resourceVersion": "1.0",
   "name": "sprLight2",

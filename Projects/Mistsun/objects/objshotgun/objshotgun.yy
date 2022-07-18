@@ -1,16 +1,16 @@
 {
+  "managed": true,
   "spriteId": {
     "name": "sprShotgun",
     "path": "sprites/sprShotgun/sprShotgun.yy",
   },
   "solid": false,
   "visible": true,
-  "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "objGun",
-    "path": "objects/objGun/objGun.yy",
+    "name": "objGunParent",
+    "path": "objects/objGunParent/objGunParent.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -31,7 +31,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Guns",
-    "path": "folders/Objects/Wepons/Guns.yy",
+    "path": "folders/Objects/Items/Wepons/Guns.yy",
   },
   "resourceVersion": "1.0",
   "name": "objShotgun",

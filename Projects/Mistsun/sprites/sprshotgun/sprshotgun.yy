@@ -93,8 +93,8 @@
     "resourceType": "GMNineSliceData",
   },
   "parent": {
-    "name": "Wepon",
-    "path": "folders/Sprites/Wepon.yy",
+    "name": "Wepons",
+    "path": "folders/Sprites/Items/Wepons.yy",
   },
   "resourceVersion": "1.0",
   "name": "sprShotgun",

@@ -6,7 +6,7 @@
     "path": "folders/Scripts/Items.yy",
   },
   "resourceVersion": "1.0",
-  "name": "clsWepons",
+  "name": "clswepons",
   "tags": [],
   "resourceType": "GMScript",
 }

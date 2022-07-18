@@ -6,7 +6,6 @@ global.__stateMachines		= {};
 
 /// @description
 /// @param {bool} [_autorun]
-/// @returns {nil} 
 function StateMachine(_autorun=false) constructor
 {
 	owner					= other.id;

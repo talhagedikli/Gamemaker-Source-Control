@@ -27,7 +27,10 @@ function check_collisions_classic(_motion) {
 
 }
 
-///@param {object} _object
+/// @desc Description for check_collisions_pixel_perfect
+/// @param {id} [_object]=noone description
+/// @param {any*} _motion description
+/// @param {bool} [_applyspd]=true description
 function check_collisions_pixel_perfect(_object = noone, _motion, _applyspd = true) { /// @description the pixel perfect collisions
 
 	//I think this is better calculation for single mask

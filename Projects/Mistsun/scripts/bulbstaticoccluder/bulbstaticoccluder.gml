@@ -1,3 +1,4 @@
+// Feather disable all
 /// @param renderer
 
 function BulbStaticOccluder(_renderer) constructor

@@ -2,12 +2,7 @@
 // Feather disable GM1010
 // Feather disable GM1009
 // Feather disable GM1043
-enum WeponStates 
-{
-	idle,
-	reload,
-	attack
-}
+
 
 function Wepon() constructor
 {
@@ -80,7 +75,6 @@ function Wepon() constructor
 function Gun()		: Wepon() constructor
 {
 	#region INIT
-	
 	numofBullets	= undefined;
 	bulletSpread	= undefined;
 	
@@ -94,10 +88,10 @@ function Gun()		: Wepon() constructor
 	reloadTween = new Tween(TweenType.QuartEaseOut, 0, 0, reloadTime);
 	
 	runningLoopDurMin		= 30;
-	runningLoopDurMax		= 60;
+	runningLoopDurMax		= 90;
 	runningLoopMarginMax	= 2; // Means animcurvevalue*value
 	runningLoopMarginMin	= 0.8; // Means animcurvevalue*value
-	runningCurve			= new Animcurve(acWepons, "running", runningLoopDurMax);
+	runningCurve			= new Animcurve(acGuns, "running", runningLoopDurMax);
 	runningCurve.start();
 	
 	heatTime		= 0;
@@ -130,23 +124,37 @@ function Gun()		: Wepon() constructor
 			audio_sound_pitch(_snd, random_range(0.9, 1.1));
 		}
 	}
-	walkingEffect		= function()
+	walkingEffect		= function()	// #Optimize
 	{
 		if (runningCurve.isFinished())
 		{
 			runningCurve.reset();
+			runningCurve.start();
+		}
+		else
+		{
 			var _dur = runningCurve.getDuration();
-
 			if (owner.moving == true) 
 			{
-				if (_dur != runningLoopDurMin) runningCurve.setDuration(runningLoopDurMin);
+				if (_dur != runningLoopDurMin) 
+				{
+					runningCurve.reset();
+					runningCurve.setDuration(runningLoopDurMin);
+					runningCurve.start();
+					
+				}
 			}
 			else 
 			{
-				if (_dur != runningLoopDurMax) runningCurve.setDuration(runningLoopDurMax);
-			}
-			runningCurve.start();
+				if (_dur != runningLoopDurMax)
+				{
+					runningCurve.reset();
+					runningCurve.setDuration(runningLoopDurMax);
+					runningCurve.start();
+				}
+			}			
 		}
+
 		y += owner.moving == true ? runningLoopMarginMax*runningCurve.getValue() : runningLoopMarginMin*runningCurve.getValue();		
 	}
 	followOwner			= function()
@@ -189,7 +197,14 @@ function Gun()		: Wepon() constructor
 	}
 	shoot				= function()
 	{
-
+		repeat (numofBullets)
+		{
+			var _x			= x + lengthdir_x(sprite_width, image_angle);
+			var _y			= y + lengthdir_y(sprite_width, image_angle);
+			var _b			= instance_create_layer(_x, _y, "Bullets", objBulletClass, new SmallBullet());
+			_b.image_angle	= random_range(image_angle-bulletSpread, image_angle+bulletSpread);
+			_b.direction	= _b.image_angle;
+		}
 	}
 	recoil				= function() 
 	{
@@ -250,6 +265,9 @@ function Gun()		: Wepon() constructor
 		{
 			time_source_reset(heatTimer);
 		}
+		followOwner();
+		faceMouse();
+		
 		// Change state
 		if (!INPUT.keyShoot)
 		{
@@ -257,12 +275,10 @@ function Gun()		: Wepon() constructor
 		}
 		if (INPUT.keyReloadPressed)
 		{
-			reloadTween.start(image_angle, image_angle - 360);
+			reloadTween.start(image_angle, image_angle + 360);
 			playReloadSound();
 			stateChange(WeponStates.reload);	
 		}
-		followOwner();
-		faceMouse();		
 	}
 	#endregion
 	
@@ -361,7 +377,7 @@ function Thompson()	: Gun() constructor
 	// Variables
 	sprite_index = sprThompson;
 	
-	recoilPower = 2;
+	recoilPower = 3;
 	bulletSpread = 3;
 	heatTime = 6;
 	numofBullets = 1;

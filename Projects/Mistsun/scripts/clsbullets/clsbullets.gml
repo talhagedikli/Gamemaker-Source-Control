@@ -1,11 +1,7 @@
 // Feather disable GM1013
 // Feather disable GM1010
 // Feather disable GM1043
-enum BulletStates
-{
-	active,
-	touched
-}
+
 function Bullet() constructor
 {
 	#region INITIALIZE
@@ -51,7 +47,7 @@ function Bullet() constructor
 function SmallBullet() : Bullet() constructor
 {
 	#region INITIALIZE
-	sprite_index	= sprBullet;
+	sprite_index	= sprSmallBullet;
 	spd				= 10;
 	spdIncrease		= 1;
 	knockbackPower	= 20;
@@ -63,7 +59,7 @@ function SmallBullet() : Bullet() constructor
 	Step = function()
 	{
 		__inheritedStep();	// Inherited from parent constructor
-		var _inst = instance_place(x, y, objEnemy);
+		var _inst = instance_place(x, y, objEnemyParent);
 		if (_inst != noone)
 		{
 			_inst.knockbackDir		= image_angle;
