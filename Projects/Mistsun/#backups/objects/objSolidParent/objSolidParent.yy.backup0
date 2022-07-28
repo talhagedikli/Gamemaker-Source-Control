@@ -1,0 +1,7 @@
+// 2022-07-19 15:16:01
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+sprite_index = sprParent;
+uses_physics = false;
+
+#event create

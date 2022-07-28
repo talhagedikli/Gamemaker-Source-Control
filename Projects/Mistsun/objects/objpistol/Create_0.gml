@@ -7,7 +7,9 @@ numofBullets	= 1;
 
 recoilPower		= 5;
 
-attackSound		= sndPistolShot;
+attackSound			= sndPistolShot;
+soundFX.shootSound		= sndPistolShot;
+
 
 var _f = function() {};
 heatTime		= 15;

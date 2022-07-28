@@ -8,6 +8,7 @@
 /// @func SnowState(initial_state, [execute_enter])
 /// @param {string} initial_state		Initial state for the state machine
 /// @param {bool}   [execute_enter]		Whether to execute the "enter" event for the initial state (true) or not (false) [Default: true]
+// Feather disable all
 function SnowState(_initState, _execEnter = true) constructor {
 	
 	#region SnowState System

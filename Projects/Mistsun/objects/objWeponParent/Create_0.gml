@@ -10,11 +10,17 @@ owner			= objPlayer.id;
 bbox_width		= sprite_get_bbox_left(sprite_index) - sprite_get_bbox_right(sprite_index);
 bbox_height 	= sprite_get_bbox_bottom(sprite_index) - sprite_get_bbox_top(sprite_index);
 
-state			= 0;
+state			= WeponStates.idle;
 facing			= 1;
 
 effectsArray	= array_create(0);
 
+drawAngle		= image_angle;
+attackAngle		= image_angle;
+
+soundFX 		= {
+	
+};
 
 // Methods
 addToEffectList = function(_effect)

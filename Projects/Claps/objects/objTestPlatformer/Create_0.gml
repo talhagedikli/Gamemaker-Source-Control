@@ -10,9 +10,9 @@ grav			= 0.05;
 jumping 		= false;
 jPower			= 3;
 
-upperVfxTimer	= new Timer();
-ghostDashTimer	= new Timer();
-blurTimer		= new Timer();
+upperVfxTimer	= new Timer(0);
+ghostDashTimer	= new Timer(0);
+blurTimer		= new Timer(0);
 blurMagnitude	= 0;
 blurMax			= 7;
 IsMoving		= function()

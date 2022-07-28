@@ -1,1 +1,1 @@
-// Draw nothing
+// Draw nothing by default

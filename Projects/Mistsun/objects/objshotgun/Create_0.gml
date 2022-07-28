@@ -10,6 +10,7 @@ bulletSpread = 7;
 recoilPower = 7;
 
 attackSound = sndPistolShot;
+soundFX.shootSound = sndPistolShot;
 
 heatTime = 45;
 var _f = function() {};

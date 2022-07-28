@@ -8,6 +8,7 @@ function surface_free_safe(sur)
 	}
 }
 
+
 // Quick set halign and valign
 function draw_set_aling(halign = fa_left, valign = fa_top)
 {
@@ -85,12 +86,12 @@ function wrap(_value, _minimum, _wrapAt)
     if ( _mod < 0 ) return _mod + _wrapAt else return _mod + _minimum;
 }
 
-function normalize(value, min, max)
-{
-	var normalized = (value - min) / (max - min);
-	normalized = clamp(normalized, 0, 1);
-	return normalized;
-}
+//function normalize(value, min, max)
+//{
+//	var normalized = (value - min) / (max - min);
+//	normalized = clamp(normalized, 0, 1);
+//	return normalized;
+//}
 
 ///Map(val, min1, max1, min2, max2)   
 function remap(value, min1, max1, min2, max2)

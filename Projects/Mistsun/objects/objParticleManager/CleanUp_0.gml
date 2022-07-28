@@ -1,4 +1,3 @@
-part_type_destroy(global.PTPixel);
 var i = 0; repeat(array_length(partTypes))
 {
 	var pt = partTypes[i];

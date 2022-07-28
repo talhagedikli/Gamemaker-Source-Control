@@ -1,11 +1,11 @@
 {
-  "managed": true,
   "spriteId": {
     "name": "sprThompson",
     "path": "sprites/sprThompson/sprThompson.yy",
   },
   "solid": false,
   "visible": true,
+  "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {

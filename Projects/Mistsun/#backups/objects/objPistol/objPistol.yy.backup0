@@ -1,6 +1,6 @@
-// 2022-07-16 14:39:05
+// 2022-07-20 00:55:09
 #event properties (no comments/etc. here are saved)
-parent_index = objGun;
+parent_index = objGunParent;
 sprite_index = sprPistol;
 uses_physics = false;
 
@@ -15,6 +15,7 @@ numofBullets	= 1;
 recoilPower		= 5;
 
 attackSound		= sndPistolShot;
+
 
 var _f = function() {};
 heatTime		= 15;

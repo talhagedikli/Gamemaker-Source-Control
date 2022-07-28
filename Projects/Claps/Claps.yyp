@@ -100,9 +100,9 @@
     {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"AdMob Extension.pdf","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.500.0.121",
+    "IDEVersion": "2022.800.0.165",
   },
-  "resourceVersion": "1.5",
+  "resourceVersion": "1.6",
   "name": "Claps",
   "tags": [],
   "resourceType": "GMProject",

@@ -2,7 +2,6 @@
 event_inherited();
 #region INIT
 // Variables
-sprite_index = sprRifle;
 
 recoilPower = 25;
 
@@ -10,6 +9,7 @@ bulletSpread = 1;
 numofBullets = 1;
 
 attackSound = sndCrossbowShot;
+soundFX.shootSound = sndCrossbowShot;
 
 heatTime = 50;
 var _f = function() {};

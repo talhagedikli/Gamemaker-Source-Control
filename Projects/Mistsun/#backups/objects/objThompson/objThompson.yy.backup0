@@ -1,6 +1,6 @@
-// 2022-07-16 15:09:15
+// 2022-07-19 15:34:41
 #event properties (no comments/etc. here are saved)
-parent_index = objGun;
+parent_index = objGunParent;
 sprite_index = sprThompson;
 uses_physics = false;
 
@@ -12,7 +12,7 @@ event_inherited();
 // Variables
 sprite_index = sprThompson;
 	
-recoilPower = 3;
+recoilPower = 5;
 
 bulletSpread = 3;
 numofBullets = 1;

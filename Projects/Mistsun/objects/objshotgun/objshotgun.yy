@@ -1,11 +1,11 @@
 {
-  "managed": true,
   "spriteId": {
     "name": "sprShotgun",
     "path": "sprites/sprShotgun/sprShotgun.yy",
   },
   "solid": false,
   "visible": true,
+  "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {

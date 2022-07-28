@@ -1,3 +1,4 @@
+event_inherited();
 #macro view view_camera[0]
 // following = noone;
 // gameWidth = 1920/4;

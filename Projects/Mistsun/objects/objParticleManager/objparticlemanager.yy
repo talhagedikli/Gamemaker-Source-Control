@@ -35,7 +35,7 @@
     "path": "folders/Objects/Managers.yy",
   },
   "resourceVersion": "1.0",
-  "name": "objParticle",
+  "name": "objParticleManager",
   "tags": [],
   "resourceType": "GMObject",
 }

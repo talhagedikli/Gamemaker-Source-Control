@@ -5,12 +5,13 @@ event_inherited();
 // Variables
 sprite_index = sprThompson;
 	
-recoilPower = 3;
+recoilPower = 5;
 
 bulletSpread = 3;
 numofBullets = 1;
 
 attackSound = sndThompsonShot;
+soundFX.shootSound = sndThompsonShot;
 
 heatTime = 6;
 var _f = function() {};

@@ -1,11 +1,11 @@
 {
-  "managed": true,
   "spriteId": {
-    "name": "sprRifle",
-    "path": "sprites/sprRifle/sprRifle.yy",
+    "name": "sprCrossbow",
+    "path": "sprites/sprCrossbow/sprCrossbow.yy",
   },
   "solid": false,
   "visible": true,
+  "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {

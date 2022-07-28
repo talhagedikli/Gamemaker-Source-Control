@@ -1,3 +1,4 @@
+event_inherited();
 /// @description
 fileName = "save";
 function Save(_rs)

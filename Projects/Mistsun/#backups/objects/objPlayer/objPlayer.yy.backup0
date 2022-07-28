@@ -1,6 +1,6 @@
-// 2022-07-18 15:12:30
+// 2022-07-19 18:22:37
 #event properties (no comments/etc. here are saved)
-parent_index = objAlly;
+parent_index = objAllyParent;
 sprite_index = sprPlayer;
 uses_physics = false;
 
@@ -21,86 +21,66 @@ array_push(weponInventory, instance_create_layer(x, y, "Wepons", objThompson));
 array_push(weponInventory, instance_create_layer(x, y, "Wepons", objRifle));
 array_push(weponInventory, instance_create_layer(x, y, "Wepons", objCrossbow));
 
+// Init first wepon
 weponIndex = 0;
 wepon = weponInventory[weponIndex];
-// Just activate current wepon
-//var i = 0; repeat (array_length(weponInventory))
-//{
-instance_deactivate_object(objGun);
-	//i++;
-//}
-instance_activate_object(weponInventory[weponIndex]);
-
-// changeWepon = function()
-// {
-	
-// 	var _in = mouse_wheel();
-// 	var _invlen = array_length(weponInventory);
-// 	// with (objGun)
-// 	// {
-// 	// 	if (object_get_parent(owner.object_index) == object_get_parent(other.object_index))
-// 	// 	{
-// 	// 		instance_deactivate_object(id);
-// 	// 	}
-// 	// }
-// 	if (abs(_in))
-// 	{
-// 		weponIndex += _in;
-// 		weponIndex = abs(weponIndex) mod _invlen;
-// 		instance_deactivate_object(objGun);
-// 		wepon = weponInventory[weponIndex];
-// 		instance_activate_object(wepon);
-// 		wepon.x = bbox_left + sprite_width*0.5;
-// 		wepon.y = y-sprite_height*0.5;
-
-// 	}
-// }
+var i = 0; repeat(array_length(weponInventory))
+{
+	instance_deactivate_object(weponInventory[i].id);
+	i++;
+}
+instance_activate_object(wepon.id);
 
 
 #event step
-if (state == PlayerStates.idle)
-{
-	var _horizontalInput	= INPUT.horizontalInput;// Will be -1, 0 or 1
-	var _verticalInput		= INPUT.verticalInput;
-	var _keyShoot			= INPUT.keyShoot;
-	var _pdir = point_direction(x, y, mouse_x, mouse_y);
+switch (state) {
+    case PlayerStates.idle:
+		var _horizontalInput	= INPUT.horizontalInput;// Will be -1, 0 or 1
+		var _verticalInput		= INPUT.verticalInput;
+		var _keyShoot			= INPUT.keyShoot;
+		var _pdir				= point_direction(x, y, mouse_x, mouse_y);
 
-	var _mdir = point_direction(0, 0, _horizontalInput, _verticalInput);
-	var _xto, _yto;
+		var _mdir = point_direction(0, 0, _horizontalInput, _verticalInput);
+		var _xto, _yto;
 
 
-	if (abs(_horizontalInput) || abs(_verticalInput))
-	{
-		//if (wepon.getState() == WeponStates.attack) spd = approach(spd, spdMin, accel);
-		//else spd = approach(spd, spdMax, accel);
-		spd = approach(spd, spdMax, accel);
-		facing = sign(_horizontalInput);
-	}
-	else
-	{
-		spd = approach(spd, 0, accel);
-	}
+		if (abs(_horizontalInput) || abs(_verticalInput))
+		{
+			//if (wepon.getState() == WeponStates.attack) spd = approach(spd, spdMin, accel);
+			//else spd = approach(spd, spdMax, accel);
+			spd = approach(spd, spdMax, accel);
+			facing = sign(_horizontalInput);
+		}
+		else
+		{
+			spd = 0;
+		}
 	
 	
-	if (spd != 0)	moving = true;
-	else			moving = false;
+		if (spd != 0)	moving = true;
+		else			moving = false;
 	
-	_xto = lengthdir_x(spd, _mdir);
-	_yto = lengthdir_y(spd, _mdir);
+		_xto = lengthdir_x(spd, _mdir);
+		_yto = lengthdir_y(spd, _mdir);
 
-	changeWepon();
-	//depth = -y;
-	// image_angle = _pdir;
-	// direction = _pdir;
-	//var _jiggle = 0.4;
-	//light.x = x + random_range(-_jiggle, _jiggle);
-	//light.y = y + random_range(-_jiggle, _jiggle);
-	x += _xto;
-	y += _yto;		
+		changeWepon();
+		//x += _xto;
+		//y += _yto;
+		//I think this is better calculation for single mask
+
+		// Applying horizontal speed if there is no collision with block
+		// x += lengthdir_x(_motion.x, _dir);
+		//Horizontal collisions
+		checkCollisions(objSolidParent, _xto, _yto);
+		
+        break;
+    default:
+        show("state does not match");
+        break;
 }
 
 
 
 #event draw
-draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+event_inherited();
 wepon.drawSelf();

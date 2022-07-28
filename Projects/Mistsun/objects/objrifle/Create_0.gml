@@ -10,7 +10,8 @@ recoilPower = 30;
 bulletSpread = 1;
 numofBullets = 1;
 
-attackSound = sndThompsonShot;
+attackSound = sndRifleShot;
+soundFX.shootSound = sndRifleShot;
 
 heatTime = 60;
 var _f = function() {};

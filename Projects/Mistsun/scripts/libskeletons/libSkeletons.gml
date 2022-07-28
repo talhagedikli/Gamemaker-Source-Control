@@ -1,7 +1,7 @@
 #region Functions
 function mouse_wheel()
 {
-	return (mouse_wheel_down() - mouse_wheel_up());
+	return (real(mouse_wheel_down()) - real(mouse_wheel_up()));
 }
 
 // Set surface free safely

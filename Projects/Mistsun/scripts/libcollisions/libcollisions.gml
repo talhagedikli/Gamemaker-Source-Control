@@ -1,30 +1,29 @@
 /// @description check 1 pixel collisions
 //
-function check_collisions_classic(_motion) {
+function check_collisions_classic(_xspd, _yspd) {
 	//horizontal collision
-	if (tile_meeting(x+_motion.x, y, "Matrix"))
+	if (place_meeting(x+_xspd, y, objSolidParent))
 	{
-		while (!tile_meeting(x+sign(_motion.x), y, "Matrix"))
+		while (!place_meeting(x+sign(_xspd), y, objSolidParent))
 		{
-			x = x + sign(_motion.x);
+			x = x + sign(_xspd);
 		}
-		_motion.x = 0;
+		_xspd = 0;
 	}
-	// applying _motion.x
-	x = x + _motion.x;
+	// applying _xspd
+	x = x + _xspd;
 
 	//vertical collision
-	if (tile_meeting(x, y+_motion.y, "Matrix"))
+	if (place_meeting(x, y+_yspd, objSolidParent))
 	{
-		while (!tile_meeting(x, y+sign(_motion.y), "Matrix"))
+		while (!place_meeting(x, y+sign(_yspd), objSolidParent))
 		{
-			y = y + sign(_motion.y);
+			y = y + sign(_yspd);
 		}
-		_motion.y = 0;
+		_yspd = 0;
 	}
-	//applying _motion.y
-	y = y + _motion.y;
-
+	//applying _yspd
+	y = y + _yspd;
 }
 
 /// @desc Description for check_collisions_pixel_perfect
@@ -72,7 +71,7 @@ function check_collisions_pixel_perfect(_object = noone, _motion, _applyspd = tr
 	}
 }
 
-function check_collisions_pixel_perfect_topdown(_object = noone, _motion, _dir) { /// @description the pixel perfect collisions
+function check_collisions_pixel_perfect_topdown(_object, _xspd, _yspd, _dir=0) { /// @description the pixel perfect collisions
 
 	//I think this is better calculation for single mask
 	var sprite_bbox_top		= sprite_get_bbox_top(self.sprite_index)		- sprite_get_yoffset(self.sprite_index);

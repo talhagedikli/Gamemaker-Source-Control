@@ -8,8 +8,6 @@ switch (state) {
         break;
     case WeponStates.attack:
         self.attack();
-        self.attack();
-        self.attack();
         break;
     default:
         show("state not matching");

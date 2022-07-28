@@ -1,3 +1,4 @@
+event_inherited();
 partTypes = [];
 
 addPartType = function(_parttype)
@@ -20,22 +21,12 @@ part_type_speed(_p, 0, 0, 0, 0);
 
 
 global.PTPixel = _p;
-
 addPartType(global.PTPixel);
 
-// enum PartType
-// {
-// 	pixel,
-// }
 
-// type = PartType.pixel;
 
-// switch (type)
-// {
-// 	case PartType.pixel:
-// 		sprite_index = sprPixel;
-// 	break;
-// }
 
-// spd = 1;
-// decel = 0.05;
+
+
+
+

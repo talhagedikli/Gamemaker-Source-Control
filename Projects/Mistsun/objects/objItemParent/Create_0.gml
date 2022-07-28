@@ -6,7 +6,7 @@ bbox_height 	= sprite_get_bbox_bottom(sprite_index) - sprite_get_bbox_top(sprite
 state			= 0;
 facing			= 1;
 
-effectsArray	= [];
+effectsArray	= array_create(0);
 
 
 // Methods

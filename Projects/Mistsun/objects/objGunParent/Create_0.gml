@@ -7,30 +7,51 @@ bulletSpread	= 0;
 
 barrelWidth 	= sprite_get_bbox_right(sprite_index) - sprite_get_xoffset(sprite_index);
 
+shooting		= false;
+
 recoilPower		= 0;
 recoilAngle		= 0;
 	
 attackSound		= undefined;
 reloadSound		= undefined;
+
+soundFX 		= {
+	"shootSound": undefined,
+	"reloadSound": undefined
+}
 	
 reloadTime		= 15;
 reloadTween		= new Tween(TweenType.QuartEaseOut, 0, 0, reloadTime);
-	
-runningLoopDurMin		= 30;
-runningLoopDurMax		= 90;
-runningLoopMarginMax	= 2; // Means animcurvevalue*value
-runningLoopMarginMin	= 0.8; // Means animcurvevalue*value
-runningCurve			= new Animcurve(acGuns, "running", runningLoopDurMax);
+
+runningLoop 	= 
+{
+	durationMin: 30,
+	durationMax: 90,
+	marginMin: 0.8,
+	marginMax: 2,
+}
+// runningLoopDurMin		= 30;
+// runningLoopDurMax		= 90;
+// runningLoopMarginMax	= 2; // Means animcurvevalue*value
+// runningLoopMarginMin	= 0.8; // Means animcurvevalue*value
+runningCurve			= new Animcurve(acGuns, "running", runningLoop.durationMax);
 runningCurve.start();
 
 //recoilDur				= 5;
 //recoilCurve				= new Animcurve(acGuns, "recoil", recoilDur);
 
+// Particles
 ptAttack		= part_type_create();	// Must be cleaned
 addToEffectList(ptAttack);
 
 ptSpark			= part_type_create();
 addToEffectList(ptSpark);
+
+
+//effects			= {
+//	spark: ptSpark,
+//	shoot: ptAttack
+//}
 
 part_type_sprite(ptSpark, sprSparks, false, false, true);
 part_type_scale(ptSpark, 0.8, 0.8);
@@ -77,35 +98,34 @@ walkingEffect		= function()	// #Optimize
 		var _dur = runningCurve.getDuration();
 		if (owner.moving == true) 
 		{
-			if (_dur != runningLoopDurMin) 
+			if (_dur != runningLoop.durationMin) 
 			{
 				runningCurve.reset();
-				runningCurve.setDuration(runningLoopDurMin);
+				runningCurve.setDuration(runningLoop.durationMin);
 				runningCurve.start();
 					
 			}
 		}
 		else 
 		{
-			if (_dur != runningLoopDurMax)
+			if (_dur != runningLoop.durationMax)
 			{
 				runningCurve.reset();
-				runningCurve.setDuration(runningLoopDurMax);
+				runningCurve.setDuration(runningLoop.durationMax);
 				runningCurve.start();
 			}
 		}			
 	}
 
-	y += owner.moving == true ? runningLoopMarginMax*runningCurve.getValue() : runningLoopMarginMin*runningCurve.getValue();		
+	y += owner.moving == true ? runningLoop.marginMax*runningCurve.getValue() : runningLoop.marginMin*runningCurve.getValue();		
 }
 followOwner			= function()
 {
 	var _gunFacingX = sign(mouse_x-owner.x);
 	var _gunFacingY = sign(mouse_y-owner.y);
 	
-	var _margin = 8;
 	var _x = owner.x + facing*(sprite_width*0.15) + owner.spd*real(INPUT.horizontalInput);
-	var _y = owner.y - owner.sprite_height*0.25 + owner.spd*real(INPUT.verticalInput);
+	var _y = owner.y - owner.sprite_height*0.5 + owner.spd*real(INPUT.verticalInput);
 	x = lerp(x, _x, 0.4);
 	y = lerp(y, _y, 0.4);
 		
@@ -114,7 +134,10 @@ faceMouse			= function()
 {
 	var _pdir = point_direction(owner.x, owner.y, mouse_x, mouse_y);
 	var _gdir = point_direction(x, y, mouse_x, mouse_y);
-	image_angle = _gdir;
+	var _diff = angle_difference(_gdir, image_angle);
+	//drawAngle = _gdir;
+	//attackAngle = drawAngle;
+	image_angle += _diff * 0.7;
 	direction	= image_angle;
 	if (_pdir<90 || _pdir>270)
 	{
@@ -142,14 +165,14 @@ createSparkEffect = function()
 	var _y			= y + lengthdir_y(barrelWidth, image_angle);
 	//part_type_direction(ptSpark, image_angle, image_angle, 0, 0);
 	part_type_orientation(ptSpark, image_angle, image_angle, 0, 0, false);
-	part_particles_create(global.PSEffects, _x, _y, ptSpark, 1);
+	// part_particles_create(global.PSEffects, _x, _y, ptSpark, 1);
 }
 shoot				= function()
 {
 	repeat (numofBullets)
 	{
-		var _x			= x + lengthdir_x(sprite_width, image_angle);
-		var _y			= y + lengthdir_y(sprite_width, image_angle);
+		var _x			= x + lengthdir_x(barrelWidth, image_angle);
+		var _y			= y + lengthdir_y(barrelWidth, image_angle);
 		var _b			= instance_create_layer(_x, _y, "Bullets", objSmallBullet);
 		_b.image_angle	= random_range(image_angle-bulletSpread, image_angle+bulletSpread);
 		_b.direction	= _b.image_angle;
@@ -160,7 +183,7 @@ recoil				= function()
 	var _recoilAngle = random_range(image_angle-160, image_angle-200);
 	var _power = random_range(recoilPower*0.8, recoilPower);
 	x += lengthdir_x(_power, _recoilAngle);
-	y += lengthdir_y(_power, _recoilAngle);	
+	y += lengthdir_y(_power, _recoilAngle);
 }
 #endregion
 	
@@ -188,11 +211,13 @@ reload = function()
 {
 	if (reloadTween.getState() == time_source_state_initial)
 	{
-		playReloadSound();		
+		playSound(soundFX.reloadSound, 5, false, random_range(0.9, 1.1));	
 		reloadTween.start(image_angle, image_angle + 360);
 	}
 	else if (reloadTween.getState() != time_source_state_stopped)
 	{
+		var _gdir = point_direction(x, y, mouse_x, mouse_y);
+		var _diff = angle_difference(_gdir, image_angle);
 		image_angle = reloadTween.getValue();
 		direction = image_angle;			
 	}
@@ -212,7 +237,7 @@ attack = function()
 		recoil();
 		//recoilCurve.reset();
 		//recoilCurve.start();
-		playSound(attackSound, 5, false, random_range(0.9, 1.1));
+		playSound(soundFX.shootSound, 5, false, random_range(0.9, 1.1));
 		createAttackEffect();
 		createSparkEffect();
 		time_source_start(heatTimer);
