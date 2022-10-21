@@ -83,7 +83,7 @@ function Vector2(_x = 0, _y = _x) constructor
 	
 	static Absv = function()
 	{
-	    return (new Vector2(abs(x), abs(y)));
+	    returnnew Vector2(abs(x), abs(y));
 	}
 	
 	/// @param {real} radians
@@ -184,22 +184,22 @@ function Vector2(_x = 0, _y = _x) constructor
 
 	static Signv = function()
 	{
-	    return (new Vector2(sign(x), sign(y)));
+	    returnnew Vector2(sign(x), sign(y));
 	}
 
 	static Floorv = function()
 	{
-	    return (new Vector2(floor(x), floor(y)));
+	    returnnew Vector2(floor(x), floor(y));
 	}
 
 	static Ceilv = function()
 	{
-	    return (new Vector2(ceil(x), ceil(x)));
+	    returnnew Vector2(ceil(x), ceil(x));
 	}
 
 	static Roundv = function()
 	{
-	    return (new Vector2(round(x), round(y)));
+	    returnnew Vector2(round(x), round(y));
 	}
 	/// @param {real} by_amount
 	/// @param {bool} radians?
@@ -208,7 +208,7 @@ function Vector2(_x = 0, _y = _x) constructor
 	{
 	    var _sine = (radians) ? sin(by_amount) : dsin(by_amount);
 	    var _cosi = (radians) ? cos(by_amount) : dcos(by_amount);
-	    return (new Vector2(x * _cosi - y * _sine, x * _sine + y * _cosi));
+	    returnnew Vector2(x * _cosi - y * _sine, x * _sine + y * _cosi);
 	}
 
 	/// @param vector2

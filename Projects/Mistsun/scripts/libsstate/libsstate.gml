@@ -33,7 +33,7 @@ function StateMachine(_autorun=false) constructor
 		array_push(history ,_name);
 	}
 	
-	static Step = function()
+	static step = function()
 	{
 		activeState.event_step();
 	}

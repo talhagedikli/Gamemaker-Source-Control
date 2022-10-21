@@ -8,4 +8,4 @@
 #macro SNOWSTATE_DEFAULT_HISTORY_MAX_SIZE		5			// Default maxmimum history count
 #macro SNOWSTATE_CIRCULAR_INHERITANCE_ERROR		true		// Whether to throw an error when circular inheritance is found (true) or not (false)
 #macro SNOWSTATE_WILDCARD_TRANSITION_NAME		"*"			// Default wildcard transition name
-#macro SNOWSTATE_REFLEXIVE_TRANSITION_NAME		"="			// Default reflexive transition name
+#macro SNOWSTATE_REFLEXIVE_TRANSITION_NAME		"="
